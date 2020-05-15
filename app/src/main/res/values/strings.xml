@@ -14,7 +14,7 @@
     <string name="txtUsuario">Aca va el nombre de usuario</string>
     <string name="txtPacientes">Pacientes: </string>
     <string name="txtSintomasYMedicamentos">Sintomas y medicamentos: </string>
-
+    <string name="txtDetalle">Detalle: </string>
 
     <!-- Botones -->
     <string name="btnRegistrar">Registrar</string>
