@@ -14,7 +14,7 @@ public class DonArToolBar extends AppCompatActivity implements IToolBar, View.On
 
     public TextView titulo;
     public TextView nombreUsuario;
-    public TextView idUsuario;
+    public TextView idUser;
     public Button registrar;
     public Button login;
 
@@ -25,7 +25,7 @@ public class DonArToolBar extends AppCompatActivity implements IToolBar, View.On
 
         titulo = (TextView) findViewById(R.id.txtAplicacionYModulo);
         nombreUsuario = (TextView) findViewById(R.id.txtUsuario);
-        idUsuario = (TextView) findViewById(R.id.txtId);
+        idUser = (TextView) findViewById(R.id.txtId);
 
         registrar = (Button) findViewById(R.id.btnRegistro);
         login = (Button) findViewById(R.id.btnLogin);
@@ -38,13 +38,21 @@ public class DonArToolBar extends AppCompatActivity implements IToolBar, View.On
     @SuppressLint("SetTextI18n")
     @Override
     public void dataChangeToolbar(String textoTitulo, String usuario, String idUsuario, boolean verBotones) {
+        titulo = (TextView) findViewById(R.id.txtAplicacionYModulo);
+        nombreUsuario = (TextView) findViewById(R.id.txtUsuario);
+        idUser = (TextView) findViewById(R.id.txtId);
+
         titulo.setText("DonAr - " + textoTitulo);
         nombreUsuario.setText(usuario);
+        idUser.setText(idUsuario);
+        idUser.setVisibility(View.INVISIBLE);
         mostrarBotones(verBotones);
     }
 
     @Override
     public void mostrarBotones(boolean mostrar) {
+        registrar = (Button) findViewById(R.id.btnRegistro);
+        login = (Button) findViewById(R.id.btnLogin);
         if(mostrar)
         {
             registrar.setVisibility(View.VISIBLE);

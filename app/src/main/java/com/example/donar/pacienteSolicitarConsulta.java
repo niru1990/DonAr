@@ -14,7 +14,7 @@ public class pacienteSolicitarConsulta extends DonArToolBar implements IToolBar,
     TextView apellido;
     TextView detalle;
     TextView id;
-    Button solciitar;
+    Button solicitar;
     //Button login;
     //Button registrar;
 
@@ -26,12 +26,12 @@ public class pacienteSolicitarConsulta extends DonArToolBar implements IToolBar,
         apellido = (TextView) findViewById(R.id.txtApellido);
         detalle = (TextView) findViewById(R.id.medtSintomasYMedicamentos);
         id = (TextView) findViewById(R.id.txtIdSolicitud);
-        solciitar = (Button) findViewById(R.id.btnSolciitar);
+        solicitar = (Button) findViewById(R.id.btnSolciitar);
         //login = (Button) findViewById(R.id.btnLogin);//.setOnClickListener(this);
         //registrar = (Button) findViewById(R.id.btnRegistro);
 
-        dataChangeToolbar("Pacientes -  Consulta", " ", "0", false);
-        solciitar.setOnClickListener(this);
+        dataChangeToolbar("Pacientes -  Consulta", "NICO", "0", false);
+        solicitar.setOnClickListener(this);
         //login.setOnClickListener(this);
         //registrar.setOnClickListener(this);
     }
