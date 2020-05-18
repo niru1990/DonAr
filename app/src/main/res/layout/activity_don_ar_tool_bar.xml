@@ -69,4 +69,13 @@
         android:text="@string/btnRegistro"
         app:layout_constraintEnd_toStartOf="@+id/btnLogin"
         app:layout_constraintTop_toTopOf="@+id/guideline26" />
+
+    <TextView
+        android:id="@+id/txtId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        tools:layout_editor_absoluteX="76dp"
+        tools:layout_editor_absoluteY="21dp"
+        tools:visibility="invisible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
