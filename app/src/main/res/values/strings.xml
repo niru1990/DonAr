@@ -23,4 +23,10 @@
     <string name="btnLogin">Login</string>
     <string name="btnSolicitar">Solicitar</string>
     <string name="btnSAsignar">Asignar</string>
+
+    <!-- Descripciones -->
+    <string name="voluntarios">Voluntarios</string>
+    <string name="pacientes">Pacientes</string>
+    <string name="donaciones">Donaciones</string>
+    <string name="reportes">Reportes</string>
 </resources>
