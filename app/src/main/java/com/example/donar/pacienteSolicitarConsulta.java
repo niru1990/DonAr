@@ -8,13 +8,14 @@ import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
 
-public class pacienteSolicitarConsulta extends DonArToolBar implements IToolBar,View.OnClickListener{//AppCompatActivity{
+public class pacienteSolicitarConsulta extends DonArToolBar implements View.OnClickListener{//AppCompatActivity{
 
-    TextView nombre;
-    TextView apellido;
-    TextView detalle;
-    TextView id;
-    Button solicitar;
+    private TextView nombre;
+    private TextView apellido;
+    private TextView detalle;
+    private TextView id;
+    private TextView usuario;
+    private Button solicitar;
     //Button login;
     //Button registrar;
 
@@ -22,15 +23,21 @@ public class pacienteSolicitarConsulta extends DonArToolBar implements IToolBar,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paciente_solicitar_consulta);
+        configView();
+    }
+
+    private void configView(){
         nombre = (TextView) findViewById(R.id.txtNombre);
         apellido = (TextView) findViewById(R.id.txtApellido);
         detalle = (TextView) findViewById(R.id.medtSintomasYMedicamentos);
         id = (TextView) findViewById(R.id.txtIdSolicitud);
         solicitar = (Button) findViewById(R.id.btnSolciitar);
+        usuario = (TextView) findViewById(R.id.txtUsuario);
         //login = (Button) findViewById(R.id.btnLogin);//.setOnClickListener(this);
         //registrar = (Button) findViewById(R.id.btnRegistro);
 
-        dataChangeToolbar("Pacientes -  Consulta", "NICO", "0", false);
+        dataChangeToolbar("Pacientes -  Consulta", usuario.getText().toString(),
+                id.getText().toString(), false);
         solicitar.setOnClickListener(this);
         //login.setOnClickListener(this);
         //registrar.setOnClickListener(this);

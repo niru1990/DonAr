@@ -58,7 +58,7 @@
         app:layout_constraintGuide_begin="430dp" />
 
     <TextView
-        android:id="@+id/txtnombre"
+        android:id="@+id/txtNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/txtNombre"
@@ -145,6 +145,14 @@
         app:layout_constraintTop_toBottomOf="@+id/imbAgregar"
         app:srcCompat="@android:drawable/ic_delete" />
 
+    <TextView
+        android:id="@+id/txtIdHistorial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        tools:layout_editor_absoluteX="132dp"
+        tools:layout_editor_absoluteY="95dp"
+        tools:visibility="invisible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
