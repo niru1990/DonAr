@@ -62,7 +62,7 @@ public class MainActivity extends DonArToolBar implements View.OnClickListener {
         dataChangeToolbar("Pacientes -  Consulta", usuario.getText().toString(),
                 id.getText().toString(), false);
     }
-
+//
     @SuppressLint("SetTextI18n")
     @Override
     public void dataChangeToolbar(String titulo, String usuario, String idUsuario, boolean verBotones) {
