@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -103,4 +104,8 @@ public class MainActivity extends DonArToolBar implements View.OnClickListener {
             intent = new Intent(v.getContext(), registroGeneral.class);
         startActivity(intent);
     }
+
+
+
+
 }

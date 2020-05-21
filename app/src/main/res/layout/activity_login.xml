@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="30dp"
+    android:paddingTop="100dp"
+    android:paddingRight="30dp"
+    android:paddingBottom="50dp"
+    tools:context=".LoginActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Email"
+            android:layout_width="320dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/contrasenia"
+            android:layout_width="320dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--
+    <Button
+        android:onClick="cerrarSesion"
+        android:id="@+id/btn_sign_out"
+        android:layout_margin="25dp"
+        android:text="Cerrar sesión"
+        android:textColor="#fff"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+      -->
+    <Button
+        android:id="@+id/buttonIniciarSesion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Iniciar sesión"
+        tools:layout_editor_absoluteX="159dp"
+        tools:layout_editor_absoluteY="462dp"
+        android:background="#33cc5a"
+        android:layout_margin="15dp"
+        />
+
+    <Button
+        android:id="@+id/buttonIniciarSesionGoogle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Iniciar sesión con Google"
+        tools:layout_editor_absoluteX="159dp"
+        tools:layout_editor_absoluteY="462dp"
+        android:background="#318FC5"
+        android:layout_margin="15dp"
+        />
+
+</LinearLayout>

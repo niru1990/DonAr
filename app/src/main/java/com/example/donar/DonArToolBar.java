@@ -3,6 +3,7 @@ package com.example.donar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -75,10 +76,16 @@ public class DonArToolBar extends AppCompatActivity implements IToolBar, View.On
                 s = "Intento ingresar";
                 break;
             case R.id.btnLogin:
-                s= "Ingreso";
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                //s= "Ingreso";
                 break;
             default:
                 break;
         }
     }
+
+
+
+
 }
