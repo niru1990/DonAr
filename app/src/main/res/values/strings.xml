@@ -29,4 +29,7 @@
     <string name="pacientes">Pacientes</string>
     <string name="donaciones">Donaciones</string>
     <string name="reportes">Reportes</string>
+    <string name="action_login">Login</string>
+    <string name="action_registro">Registro</string>
+    <string name="action_settings">Settings</string>
 </resources>

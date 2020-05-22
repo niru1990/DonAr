@@ -8,12 +8,14 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/donArToolBar"
-        android:layout_width="415dp"
-        android:layout_height="62dp"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        tools:layout_editor_absoluteX="1dp" />
+        android:elevation="4dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:ignore="MissingConstraints"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline24"
@@ -29,6 +31,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="385dp" />
 
+    <!--
     <TextView
         android:id="@+id/txtAplicacionYModulo"
         android:layout_width="wrap_content"
@@ -37,6 +40,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/donArToolBar"
         app:layout_constraintStart_toStartOf="@+id/guideline24"
         app:layout_constraintTop_toTopOf="@+id/guideline26" />
+    -->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline26"
@@ -45,6 +49,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="15dp" />
 
+    <!--
     <TextView
         android:id="@+id/txtUsuario"
         android:layout_width="wrap_content"
@@ -53,7 +58,9 @@
         app:layout_constraintBottom_toBottomOf="@+id/donArToolBar"
         app:layout_constraintEnd_toStartOf="@+id/guideline25"
         app:layout_constraintTop_toTopOf="@+id/guideline26" />
+    -->
 
+    <!-- Los botones sale mejor sustituirlos por un recurso de tipo menu.
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
@@ -69,7 +76,9 @@
         android:text="@string/btnRegistro"
         app:layout_constraintEnd_toStartOf="@+id/btnLogin"
         app:layout_constraintTop_toTopOf="@+id/guideline26" />
+    -->
 
+    <!--
     <TextView
         android:id="@+id/txtId"
         android:layout_width="wrap_content"
@@ -78,4 +87,5 @@
         tools:layout_editor_absoluteX="76dp"
         tools:layout_editor_absoluteY="21dp"
         tools:visibility="invisible" />
+    -->
 </androidx.constraintlayout.widget.ConstraintLayout>
