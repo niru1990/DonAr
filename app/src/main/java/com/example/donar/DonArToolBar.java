@@ -1,6 +1,7 @@
 package com.example.donar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ public class DonArToolBar extends AppCompatActivity implements IToolBar, View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_don_ar_tool_bar);
+
 
         titulo = (TextView) findViewById(R.id.txtAplicacionYModulo);
         nombreUsuario = (TextView) findViewById(R.id.txtUsuario);

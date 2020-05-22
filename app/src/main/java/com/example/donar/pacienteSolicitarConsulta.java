@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
 
+import Negocio.Paciente;
+import DonArDato.PacienteDTO;
+
 public class pacienteSolicitarConsulta extends DonArToolBar implements View.OnClickListener{//AppCompatActivity{
 
     private TextView nombre;
@@ -41,6 +44,12 @@ public class pacienteSolicitarConsulta extends DonArToolBar implements View.OnCl
         solicitar.setOnClickListener(this);
         //login.setOnClickListener(this);
         //registrar.setOnClickListener(this);
+        loadData();
+    }
+
+    public void loadData(){
+        Paciente p = new Paciente();
+        p.getPaciente();
     }
 
     @Override
@@ -55,12 +64,12 @@ public class pacienteSolicitarConsulta extends DonArToolBar implements View.OnCl
                 break;
         }
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void dataChangeToolbar(String titulo, String usuario, String idUsuario, boolean verBotones) {
         super.dataChangeToolbar(titulo, usuario, idUsuario, verBotones);
     }
+
 
     private void guardar(){
         //Acá va el SAVE

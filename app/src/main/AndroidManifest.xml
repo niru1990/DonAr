@@ -3,7 +3,7 @@
     package="com.example.donar">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,15 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".pacientesHistoriaCLinica"></activity>
+        <activity android:name=".pacientesMain"></activity>
+        <activity android:name=".pacientesHistoriaCLinica" />
         <activity android:name=".pacienteAsignarEspecialidad" />
-        <activity android:name=".pacienteSolicitarConsulta"></activity>
+        <activity android:name=".pacienteSolicitarConsulta" />
         <activity android:name=".DonArToolBar" />
         <activity android:name=".voluntariosAutoMach" />
         <activity android:name=".registroHorasVoluntarios" />
         <activity android:name=".registroGeneral" />
         <activity android:name=".voluntarioMedico" />
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

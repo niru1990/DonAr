@@ -1,5 +1,6 @@
 package com.example.donar;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -7,10 +8,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 public class MainActivity extends DonArToolBar implements View.OnClickListener {
 
@@ -21,7 +26,9 @@ public class MainActivity extends DonArToolBar implements View.OnClickListener {
     private TextView id;
     private TextView usuario;
     boolean active;
+    private Toolbar toolbar;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +36,7 @@ public class MainActivity extends DonArToolBar implements View.OnClickListener {
         configView();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void configView() {
         donaciones = (ImageButton) findViewById(R.id.imbDonaciones);
         voluntarios = (ImageButton) findViewById(R.id.imbVoluntarios);
@@ -36,14 +44,28 @@ public class MainActivity extends DonArToolBar implements View.OnClickListener {
         reportes = (ImageButton) findViewById(R.id.imbReportes);
         id = (TextView)findViewById(R.id.txtId);
         usuario = (TextView) findViewById(R.id.txtUsuario);
+        toolbar = (Toolbar) findViewById(R.id.donArToolBar);
+
+        //setSupportActionBar(toolbar);
+
+
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("HOLA", "HOLA!!");
+                finish();
+            }
+        });
+
 
         donaciones.setOnClickListener(this);
         voluntarios.setOnClickListener(this);
         pacientes.setOnClickListener(this);
         reportes.setOnClickListener(this);
 
-        active = (verificarConexion() && id.getText().toString().compareTo(" ") != 0);
-        //active = true; //SOLO PRUEBA
+        //active = (verificarConexion() && id.getText().toString().compareTo(" ") != 0);
+        active = true; //SOLO PRUEBA
 
         if (active) {
             donaciones.setImageResource(R.mipmap.boton_donaciones);
@@ -58,8 +80,8 @@ public class MainActivity extends DonArToolBar implements View.OnClickListener {
             reportes.setImageResource(R.mipmap.boton_reportes_gris);
         }
 
-        dataChangeToolbar("Pacientes -  Consulta", usuario.getText().toString(),
-                id.getText().toString(), false);
+        dataChangeToolbar(" ", usuario.getText().toString(),
+                id.getText().toString(), (id.getText().toString().compareTo(" ") == 0 )  );
     }
 
     @SuppressLint("SetTextI18n")
@@ -78,7 +100,10 @@ public class MainActivity extends DonArToolBar implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Log.i("ID toolbar", String.valueOf(v.getId()));
+        super.onClick(v);
         Intent intent;
+
         if(active){
             switch(v.getId())
             {
@@ -86,7 +111,7 @@ public class MainActivity extends DonArToolBar implements View.OnClickListener {
                     intent = new Intent(v.getContext(), pacienteSolicitarConsulta.class); //prueba
                     break;
                 case R.id.imbPacientes:
-                    intent = new Intent(v.getContext(), pacienteSolicitarConsulta.class);//prueba
+                    intent = new Intent(v.getContext(), pacientesMain.class);//prueba
                     break;
                 case R.id.imbReportes:
                     intent = new Intent(v.getContext(), pacienteSolicitarConsulta.class);//prueba
@@ -102,5 +127,10 @@ public class MainActivity extends DonArToolBar implements View.OnClickListener {
         else
             intent = new Intent(v.getContext(), registroGeneral.class);
         startActivity(intent);
+    }
+
+
+    private void onMenuCickItemListener(MenuItem mi) {
+        Log.i("EL ID: ", String.valueOf(mi.getItemId()));
     }
 }
