@@ -15,6 +15,13 @@ import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
+//Negocio
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import DonArDato.VoluntarioDTO;
+import Negocio.Voluntario;
+
 public class pacienteAsignarEspecialidad extends AppCompatActivity implements View.OnClickListener {
 
     private TextView id;
@@ -33,8 +40,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
         configView();
     }
 
-    private void configView()
-    {
+    private void configView() {
         id = (TextView) findViewById(R.id.txtIdConsulta);
         nombre = (TextView) findViewById(R.id.txtNombre);
         apellido = (TextView) findViewById(R.id.txtApellido);
@@ -46,6 +52,13 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
         cargarSpinner(especialidad);
         toolbar = (Toolbar) findViewById(R.id.donArToolBar);
         setSupportActionBar(toolbar);
+
+        /**
+         * Testeo de la llamada a la API
+        Voluntario voluntario = new Voluntario();
+        voluntario.obtenerListadoVoluntarios();
+        */
+
     }
 
     /**
@@ -66,7 +79,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
      * @return
      */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_login:
                 Toast.makeText(this, "Hago click en boton login", Toast.LENGTH_SHORT).show();
@@ -92,7 +105,6 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
 
     @Override
     public void onClick(@NotNull View v) {
-        //super.onClick(v);
         switch (v.getId())
         {
             case R.id.btnAsignar:

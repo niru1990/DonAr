@@ -89,7 +89,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
 
     public void loadData(){
         Paciente p = new Paciente();
-        p.getPaciente();
+        p.getListPaciente();
     }
 
     @Override
