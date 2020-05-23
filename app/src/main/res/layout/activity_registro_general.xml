@@ -207,7 +207,7 @@
         app:layout_constraintGuide_begin="10dp" />
 
     <Button
-        android:id="@+id/btnSiguiente1"
+        android:id="@+id/btnSiguiente"
         android:layout_width="285dp"
         android:layout_height="35dp"
         android:text="@string/btnSiguiente"
@@ -217,7 +217,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline12" />
 
     <Button
-        android:id="@+id/btnRegistrarPaciente"
+        android:id="@+id/btnRegistrarPacienteOVoluntarioBasico"
         android:layout_width="285dp"
         android:layout_height="35dp"
         android:text="@string/btnRegistrarse"

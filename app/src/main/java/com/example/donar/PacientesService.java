@@ -22,5 +22,5 @@ public interface PacientesService {
     //Registrar paciente
     String API_ROUTE_ADD_ITEM = "https://donar.azurewebsites.net/api/paciente/registrarPaciente";
     @POST(API_ROUTE_ADD_ITEM)
-    Call<Void> addPaciente(@Body Paciente paciente);
+    Call<Void> addPaciente(@Body PacienteDTO paciente);
 }
