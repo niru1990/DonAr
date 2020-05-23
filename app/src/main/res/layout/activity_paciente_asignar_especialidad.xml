@@ -106,7 +106,7 @@
         android:id="@+id/spnEspecialidad"
         android:layout_width="304dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/btnSolciitar"
+        app:layout_constraintBottom_toTopOf="@+id/btnAsignar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/medtSintomasYMedicamentos" />
@@ -119,6 +119,14 @@
         app:layout_constraintBottom_toTopOf="@+id/spnEspecialidad"
         app:layout_constraintStart_toStartOf="@+id/guideline30"
         app:layout_constraintTop_toBottomOf="@+id/medtSintomasYMedicamentos" />
+
+    <TextView
+        android:id="@+id/txtIdConsulta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="123dp"
+        tools:layout_editor_absoluteY="111dp"
+        tools:visibility="invisible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

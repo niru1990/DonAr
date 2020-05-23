@@ -3,67 +3,64 @@ package com.example.donar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
-public class pacientesHistoriaCLinica extends AppCompatActivity implements View.OnClickListener {
+public class pacientesMain extends DonArToolBar implements View.OnClickListener {
 
-    private ImageButton agregar;
-    private ImageButton cancelar;
-
-    private TextView id;
-    private TextView nombre;
-    private TextView apellido;
-    private EditText detalle;
-
-    private ListView historial;
-
+    private ImageButton historiaClinica;
+    private ImageButton asignarEspecialidad;
+    private ImageButton solicitarConsulta;
     private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pacientes_historia_c_linica);
+        setContentView(R.layout.activity_pacientes_main);
         configView();
     }
 
-    private void configView() {
-        agregar = (ImageButton) findViewById(R.id.imbAgregar);
-        cancelar= (ImageButton) findViewById(R.id.ibmCancelar);
-        nombre = (TextView) findViewById(R.id.txtNombre);
-        apellido = (TextView) findViewById(R.id.txtApellido);
-        id = (TextView) findViewById(R.id.txtIdHistorial);
-        detalle = (EditText) findViewById(R.id.edtDetalle);
-        historial = (ListView) findViewById(R.id.lstHistorial);
-
-        agregar.setOnClickListener(this);
-        cancelar.setOnClickListener(this);
+    private void configView(){
+        asignarEspecialidad = (ImageButton) findViewById(R.id.imbAsignarEspecialidad);
+        historiaClinica = (ImageButton) findViewById(R.id.imbHistoriaClinica);
+        solicitarConsulta = (ImageButton) findViewById(R.id.imbSolicitarConsulta);
+        asignarEspecialidad.setOnClickListener(this);
+        solicitarConsulta.setOnClickListener(this);
+        historiaClinica.setOnClickListener(this);
 
         toolbar = (Toolbar) findViewById(R.id.donArToolBar);
         setSupportActionBar(toolbar);
     }
 
+
     @Override
     public void onClick(@NotNull View v) {
-        switch (v.getId())
-        {
-            case R.id.imbAgregar:
-                break;
-            case R.id.ibmCancelar:
-                break;
-        }
+        Intent intent;
+            switch(v.getId())
+            {
+                case R.id.imbAsignarEspecialidad:
+                    intent = new Intent(v.getContext(), pacienteAsignarEspecialidad.class);
+                    break;
+                case R.id.imbHistoriaClinica:
+                    intent = new Intent(v.getContext(), pacientesHistoriaCLinica.class);
+                    break;
+                case R.id.imbSolicitarConsulta:
+                    intent = new Intent(v.getContext(), pacienteSolicitarConsulta.class);
+                    break;
+                default:
+                    intent = new Intent(v.getContext(), MainActivity.class);
+                    break;
+            }
+        startActivity(intent);
     }
+
 
     /**
      * Aqui creamos las opciones de Menu con el toolbar.
@@ -106,5 +103,4 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }
