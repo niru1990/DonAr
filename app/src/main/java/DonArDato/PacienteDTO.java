@@ -1,27 +1,13 @@
 package DonArDato;
 
-import java.util.Date;
+import java.math.BigInteger;
+import java.util.ArrayList;
 
-public class PacienteDTO {
+public class PacienteDTO extends PersonaDTO{
 
-    private Integer _id;
-    private String _nombre;
-    private String _apellido;
-    private Date _fechaNacimiento;
-    private String _telefono;
+    private BigInteger _idHistoriaClinica;
 
-    public Integer getId() {
-        return this._id;
-    }
-    public void setId(Integer value) {
-        this._id = value;
-    }
-    public String getNombre(){return this._nombre;}
-    public void setNombre(String value){this._nombre = value;}
-    public String getApellido(){return this._apellido;}
-    public void setApellido(String value){this._apellido = value;}
-    public Date getFechaNacimiento(){return this._fechaNacimiento;}
-    public void setFechaNacimiento(Date value){this._fechaNacimiento = value;}
-    public String getTelefono(){return this._telefono;}
-    public void setTelefono(String value){this._telefono = value;}
+    public BigInteger getIdHistoriaClinica(){return this._idHistoriaClinica;}
+    public void setIdHistoriaClinica(BigInteger value){ this._idHistoriaClinica = value;}
+
 }

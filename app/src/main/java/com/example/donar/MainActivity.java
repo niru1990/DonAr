@@ -27,8 +27,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton voluntarios;
     private ImageButton pacientes;
     private ImageButton reportes;
-    boolean active;
     private Toolbar toolbar;
+
+    private boolean active;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
