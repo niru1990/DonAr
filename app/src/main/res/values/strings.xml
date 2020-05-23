@@ -34,5 +34,6 @@
     <string name="action_login">Login</string>
     <string name="action_registro">Registro</string>
     <string name="action_settings">Settings</string>
+    <string name="btnRegistrarse">registrarse</string>
 
 </resources>

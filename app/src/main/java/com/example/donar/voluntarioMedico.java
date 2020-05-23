@@ -9,6 +9,6 @@ public class voluntarioMedico extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_voluntario_medico);
+        setContentView(R.layout.activity_registro_voluntario_medico);
     }
 }

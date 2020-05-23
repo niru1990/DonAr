@@ -63,14 +63,14 @@
         />
 
     <Button
-        android:id="@+id/buttonIniciarSesionGoogle"
+        android:id="@+id/googleButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         android:text="Iniciar sesión con Google"
+        android:textColor="@color/colorPrimaryDark"
         tools:layout_editor_absoluteX="159dp"
         tools:layout_editor_absoluteY="462dp"
-        android:background="#318FC5"
-        android:layout_margin="15dp"
-        />
+        android:drawableLeft="@drawable/common_google_signin_btn_text_light" />
 
 </LinearLayout>

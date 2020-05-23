@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".registroGeneral">
 
     <include layout="@layout/activity_don_ar_tool_bar"></include>
@@ -211,6 +212,18 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/glVTextos"
         app:layout_constraintTop_toTopOf="@+id/guideline12" />
+
+    <Button
+        android:id="@+id/btnRegistrarPaciente"
+        android:layout_width="285dp"
+        android:layout_height="35dp"
+        android:text="@string/btnRegistrarse"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="@+id/glVTextos"
+        app:layout_constraintTop_toTopOf="@+id/guideline12"
+        app:layout_constraintVertical_bias="0.761" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline31"

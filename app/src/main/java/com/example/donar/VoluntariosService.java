@@ -1,40 +1,37 @@
 package com.example.donar;
 
-import java.util.List;
-
+import DonArDato.PacienteDTO;
 import DonArDato.VoluntarioDTO;
+import DonArDato.VoluntarioMedicoDTO;
+import Negocio.Paciente;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface VoluntariosService {
 
-    //Voluntarios basicos o voluntarios no medicos.
-    /**
-     * Definicion de ruta para GET (Read all)
-     */
-    String API_ROUTE_Voluntario= "api/voluntariobasico/{id}";
+    //Get voluntario basico
+    String API_ROUTE_BASICO= "https://donar.azurewebsites.net/api/voluntariobasico/{id}";
+    @GET(API_ROUTE_BASICO)
+    Call<PacienteDTO> getVoluntarioBasico(@Path("id") String id);
 
-    /**
-     * Metodo abstracto para utilizar HTTP.GET
-     * @return PacienteDTO
-     */
-    @GET(API_ROUTE_Voluntario)
-    Call<VoluntarioDTO> getVoluntario(@Path("id") String id);
 
-    /**
-     * Definicion de ruta para GET (Read all)
-     */
-    String API_ROUTE_Voluntarios= "api/voluntariobasico/";
+    //Registrar voluntario basico
+    String API_ROUTE_ADD_ITEM_BASICO = "https://donar.azurewebsites.net/api/paciente/voluntariobasico";
+    @POST(API_ROUTE_ADD_ITEM_BASICO)
+    Call<Void> addVoluntarioBasico(@Body VoluntarioDTO voluntarioBasico);
 
-    /**
-     * Metodo abstracto para utilizar HTTP.GET
-     * @return PacienteDTO
-     */
-    @GET(API_ROUTE_Voluntarios)
-    Call<List<VoluntarioDTO>> getVoluntario();
+    //Get voluntario medico
+    String API_ROUTE_MEDICO= "https://donar.azurewebsites.net/api/voluntariomedico/{id}";
+    @GET(API_ROUTE_MEDICO)
+    Call<PacienteDTO> getVoluntarioMedico(@Path("id") String id);
 
-    //Voluntarios medicos
 
-    //Voluntarios Organizaciones
+    //Registrar voluntario medico
+    String API_ROUTE_ADD_ITEM_MEDICO = "https://donar.azurewebsites.net/api/voluntariomedico";
+    @POST(API_ROUTE_ADD_ITEM_MEDICO)
+    Call<Void> addVoluntarioMedico(@Body VoluntarioMedicoDTO voluntarioMedico);
+
 }

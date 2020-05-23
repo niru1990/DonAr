@@ -1,6 +1,5 @@
 package com.example.donar;
 
-//import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -9,11 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-//import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -83,7 +81,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    @SuppressLint("SetTextI18n")
+    /**
+     * Aqui tenemos las opciones para cada item del menu.
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -147,4 +149,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent = new Intent(v.getContext(), registroGeneral.class);
         startActivity(intent);
     }
+
 }

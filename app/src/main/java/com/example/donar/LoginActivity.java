@@ -2,6 +2,7 @@ package com.example.donar;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mfirebaseAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
@@ -25,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     List<AuthUI.IdpConfig> provider = Arrays.asList(
             new AuthUI.IdpConfig.GoogleBuilder().build()
     );
+
+    Button button = findViewById(R.id.googleButton);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +54,25 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-
-
     }
+
+
+/*
+    final Button buttonVolver = findViewById(R.id.buttonVolver);
+        buttonVolver.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            try {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+    });
+*/
+
 
     @Override
     protected void onResume() {
