@@ -220,7 +220,7 @@
         android:id="@+id/btnRegistrarPaciente"
         android:layout_width="285dp"
         android:layout_height="35dp"
-        android:text="@string/btnRegistrarse"
+        android:text="@string/btnRegistrar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="0.52"

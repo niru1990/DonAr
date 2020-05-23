@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import DonArDato.PacienteDTO;
 import Negocio.Paciente;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,7 +29,7 @@ public class registroGeneral extends AppCompatActivity {
             public void onClick(View v) {
                 try {
 
-                    Paciente paciente = new Paciente();
+                    PacienteDTO paciente = new PacienteDTO();
                     //Log.i("MARCA", marca.getText().toString());
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl("")

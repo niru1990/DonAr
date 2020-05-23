@@ -3,7 +3,6 @@ package com.example.donar;
 import java.util.List;
 
 import DonArDato.PacienteDTO;
-import Negocio.Paciente;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -22,5 +21,5 @@ public interface PacientesService {
     //Registrar paciente
     String API_ROUTE_ADD_ITEM = "https://donar.azurewebsites.net/api/paciente/registrarPaciente";
     @POST(API_ROUTE_ADD_ITEM)
-    Call<Void> addPaciente(@Body Paciente paciente);
+    Call<Void> addPaciente(@Body PacienteDTO paciente);
 }
