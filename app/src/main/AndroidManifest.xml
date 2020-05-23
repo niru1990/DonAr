@@ -12,6 +12,7 @@
         <activity android:name=".pacientesHistoriaCLinica"/>
         <activity android:name=".pacienteAsignarEspecialidad" />
         <activity android:name=".pacienteSolicitarConsulta"/>
+        <activity android:name=".pacientesMain"/>
         <activity android:name=".DonArToolBar" />
         <activity android:name=".voluntariosAutoMach" />
         <activity android:name=".registroHorasVoluntarios" />
