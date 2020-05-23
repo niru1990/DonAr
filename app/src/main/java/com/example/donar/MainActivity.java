@@ -1,34 +1,35 @@
 package com.example.donar;
 
-import androidx.annotation.RequiresApi;
+//import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
+//import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import android.widget.Toast;
 
-public class MainActivity extends DonArToolBar implements View.OnClickListener {
+import org.jetbrains.annotations.NotNull;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageButton donaciones;
     private ImageButton voluntarios;
     private ImageButton pacientes;
     private ImageButton reportes;
-    private TextView id;
-    private TextView usuario;
     boolean active;
     private Toolbar toolbar;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,28 +37,11 @@ public class MainActivity extends DonArToolBar implements View.OnClickListener {
         configView();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void configView() {
         donaciones = (ImageButton) findViewById(R.id.imbDonaciones);
         voluntarios = (ImageButton) findViewById(R.id.imbVoluntarios);
         pacientes = (ImageButton) findViewById(R.id.imbPacientes);
         reportes = (ImageButton) findViewById(R.id.imbReportes);
-        id = (TextView)findViewById(R.id.txtId);
-        usuario = (TextView) findViewById(R.id.txtUsuario);
-        toolbar = (Toolbar) findViewById(R.id.donArToolBar);
-
-        //setSupportActionBar(toolbar);
-
-
-
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("HOLA", "HOLA!!");
-                finish();
-            }
-        });
-
 
         donaciones.setOnClickListener(this);
         voluntarios.setOnClickListener(this);
@@ -80,14 +64,50 @@ public class MainActivity extends DonArToolBar implements View.OnClickListener {
             reportes.setImageResource(R.mipmap.boton_reportes_gris);
         }
 
-        dataChangeToolbar(" ", usuario.getText().toString(),
-                id.getText().toString(), (id.getText().toString().compareTo(" ") == 0 )  );
+        toolbar = (Toolbar) findViewById(R.id.donArToolBar);
+        setSupportActionBar(toolbar);
     }
 
-    @SuppressLint("SetTextI18n")
+    /**
+     * Aqui creamos las opciones de Menu con el toolbar.
+     * @param menu
+     * @return
+     */
     @Override
-    public void dataChangeToolbar(String titulo, String usuario, String idUsuario, boolean verBotones) {
-        super.dataChangeToolbar(titulo, usuario, idUsuario, verBotones);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    /**
+        * Aqui tenemos las opciones para cada item del menu.
+     * @param item
+     * @return
+             */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_login:
+                Toast.makeText(this, "Hago click en boton login", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.action_registro:
+                Toast.makeText(this, "Haglo click en el boton registro", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.action_login_oculto:
+                Toast.makeText(this, "Hago click en boton login oculto", Toast.LENGTH_LONG).show();
+                return true;
+
+            case R.id.action_registro_oculto:
+                Toast.makeText(this, "Haglo click en el boton registro oculto", Toast.LENGTH_LONG).show();
+                return true;
+
+            default:
+                //Aqui la accion del usuario no fue reconocida
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private boolean verificarConexion() {
@@ -99,9 +119,9 @@ public class MainActivity extends DonArToolBar implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NotNull View v) {
         Log.i("ID toolbar", String.valueOf(v.getId()));
-        super.onClick(v);
+        //super.onClick(v);
         Intent intent;
 
         if(active){
@@ -129,8 +149,4 @@ public class MainActivity extends DonArToolBar implements View.OnClickListener {
         startActivity(intent);
     }
 
-
-    private void onMenuCickItemListener(MenuItem mi) {
-        Log.i("EL ID: ", String.valueOf(mi.getItemId()));
-    }
 }
