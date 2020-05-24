@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.ExecutionException;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageButton donaciones;
@@ -39,34 +41,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void configView() {
-        donaciones = (ImageButton) findViewById(R.id.imbDonaciones);
-        voluntarios = (ImageButton) findViewById(R.id.imbVoluntarios);
-        pacientes = (ImageButton) findViewById(R.id.imbPacientes);
-        reportes = (ImageButton) findViewById(R.id.imbReportes);
+        try {
+            if (verificarConexion()) {
+                donaciones = (ImageButton) findViewById(R.id.imbDonaciones);
+                voluntarios = (ImageButton) findViewById(R.id.imbVoluntarios);
+                pacientes = (ImageButton) findViewById(R.id.imbPacientes);
+                reportes = (ImageButton) findViewById(R.id.imbReportes);
 
-        donaciones.setOnClickListener(this);
-        voluntarios.setOnClickListener(this);
-        pacientes.setOnClickListener(this);
-        reportes.setOnClickListener(this);
+                donaciones.setOnClickListener(this);
+                voluntarios.setOnClickListener(this);
+                pacientes.setOnClickListener(this);
+                reportes.setOnClickListener(this);
+                //active = (id.getText().toString().compareTo(" ") != 0);
+                active = true; //SOLO PRUEBA
 
-        //active = (verificarConexion() && id.getText().toString().compareTo(" ") != 0);
-        active = true; //SOLO PRUEBA
+                if (active) {
+                    donaciones.setImageResource(R.mipmap.boton_donaciones);
+                    voluntarios.setImageResource(R.mipmap.boton_voluntarios);
+                    pacientes.setImageResource(R.mipmap.boton_pacientes);
+                    reportes.setImageResource(R.mipmap.boton_reportes);
+                } else {
+                    donaciones.setImageResource(R.mipmap.boton_donaciones_gris);
+                    voluntarios.setImageResource(R.mipmap.boton_voluntarios_gris);
+                    pacientes.setImageResource(R.mipmap.boton_pacientes_gris);
+                    reportes.setImageResource(R.mipmap.boton_reportes_gris);
+                }
 
-        if (active) {
-            donaciones.setImageResource(R.mipmap.boton_donaciones);
-            voluntarios.setImageResource(R.mipmap.boton_voluntarios);
-            pacientes.setImageResource(R.mipmap.boton_pacientes);
-            reportes.setImageResource(R.mipmap.boton_reportes);
+                toolbar = (Toolbar) findViewById(R.id.donArToolBar);
+                setSupportActionBar(toolbar);
+            } else {
+                Intent intent = new Intent(this.getApplicationContext(), sinConexionInternet.class);
+            }
         }
-        else {
-            donaciones.setImageResource(R.mipmap.boton_donaciones_gris);
-            voluntarios.setImageResource(R.mipmap.boton_voluntarios_gris);
-            pacientes.setImageResource(R.mipmap.boton_pacientes_gris);
-            reportes.setImageResource(R.mipmap.boton_reportes_gris);
+        catch (Exception ex)
+        {
+            Log.i("Main error", ex.getMessage());
+            finish();
         }
-
-        toolbar = (Toolbar) findViewById(R.id.donArToolBar);
-        setSupportActionBar(toolbar);
     }
 
     /**
@@ -87,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @return
      */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_login:
                 Toast.makeText(this, "Hago click en boton login", Toast.LENGTH_SHORT).show();
@@ -121,8 +132,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(@NotNull View v) {
-        Log.i("ID toolbar", String.valueOf(v.getId()));
-        //super.onClick(v);
         Intent intent;
 
         if(active){
