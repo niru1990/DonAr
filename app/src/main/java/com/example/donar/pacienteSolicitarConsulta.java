@@ -2,10 +2,17 @@ package com.example.donar;
 import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,16 +20,30 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
+import java.math.BigInteger;
+import java.util.List;
+
+import DonArDato.EventoDTO;
 import Negocio.Paciente;
 import DonArDato.PacienteDTO;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import Negocio.Evento;
 
 public class pacienteSolicitarConsulta extends AppCompatActivity implements View.OnClickListener{
 
     private TextView nombre;
     private TextView apellido;
+    private  TextView telefono;
     private TextView detalle;
+    private TextView sintomas;
     private TextView id;
+    private TextView edad;
     private Button solicitar;
     private Toolbar toolbar;
 
@@ -33,16 +54,41 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
         configView();
     }
 
+    private boolean verificarConexion() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return (networkInfo != null && networkInfo.isConnected());
+    }
+
     private void configView(){
-        nombre = (TextView) findViewById(R.id.txtNombre);
-        apellido = (TextView) findViewById(R.id.txtApellido);
-        detalle = (TextView) findViewById(R.id.medtSintomasYMedicamentos);
-        id = (TextView) findViewById(R.id.txtIdSolicitud);
-        solicitar = (Button) findViewById(R.id.btnSolciitar);
-        solicitar.setOnClickListener(this);
-        loadData();
-        toolbar = (Toolbar) findViewById(R.id.donArToolBar);
-        setSupportActionBar(toolbar);
+        try {
+
+            nombre = (TextView) findViewById(R.id.txtNombre);
+            apellido = (TextView) findViewById(R.id.txtApellido);
+            detalle = (TextView) findViewById(R.id.medtSintomasYMedicamentos);
+            telefono = (TextView) findViewById(R.id.txtTelefono);
+            id = (TextView) findViewById(R.id.txtIdSolicitud);
+            edad = (TextView) findViewById(R.id.txtEdad);
+            sintomas = (TextView) findViewById(R.id.txtSintomasYMedicamentos);
+            solicitar = (Button) findViewById(R.id.btnSolciitar);
+            solicitar.setOnClickListener(this);
+            toolbar = (Toolbar) findViewById(R.id.donArToolBar);
+            setSupportActionBar(toolbar);
+
+            if (verificarConexion()) {
+                loadData();
+            } else {
+                throw new Exception("El dispositivo no cuenta con conexion a internet");
+            }
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this.getApplicationContext(), sinConexionInternet.class );
+            startActivity(intent);
+        }
     }
 
     /**
@@ -88,8 +134,61 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
     }
 
     public void loadData(){
-        Paciente p = new Paciente();
-        p.getListPaciente();
+        try {
+            getUserData();
+        }
+        catch (Exception ex)
+        {
+            Log.i("Consulta - loadData", ex.getMessage());
+            Intent intent = new Intent(this.getApplicationContext(), LoginActivity.class);
+        }
+    }
+
+    private void getUserData() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://donar.azurewebsites.net/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        PacientesService pacientesService = retrofit.create(PacientesService.class);
+
+        Call<PacienteDTO> http_call = pacientesService.getPaciente("0"); ///TODO cambiar el 0 por el id del usuario
+        http_call.enqueue(new Callback<PacienteDTO>() {
+            @Override
+            public void onResponse(Call<PacienteDTO> call, Response<PacienteDTO> response) {
+                try {
+                    if (response.code() == 200) {
+                        if (response.body() != null) {
+                            PacienteDTO paciente = (PacienteDTO) response.body();
+                            nombre.setText(paciente.getNombre());
+                            apellido.setText(paciente.getApellido());
+                            telefono.setText(paciente.getTelefono());
+                            edad.setText(paciente.getEdad());
+                        } else {
+                            Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
+                                    " por favor vuelva a loguearse.");
+                            throw new Exception("No hay usuario logueado");
+                        }
+                    } else {
+                        Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
+                                " por favor vuelva a loguearse.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    try {
+                        throw new Exception(ex.getMessage());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PacienteDTO> call, Throwable t) {
+                Log.e("CALL API FAIL", "Hubo un problema al llamar a la API.");
+            }
+        });
     }
 
     @Override
@@ -105,8 +204,94 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
         }
     }
 
-
     private void guardar(){
         //Acá va el SAVE
+        EventoDTO e = formToObject();
+        if(validar(e)) {
+            sintomas.setTextColor(Color.BLACK);
+            save(e);
+        }
+        else
+        {
+            Toast.makeText(this, "Es necesario cargar los campos obligatorios",
+                    Toast.LENGTH_SHORT).show();
+            sintomas.setTextColor(Color.RED);
+        }
+    }
+
+    /**
+     * Convierto los datos del formulario en un objeto de tipo EventoDTO
+     * @return EventoDTO
+     */
+    @NotNull
+    private EventoDTO formToObject(){
+        EventoDTO e = new EventoDTO();
+        e.setId(BigInteger.valueOf(0));
+        //e.setIdPaciente();//Poner acá el id del usuario
+        e.setSintomas(detalle.getText().toString());
+        return e;
+    }
+
+    /**
+     * Validación por reglas de negocio y campos necesarios.
+     * @param eventoDTO
+     * @return boolean
+     */
+    private boolean validar(EventoDTO eventoDTO){
+        Evento event = new Evento();
+        return event.validar(eventoDTO, false);
+    }
+
+    private void save(EventoDTO event){
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://us-central1-be-tp3-a.cloudfunctions.net/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            EventoServices eventoServices = retrofit.create(EventoServices.class);
+            Call<Void> http_call = eventoServices.addEvento(event);
+
+            http_call.enqueue(new Callback<Void>() {
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    try {
+                        if (response.isSuccessful()) {
+                            String message = "";
+                            if (response.isSuccessful())
+                                message = "Su solicitud de consulta fue generada exitosamente";
+                            else
+                                message = "Ocurrio algo inesperado.";
+
+                            Toast.makeText(pacienteSolicitarConsulta.this
+                                    , message
+                                    , Toast.LENGTH_SHORT).show();
+                            limpiar();
+                        }
+                    } catch (Exception ex) {
+                        try {
+                            throw new Exception(ex.getMessage());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                public void onFailure(Call<Void> call, Throwable t) {
+                    Toast.makeText(pacienteSolicitarConsulta.this,
+                            "Hubo un error con la llamada a la API",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        catch (Exception ex){
+
+        }
+    }
+
+    /**
+     * Limpia los campos del formulario
+     */
+    private void limpiar() {
+        this.detalle.setText("");
     }
 }
