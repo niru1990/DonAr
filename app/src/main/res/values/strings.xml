@@ -16,7 +16,9 @@
     <string name="txtSintomasYMedicamentos">Sintomas y medicamentos: </string>
     <string name="txtDetalle">Detalle: </string>
     <string name="txtEdad">Edad: </string>
-
+    <string name="txtSinInternet1">Por el momento no cuenta con internet</string>
+    <string name="txtSinInternet2">para realizar esta acción.</string>
+    <string name="txtSinInternet3">Por favor intente mas tarde</string>
     <!-- Botones -->
     <string name="btnRegistrar">Registrar</string>
     <string name="btnSiguiente">Siguiente</string>
