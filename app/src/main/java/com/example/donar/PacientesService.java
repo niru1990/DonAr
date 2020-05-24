@@ -3,7 +3,6 @@ package com.example.donar;
 import java.util.List;
 
 import DonArDato.PacienteDTO;
-import Negocio.Paciente;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

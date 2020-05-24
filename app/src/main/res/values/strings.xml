@@ -19,11 +19,13 @@
     <string name="txtHorarioIngreso">Horario de ingreso </string>
     <string name="txtHorarioSalida">Horarios de salida</string>
 
+    <string name="txtEdad">Edad: </string>
 
     <!-- Botones -->
     <string name="btnRegistrar">Registrar</string>
     <string name="btnSiguiente">Siguiente</string>
     <string name="btnRegistro">Registrate</string>
+
     <string name="btnLogin">Login</string>
     <string name="btnSolicitar">Solicitar</string>
     <string name="btnSAsignar">Asignar</string>

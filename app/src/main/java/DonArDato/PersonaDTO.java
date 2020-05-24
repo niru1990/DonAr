@@ -10,21 +10,16 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class PersonaDTO {
+import Negocio.Usuario;
 
-    private BigInteger _id;
+public class PersonaDTO extends UsuarioDTO {
+
     private String _nombre;
     private String _apellido;
     private Date _fechaNacimiento;
     private String _telefono;
     private Integer _edad;
 
-    public BigInteger getId() {
-        return this._id;
-    }
-    public void setId(BigInteger value) {
-        this._id = value;
-    }
     public String getNombre(){return this._nombre;}
     public void setNombre(String value){this._nombre = value;}
     public String getApellido(){return this._apellido;}

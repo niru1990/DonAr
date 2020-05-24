@@ -81,7 +81,7 @@
     <Button
         android:id="@+id/btnSolciitar"
         android:layout_width="285dp"
-        android:layout_height="35dp"
+        android:layout_height="45dp"
         android:text="@string/btnSolicitar"
         app:layout_constraintBottom_toBottomOf="@+id/include"
         app:layout_constraintEnd_toEndOf="parent"
@@ -110,5 +110,13 @@
         tools:layout_editor_absoluteX="119dp"
         tools:layout_editor_absoluteY="100dp"
         tools:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/txtEdad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txtEdad"
+        app:layout_constraintStart_toStartOf="@+id/guideline37"
+        app:layout_constraintTop_toTopOf="@+id/guideline39" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
