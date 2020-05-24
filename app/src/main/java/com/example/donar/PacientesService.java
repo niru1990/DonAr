@@ -13,13 +13,14 @@ public interface PacientesService {
 
 
     //Get paciente
-    String API_ROUTE= "https://donar.azurewebsites.net/api/paciente/read/{id}";
+    String API_ROUTE= "api/evento/getPaciente/{id}";
     @GET(API_ROUTE)
     Call<PacienteDTO> getPaciente(@Path("id") String id);
 
 
     //Registrar paciente
-    String API_ROUTE_ADD_ITEM = "https://donar.azurewebsites.net/api/paciente/registrarPaciente";
+    String API_ROUTE_ADD_ITEM = "api/evento/registrarPaciente";
     @POST(API_ROUTE_ADD_ITEM)
     Call<Void> addPaciente(@Body PacienteDTO paciente);
+
 }

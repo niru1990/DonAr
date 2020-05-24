@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".sinConexionInternet"></activity>
+        <activity android:name=".sinConexionInternet"/>
         <activity android:name=".pacientesHistoriaCLinica" />
         <activity android:name=".pacienteAsignarEspecialidad" />
         <activity android:name=".pacienteSolicitarConsulta" />

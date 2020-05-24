@@ -100,7 +100,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
     <EditText
-        android:id="@+id/edtTipoVoluntario"
+        android:id="@+id/edtApellido"
         android:layout_width="285dp"
         android:layout_height="35dp"
         android:ems="10"
