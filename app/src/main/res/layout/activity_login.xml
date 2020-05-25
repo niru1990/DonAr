@@ -50,27 +50,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
-      -->
-    <Button
-        android:id="@+id/buttonIniciarSesion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Iniciar sesión"
-        tools:layout_editor_absoluteX="159dp"
-        tools:layout_editor_absoluteY="462dp"
-        android:background="#33cc5a"
-        android:layout_margin="15dp"
-        />
+
 
     <Button
-        android:id="@+id/googleButton"
+        android:id="@+id/sign_in_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
+        android:drawableLeft="@drawable/common_google_signin_btn_text_light"
         android:text="Iniciar sesión con Google"
         android:textColor="@color/colorPrimaryDark"
         tools:layout_editor_absoluteX="159dp"
-        tools:layout_editor_absoluteY="462dp"
-        android:drawableLeft="@drawable/common_google_signin_btn_text_light" />
+        tools:layout_editor_absoluteY="462dp" />
+        -->
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
