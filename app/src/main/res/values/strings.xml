@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DonAr</string>
     <!-- TextViews -->
-    <string name="txtTipoVoluntario">Tipo: </string>
+    <string name="txtTipoVoluntario">¿Qué tipo de usuario sos? </string>
     <string name="txtNombre">Nombre: </string>
     <string name="txtApellido">Apellido: </string>
     <string name="txtDNI">DNI: </string>
