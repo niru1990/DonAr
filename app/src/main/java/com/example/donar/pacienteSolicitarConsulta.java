@@ -152,26 +152,21 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
 
         PacientesService pacientesService = retrofit.create(PacientesService.class);
 
-        Call<PacienteDTO> http_call = pacientesService.getPaciente("0"); ///TODO cambiar el 0 por el id del usuario
+        Call<PacienteDTO> http_call = pacientesService.getPaciente("0"); ///TODO cambiar el 0 por el id del usuario desde el xml
         http_call.enqueue(new Callback<PacienteDTO>() {
             @Override
             public void onResponse(Call<PacienteDTO> call, Response<PacienteDTO> response) {
                 try {
-                    if (response.code() == 200) {
-                        if (response.body() != null) {
-                            PacienteDTO paciente = (PacienteDTO) response.body();
-                            nombre.setText(paciente.getNombre());
-                            apellido.setText(paciente.getApellido());
-                            telefono.setText(paciente.getTelefono());
-                            edad.setText(paciente.getEdad());
-                        } else {
-                            Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
-                                    " por favor vuelva a loguearse.");
-                            throw new Exception("No hay usuario logueado");
-                        }
+                    if (response.body() != null) {
+                        PacienteDTO paciente = (PacienteDTO) response.body();
+                        nombre.setText(paciente.getNombre());
+                        apellido.setText(paciente.getApellido());
+                        telefono.setText(paciente.getTelefono());
+                        edad.setText(paciente.getEdad());
                     } else {
                         Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
                                 " por favor vuelva a loguearse.");
+                        throw new Exception("No hay usuario logueado");
                     }
                 }
                 catch (Exception ex)

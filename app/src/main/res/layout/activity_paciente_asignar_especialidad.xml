@@ -128,5 +128,14 @@
         tools:layout_editor_absoluteY="111dp"
         tools:visibility="invisible" />
 
+    <TextView
+        android:id="@+id/txtIdPaciente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        tools:layout_editor_absoluteX="136dp"
+        tools:layout_editor_absoluteY="111dp"
+        tools:visibility="invisible" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

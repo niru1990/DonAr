@@ -11,7 +11,7 @@ public class Evento {
         if(datos.getSintomas().equals(""))
             valido = false;
 
-        if(tieneEspecialidad && datos.getIdEspecialidad() == null)
+        if(tieneEspecialidad && datos.getIdEspecialidad() == null || datos.getIdEspecialidad() <= 0)
             valido = false;
 
         return valido;

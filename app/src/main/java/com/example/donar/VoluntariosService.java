@@ -13,24 +13,24 @@ import retrofit2.http.Path;
 public interface VoluntariosService {
 
     //Get voluntario basico
-    String API_ROUTE_BASICO= "api/evento/getVoluntarioBasico/{id}";
+    String API_ROUTE_BASICO= "api/voluntariobasico/{id}";
     @GET(API_ROUTE_BASICO)
     Call<PacienteDTO> getVoluntarioBasico(@Path("id") String id);
 
 
     //Registrar voluntario basico
-    String API_ROUTE_ADD_ITEM_BASICO = "api/evento/registrarVoluntarioBasico";
+    String API_ROUTE_ADD_ITEM_BASICO = "api/paciente/voluntariobasico";
     @POST(API_ROUTE_ADD_ITEM_BASICO)
     Call<Void> addVoluntarioBasico(@Body VoluntarioDTO voluntarioBasico);
 
     //Get voluntario medico
-    String API_ROUTE_MEDICO= "api/evento/getVoluntarioMedico/{id}";
+    String API_ROUTE_MEDICO= "api/voluntariomedico/{id}";
     @GET(API_ROUTE_MEDICO)
     Call<PacienteDTO> getVoluntarioMedico(@Path("id") String id);
 
 
     //Registrar voluntario medico
-    String API_ROUTE_ADD_ITEM_MEDICO = "api/evento/registrarVoluntarioMedico";
+    String API_ROUTE_ADD_ITEM_MEDICO = "api/voluntariomedico";
     @POST(API_ROUTE_ADD_ITEM_MEDICO)
     Call<Void> addVoluntarioMedico(@Body VoluntarioMedicoDTO voluntarioMedico);
 
