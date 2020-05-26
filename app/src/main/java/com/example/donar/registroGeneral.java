@@ -27,8 +27,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class registroGeneral extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
     private Spinner spinnerTipoUsuario;
-    EditText campoNombre,campoApellido,campoDNI,campoMail,campoTelefono,campoPassword,campoEdad;
-    Button botonRegistrarse, botonSiguiente;
+    private EditText campoNombre,campoApellido,campoDNI,campoMail,campoTelefono,campoPassword,campoEdad;
+    private Button botonRegistrarse, botonSiguiente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +55,16 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         campoMail = (EditText) findViewById(R.id.edtMail);
         campoPassword = (EditText) findViewById(R.id.edtPassword);
 
+        botonRegistrarse = (Button) findViewById(R.id.btnRegistrarPacienteOVoluntarioBasico);
+        botonRegistrarse.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(@NotNull View v) {
         Log.i("ID toolbar", String.valueOf(v.getId()));
-        Intent intent;
+        //Intent intent;
         Spinner spinner = findViewById(R.id.spnTipoVoluntario);
-
 
         switch(v.getId())
         {
@@ -73,7 +74,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                 PacienteDTO paciente = new PacienteDTO();
 
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://donar.azurewebsites.net/api/paciente")
+                        .baseUrl("https://donar.azurewebsites.net/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
@@ -99,7 +100,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
 
                 VoluntarioDTO voluntarioBasico = new VoluntarioDTO();
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://donar.azurewebsites.net/api/voluntariobasico")
+                        .baseUrl("https://donar.azurewebsites.net/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
@@ -121,23 +122,17 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                 });
             }
 
-                intent = new Intent(v.getContext(), MainActivity.class);
                 break;
 
             case R.id.btnSiguiente:
-                guardarPreferencias();
-                intent = new Intent(v.getContext(), registroMedico.class);
-                break;
-
-            default:
-                intent = new Intent(v.getContext(), registroGeneral.class);
+                guardarPreferencias(v);
                 break;
         }
-        startActivity(intent);
+        //startActivity(intent);
     }
 
 
-    private void guardarPreferencias() {
+    private void guardarPreferencias(View v) {
 
         SharedPreferences preferencias = getSharedPreferences
                 ("Datos usuario general", Context.MODE_PRIVATE);
@@ -159,6 +154,8 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         editor.putString("telefono",telefono);
 
         editor.commit();
+        Intent intent = new Intent(v.getContext(), registroMedico.class);
+        startActivity(intent);
     }
 
     @Override
