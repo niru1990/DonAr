@@ -19,11 +19,11 @@
     <string name="txtSinInternet1">Por el momento no cuenta con internet</string>
     <string name="txtSinInternet2">para realizar esta acción.</string>
     <string name="txtSinInternet3">Por favor intente mas tarde</string>
+
     <!-- Botones -->
     <string name="btnRegistrar">Registrar</string>
     <string name="btnSiguiente">Siguiente</string>
     <string name="btnRegistro">Registrate</string>
-
     <string name="btnLogin">Login</string>
     <string name="btnSolicitar">Solicitar</string>
     <string name="btnSAsignar">Asignar</string>
@@ -38,5 +38,7 @@
     <string name="action_login">Login</string>
     <string name="action_registro">Registro</string>
     <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
+    <string name="vacio"> </string>
 
 </resources>
