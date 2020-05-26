@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- "Item menu para nombre de usuario", aparece en el toolbar si tiene espacio -->
+    <item
+        android:id="@+id/action_logout"
+        android:title="@string/vacio"
+        app:showAsAction="ifRoom"/>
+    <!--android:icon="@drawable/ic_launcher_foreground"-->
+
+    <!-- Tambien pueden tenerlo oculto a menos que se deplieguen las opciones (app:showAsAction="never") -->
+    <!-- LOGOUT -->
+    <item android:id="@+id/action_logout_oculto"
+        android:title="@string/action_logout"
+        app:showAsAction="never"/>
+
+</menu>
