@@ -3,48 +3,49 @@ package DonArDato;
 import androidx.annotation.Nullable;
 
 import java.math.BigInteger;
-import java.util.Date;
 
 public class EventoDTO {
 
-    private BigInteger _id;
-    private BigInteger _idPaciente;
-    private Date _fecha;
-    private String _sintomas;
+    private BigInteger id;
+    private BigInteger PacienteId;
+    //private String Fecha;
+    private String Sintomas;
+    private boolean Seguimiento;
     @Nullable
-    private BigInteger _idVoluntarioMedico;
-    private BigInteger _idVoluntario;
-    private Integer _idEspecialidad;
+    private BigInteger VoluntarioMedicoId;
+    private BigInteger VoluntarioBasicoId;
+    private Integer EspecialidadId;
 
     public BigInteger getId() {
-        return this._id;
+        return this.id;
     }
     public void setId(BigInteger value) {
-        this._id = value;
+        this.id = value;
     }
-    public Date getFecha(){return this._fecha;}
-    public void setFecha(Date value){this._fecha = value;}
-    public BigInteger getIdPaciente() {
-        return this._idPaciente;
+    //public String getFecha(){return this.Fecha;}
+    //public void setFecha(String value){this.Fecha = value;}
+    public BigInteger getPacienteId() {
+        return this.PacienteId;
     }
-    public void setIdPaciente(BigInteger value) {
-        this._idPaciente = value;
+    public void setPacienteId(BigInteger value) {
+        this.PacienteId = value;
     }
-    public String getSintomas(){return this._sintomas;}
-    public void setSintomas(String sintomas){this._sintomas = sintomas;}
+    public String getSintomas(){return this.Sintomas;}
+    public void setSintomas(String sintomas){this.Sintomas = sintomas;}
     public BigInteger getidVoluntario() {
-        return this._idVoluntario;
+        return this.VoluntarioBasicoId;
     }
     public void setidVoluntario(@Nullable BigInteger value) {
-        this._idVoluntario = value;
+        this.VoluntarioBasicoId = value;
     }
     public BigInteger getidVoluntarioMedico() {
-        return this._idVoluntarioMedico;
+        return this.VoluntarioMedicoId;
     }
-    public void setidVoluntarioMedico(@Nullable BigInteger value) {this._idVoluntarioMedico = value;}
-    public Integer getIdEspecialidad() {
-        return this._idEspecialidad;
+    public void setidVoluntarioMedico(@Nullable BigInteger value) {this.VoluntarioMedicoId = value;}
+    public Integer getEspecialidadId() {
+        return this.EspecialidadId;
     }
-    public void setIdEspecialidad(@Nullable Integer value) { this._idEspecialidad = value;}
+    public void setEspecialidadId(@Nullable Integer value) { this.EspecialidadId = value;}
+    public void setSeguimiento(boolean value ){ this.Seguimiento = value;}
 
 }
