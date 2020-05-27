@@ -1,18 +1,17 @@
 package com.example.donar;
 import androidx.appcompat.widget.Toolbar;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,13 +19,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
 import java.math.BigInteger;
-import java.util.List;
+import java.util.Date;
 
 import DonArDato.EventoDTO;
-import Negocio.Paciente;
 import DonArDato.PacienteDTO;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -150,19 +147,19 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        //PacientesService pacientesService = retrofit.create(PacientesService.class);
         PacientesService pacientesService = retrofit.create(PacientesService.class);
-
-        Call<PacienteDTO> http_call = pacientesService.getPaciente("0"); ///TODO cambiar el 0 por el id del usuario desde el xml
+        Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico("1"); ///TODO cambiar el 1 por el id del usuario desde el xml
         http_call.enqueue(new Callback<PacienteDTO>() {
             @Override
             public void onResponse(Call<PacienteDTO> call, Response<PacienteDTO> response) {
                 try {
                     if (response.body() != null) {
                         PacienteDTO paciente = (PacienteDTO) response.body();
-                        nombre.setText(paciente.getNombre());
-                        apellido.setText(paciente.getApellido());
-                        telefono.setText(paciente.getTelefono());
-                        edad.setText(paciente.getEdad());
+                        nombre.setText( nombre.getText() +"\n"+ paciente.getNombre());
+                        //apellido.setText(apellido.getText() +"\n"+ paciente.getApellido());
+                        telefono.setText(telefono.getText() +"\n"+ paciente.getTelefono());
+                        edad.setText(edad.getText() +"\n"+  Integer.valueOf(paciente.getEdad()).toString() );
                     } else {
                         Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
                                 " por favor vuelva a loguearse.");
@@ -221,9 +218,19 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
     @NotNull
     private EventoDTO formToObject(){
         EventoDTO e = new EventoDTO();
-        e.setId(BigInteger.valueOf(0));
-        //e.setIdPaciente();//Poner acá el id del usuario
+
+        Date d = new Date();
+        CharSequence s  = DateFormat.format("MMMM d, yyyy ", d.getTime());
+
+        e.setId(BigInteger.valueOf(0)); ///TODO: Revisar con Kevin si le mando un 0 o que
+        e.setPacienteId(BigInteger.valueOf(1));///TODO: Poner acá el id del usuario tomandolo del XML
         e.setSintomas(detalle.getText().toString());
+        e.setFecha(s.toString());
+        e.setEspecialidadId(null);
+        e.setidVoluntarioMedico(null);
+        e.setidVoluntario(null);
+        e.setSeguimiento(false);
+
         return e;
     }
 
@@ -279,7 +286,9 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
             });
         }
         catch (Exception ex){
-
+            Toast.makeText(this,
+                    "Ocurrio un error, por favor contacte al responsable de sistemas",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
