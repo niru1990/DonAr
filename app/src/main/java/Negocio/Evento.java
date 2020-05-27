@@ -2,6 +2,8 @@ package Negocio;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigInteger;
+
 import DonArDato.EventoDTO;
 
 public class Evento {
@@ -10,8 +12,16 @@ public class Evento {
         boolean valido = true;
         if(datos.getSintomas().equals(""))
             valido = false;
+        if(tieneEspecialidad && datos.getEspecialidadId() == null || datos.getEspecialidadId() <= 0)
+                valido = false;
+        if (tieneEspecialidad && datos.getidVoluntario() != BigInteger.valueOf(0))
+            valido = false;
+            return valido;
+    }
 
-        if(tieneEspecialidad && datos.getIdEspecialidad() == null || datos.getIdEspecialidad() <= 0)
+    public boolean validar(@NotNull EventoDTO datos){
+        boolean valido = true;
+        if(datos.getSintomas().equals(""))
             valido = false;
 
         return valido;
