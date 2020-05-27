@@ -225,7 +225,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
         e.setId(BigInteger.valueOf(0)); ///TODO: Revisar con Kevin si le mando un 0 o que
         e.setPacienteId(BigInteger.valueOf(1));///TODO: Poner acá el id del usuario tomandolo del XML
         e.setSintomas(detalle.getText().toString());
-        e.setFecha(s.toString());
+        //e.setFecha(s.toString());
         e.setEspecialidadId(null);
         e.setidVoluntarioMedico(null);
         e.setidVoluntario(null);
@@ -241,7 +241,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
      */
     private boolean validar(EventoDTO eventoDTO){
         Evento event = new Evento();
-        return event.validar(eventoDTO, false);
+        return event.validar(eventoDTO);
     }
 
     private void save(EventoDTO event){
