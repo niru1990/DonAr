@@ -23,4 +23,9 @@ public interface PacientesService {
     @POST(API_ROUTE_ADD_ITEM)
     Call<Void> addPaciente(@Body PacienteDTO paciente);
 
+    //Get paciente
+    String API_ROUTE_GET_ESPECIFIC= "api/Paciente/{id}";
+    @GET(API_ROUTE_GET_ESPECIFIC)
+    Call<PacienteDTO> getPacienteEspecifico(@Path("id") String id);
+
 }
