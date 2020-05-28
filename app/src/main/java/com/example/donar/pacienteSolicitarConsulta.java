@@ -247,7 +247,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
     private void save(EventoDTO event){
         try {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://us-central1-be-tp3-a.cloudfunctions.net/")
+                    .baseUrl("https://donar.azurewebsites.net/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
@@ -268,6 +268,13 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
                                     , message
                                     , Toast.LENGTH_SHORT).show();
                             limpiar();
+                        }
+                        else
+                        {
+                            Log.i(((Integer) response.code()).toString(), "No fue posible guardar la consulta, " +
+                                    "por favor intente mas tarde");
+                            throw new Exception("No fue posible guardar la consulta, " +
+                                    "por favor intente mas tarde");
                         }
                     } catch (Exception ex) {
                         try {

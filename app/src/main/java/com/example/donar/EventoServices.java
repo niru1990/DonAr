@@ -15,7 +15,7 @@ import retrofit2.http.Path;
 public interface EventoServices {
 
     //Registrar eventos
-    String API_ROUTE_ADD_ITEM = "api/evento/registrarEvento";
+    String API_ROUTE_ADD_ITEM = "api/evento/";
     @POST(API_ROUTE_ADD_ITEM)
     Call<Void> addEvento(@Body EventoDTO evento);
 
