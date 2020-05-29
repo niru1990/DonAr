@@ -18,6 +18,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutionException;
@@ -53,21 +55,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 pacientes.setOnClickListener(this);
                 reportes.setOnClickListener(this);
                 //active = (id.getText().toString().compareTo(" ") != 0);
-                active = true; //SOLO PRUEBA
+                active = isSignedIn(); //SOLO PRUEBA
 
                 if (active) {
                     donaciones.setImageResource(R.mipmap.boton_donaciones);
                     voluntarios.setImageResource(R.mipmap.boton_voluntarios);
                     pacientes.setImageResource(R.mipmap.boton_pacientes);
                     reportes.setImageResource(R.mipmap.boton_reportes);
+
                 } else {
                     donaciones.setImageResource(R.mipmap.boton_donaciones_gris);
                     voluntarios.setImageResource(R.mipmap.boton_voluntarios_gris);
                     pacientes.setImageResource(R.mipmap.boton_pacientes_gris);
                     reportes.setImageResource(R.mipmap.boton_reportes_gris);
+                    toolbar = (Toolbar) findViewById(R.id.donArToolBar);
                 }
 
-                toolbar = (Toolbar) findViewById(R.id.donArToolBar);
                 setSupportActionBar(toolbar);
             } else {
                 Intent intent = new Intent(this.getApplicationContext(), sinConexionInternet.class);
@@ -99,13 +102,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     @Override
     public boolean onOptionsItemSelected(@NotNull MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.action_login:
                 Toast.makeText(this, "Hago click en boton login", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
                 return true;
 
             case R.id.action_registro:
-                Toast.makeText(this, "Haglo click en el boton registro", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Hago click en el boton registro", Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.action_login_oculto:
@@ -128,6 +134,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
         return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    private boolean isSignedIn() {
+        return GoogleSignIn.getLastSignedInAccount(this) != null;
     }
 
     @Override
