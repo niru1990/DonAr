@@ -20,6 +20,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutionException;
@@ -31,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton pacientes;
     private ImageButton reportes;
     private Toolbar toolbar;
-
     private boolean active;
 
 
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 pacientes.setOnClickListener(this);
                 reportes.setOnClickListener(this);
                 //active = (id.getText().toString().compareTo(" ") != 0);
-                active = isSignedIn(); //SOLO PRUEBA
+                active = isSignedIn();
 
                 if (active) {
                     donaciones.setImageResource(R.mipmap.boton_donaciones);
@@ -68,9 +71,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     voluntarios.setImageResource(R.mipmap.boton_voluntarios_gris);
                     pacientes.setImageResource(R.mipmap.boton_pacientes_gris);
                     reportes.setImageResource(R.mipmap.boton_reportes_gris);
-                    toolbar = (Toolbar) findViewById(R.id.donArToolBar);
-                }
 
+                }
+                toolbar = (Toolbar) findViewById(R.id.donArToolBar);
                 setSupportActionBar(toolbar);
             } else {
                 Intent intent = new Intent(this.getApplicationContext(), sinConexionInternet.class);
@@ -91,7 +94,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        if(isSignedIn()) {
+            getMenuInflater().inflate(R.menu.toolbar_menu2, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        }
         return true;
     }
 
@@ -121,6 +128,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_registro_oculto:
                 Toast.makeText(this, "Haglo click en el boton registro oculto", Toast.LENGTH_LONG).show();
                 return true;
+            case R.id.action_cerrarSesion:
+                Toast.makeText(this, "Haglo click en el boton cerrar sesión", Toast.LENGTH_LONG).show();
+                signOut();
+                return true;
 
             default:
                 //Aqui la accion del usuario no fue reconocida
@@ -138,6 +149,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private boolean isSignedIn() {
         return GoogleSignIn.getLastSignedInAccount(this) != null;
+    }
+
+    private void signOut() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.
+                Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                build();
+
+        GoogleSignInClient googleSignInClient=GoogleSignIn.getClient(this,gso);
+        googleSignInClient.signOut();
+        finish();
+        startActivity(getIntent());
     }
 
     @Override
