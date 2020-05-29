@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -47,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
             SharedPreferences preferences = getSharedPreferences("ID usuario",Context.MODE_PRIVATE);
+        setContentView(R.layout.activity_login);
 
             String ID = preferences.getString("ID","No existe un ID pituin");
 
@@ -90,33 +94,20 @@ public class LoginActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             Intent intent = new Intent (LoginActivity.this, MainActivity.class);
             startActivity(intent);
-
         }catch (ApiException e){
             Log.w("Error", "signInResult:failed code="+e.getStatusCode());
         }
     }
 
-
     private void saveID(String ID){
 
         SharedPreferences preferencias = getSharedPreferences
-                    ("ID usuario", Context.MODE_PRIVATE);
+                ("ID usuario", Context.MODE_PRIVATE);
 
-            SharedPreferences.Editor editor = preferencias.edit();
-            editor.putString("ID",ID);
-            editor.commit();
-
-    }
-
-    /*
-    private void cargarIDTest(){
-SharedPreferences preferences = getSharedPreferences("ID usuario",Context.MODE_PRIVATE);
-
-String ID = preferences.getString("ID","No existe un ID pituin");
-
- txtID.setText(ID);
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString("ID",ID);
+        editor.commit();
 
     }
-*/
 
 }
