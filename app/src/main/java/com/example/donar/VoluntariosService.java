@@ -19,7 +19,7 @@ public interface VoluntariosService {
 
 
     //Registrar voluntario basico
-    String API_ROUTE_ADD_ITEM_BASICO = "api/paciente/voluntariobasico";
+    String API_ROUTE_ADD_ITEM_BASICO = "api/voluntariobasico";
     @POST(API_ROUTE_ADD_ITEM_BASICO)
     Call<Void> addVoluntarioBasico(@Body VoluntarioDTO voluntarioBasico);
 

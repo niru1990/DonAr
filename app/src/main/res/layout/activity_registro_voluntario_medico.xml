@@ -152,6 +152,7 @@
         android:layout_height="35dp"
         android:layout_marginTop="296dp"
         android:text="@string/btnRegistrarse"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.462"
         app:layout_constraintStart_toStartOf="parent"

@@ -11,13 +11,6 @@ import retrofit2.http.Path;
 
 public interface PacientesService {
 
-
-    //Get paciente
-    String API_ROUTE= "api/evento/getPaciente/{id}";
-    @GET(API_ROUTE)
-    Call<PacienteDTO> getPaciente(@Path("id") String id);
-
-
     //Registrar paciente
     String API_ROUTE_ADD_ITEM = "api/evento/registrarPaciente";
     @POST(API_ROUTE_ADD_ITEM)

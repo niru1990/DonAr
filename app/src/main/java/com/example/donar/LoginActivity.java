@@ -27,7 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
-    TextView txtID;
+    //TextView txtID;
 
     FirebaseAuth.AuthStateListener mAuthListener;
     @SuppressLint("WrongViewCast")
@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        txtID = findViewById(R.id.txtID);
+        //txtID = findViewById(R.id.txtID);
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if(acct!=null){
 
@@ -49,12 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             saveID(personId);
 
 
-            SharedPreferences preferences = getSharedPreferences("ID usuario",Context.MODE_PRIVATE);
-        setContentView(R.layout.activity_login);
 
-            String ID = preferences.getString("ID","No existe un ID pituin");
-
-            txtID.setText(ID);
         }
 
         googleButton = (SignInButton) findViewById(R.id.sign_in_button);
