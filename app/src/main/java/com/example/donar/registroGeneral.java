@@ -27,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class registroGeneral extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
     private Spinner spinnerTipoUsuario;
-    private EditText campoNombre,campoApellido,campoDNI,campoMail,campoTelefono,campoPassword,campoEdad;
+    private EditText campoNombre,campoApellido,campoDNI,campoMail,campoTelefono,campoNacionalidad,campoEdad;
     private Button botonRegistrarse, botonSiguiente;
 
     @Override
@@ -53,10 +53,13 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         campoDNI = (EditText) findViewById(R.id.edtDNI);
         campoTelefono = (EditText) findViewById(R.id.edtTelefono);
         campoMail = (EditText) findViewById(R.id.edtMail);
-        campoPassword = (EditText) findViewById(R.id.edtPassword);
+        campoNacionalidad = (EditText) findViewById(R.id.edtNacionalidad);
 
         botonRegistrarse = (Button) findViewById(R.id.btnRegistrarPacienteOVoluntarioBasico);
+        botonSiguiente = (Button) findViewById(R.id.btnSiguiente);
+
         botonRegistrarse.setOnClickListener(this);
+        botonSiguiente.setOnClickListener(this);
     }
 
 
@@ -128,11 +131,11 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                 guardarPreferencias(v);
                 break;
         }
-        //startActivity(intent);
+
     }
 
 
-    private void guardarPreferencias(View v) {
+    public void guardarPreferencias(View v) {
 
         SharedPreferences preferencias = getSharedPreferences
                 ("Datos usuario general", Context.MODE_PRIVATE);
@@ -143,7 +146,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         String DNI = campoDNI.getText().toString();
         String telefono = campoTelefono.getText().toString();
         String mail = campoMail.getText().toString();
-        String password = campoPassword.getText().toString();
+        String password = campoNacionalidad.getText().toString();
 
 
         SharedPreferences.Editor editor = preferencias.edit();

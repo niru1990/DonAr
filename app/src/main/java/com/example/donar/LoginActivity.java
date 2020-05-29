@@ -1,14 +1,16 @@
 package com.example.donar;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -20,13 +22,13 @@ import com.google.firebase.auth.FirebaseAuth;
 
 
 
-
 public class LoginActivity extends AppCompatActivity {
-    FirebaseAuth mfirebaseAuth;
+
+    TextView txtID;
+
     FirebaseAuth.AuthStateListener mAuthListener;
     @SuppressLint("WrongViewCast")
     SignInButton googleButton;
-    public static final int REQUEST_CODE = 777;
     int RC_SIGN_IN = 0;
     GoogleSignInClient GoogleSignInClient;
 
@@ -35,6 +37,21 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        txtID = findViewById(R.id.txtID);
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if(acct!=null){
+
+            String personId = acct.getId();
+            saveID(personId);
+
+
+            SharedPreferences preferences = getSharedPreferences("ID usuario",Context.MODE_PRIVATE);
+
+            String ID = preferences.getString("ID","No existe un ID pituin");
+
+            txtID.setText(ID);
+        }
 
         googleButton = (SignInButton) findViewById(R.id.sign_in_button);
         googleButton.setOnClickListener(new View.OnClickListener() {
@@ -73,9 +90,33 @@ public class LoginActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             Intent intent = new Intent (LoginActivity.this, MainActivity.class);
             startActivity(intent);
+
         }catch (ApiException e){
             Log.w("Error", "signInResult:failed code="+e.getStatusCode());
         }
     }
+
+
+    private void saveID(String ID){
+
+        SharedPreferences preferencias = getSharedPreferences
+                    ("ID usuario", Context.MODE_PRIVATE);
+
+            SharedPreferences.Editor editor = preferencias.edit();
+            editor.putString("ID",ID);
+            editor.commit();
+
+    }
+
+    /*
+    private void cargarIDTest(){
+SharedPreferences preferences = getSharedPreferences("ID usuario",Context.MODE_PRIVATE);
+
+String ID = preferences.getString("ID","No existe un ID pituin");
+
+ txtID.setText(ID);
+
+    }
+*/
 
 }

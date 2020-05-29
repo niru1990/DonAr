@@ -1,141 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".pacienteAsignarEspecialidad">
+    android:layout_height="wrap_content"
+    tools:context=".pacienteAsignarEspecialidad"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/include"
         layout="@layout/activity_don_ar_tool_bar"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"></include>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline30"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="50dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline37"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="205dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline38"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="360dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"></include>
 
     <TextView
         android:id="@+id/txtNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="@string/txtNombre"
-        app:layout_constraintBottom_toTopOf="@+id/guideline39"
-        app:layout_constraintStart_toStartOf="@+id/guideline30"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/include"
+        app:layout_constraintEnd_toStartOf="@+id/txtIdPaciente"
+        app:layout_constraintHorizontal_bias="0.562"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.001"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/txtApellido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/txtApellido"
-        app:layout_constraintBottom_toTopOf="@+id/guideline39"
-        app:layout_constraintStart_toStartOf="@+id/guideline37"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/include"
+        android:layout_marginTop="10dp"/>
 
+    tools:layout_editor_absoluteX="51dp"
     <TextView
         android:id="@+id/txtTelefono"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/txtTelefono"
-        app:layout_constraintStart_toStartOf="@+id/guideline30"
-        app:layout_constraintTop_toTopOf="@+id/guideline39" />
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:id="@+id/txtSintomasYMedicamentos"
-        android:layout_width="173dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/txtSintomasYMedicamentos"
-        app:layout_constraintStart_toStartOf="@+id/guideline30"
-        app:layout_constraintTop_toTopOf="@+id/guideline40" />
+        android:layout_marginTop="10dp"
+        />
 
     <EditText
         android:id="@+id/medtSintomasYMedicamentos"
-        android:layout_width="304dp"
+        android:layout_width="match_parent"
         android:layout_height="251dp"
-        android:ems="10"
-        android:gravity="start|top"
         android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/include"
-        app:layout_constraintTop_toBottomOf="@+id/txtSintomasYMedicamentos" />
+        android:layout_marginTop="10dp" />
 
-    <Button
-        android:id="@+id/btnAsignar"
-        android:layout_width="285dp"
-        android:layout_height="35dp"
-        android:text="@string/btnSAsignar"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medtSintomasYMedicamentos" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline39"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="180dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline40"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="225dp" />
-
-    <Spinner
-        android:id="@+id/spnEspecialidad"
-        android:layout_width="304dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/btnAsignar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/medtSintomasYMedicamentos" />
 
     <TextView
         android:id="@+id/txtEspecialidad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/txtEspecialidad"
-        app:layout_constraintBottom_toTopOf="@+id/spnEspecialidad"
-        app:layout_constraintStart_toStartOf="@+id/guideline30"
+        android:paddingTop="10dp"
+        />
+
+    <Spinner
+        android:id="@+id/spnEspecialidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAsignar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/medtSintomasYMedicamentos" />
 
     <TextView
         android:id="@+id/txtIdConsulta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="123dp"
-        tools:layout_editor_absoluteY="111dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtTelefono"
+        tools:layout_editor_absoluteY="130dp"
         tools:visibility="invisible" />
 
     <TextView
         android:id="@+id/txtIdPaciente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
         android:text=" "
-        tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="111dp"
         tools:visibility="invisible" />
 
+    <Button
+        android:id="@+id/btnAsignar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:text="@string/btnSAsignar"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

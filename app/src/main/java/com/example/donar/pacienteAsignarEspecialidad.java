@@ -149,11 +149,13 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
     }
 
     private EventoDTO formToObject() {
+
+
         EventoDTO event = new EventoDTO();
         event.setId(BigInteger.valueOf(Long.parseLong(id.getText().toString())));
-        event.setIdPaciente(BigInteger.valueOf(Long.parseLong(idPaciente.getText().toString())));
+        event.setPacienteId(BigInteger.valueOf(Long.parseLong(idPaciente.getText().toString())));
         //event.getidVoluntario();//Tomarlo del Xml
-        event.setIdEspecialidad(espinerValue.getIdEspecialidad());
+        event.setEspecialidadId(espinerValue.getEspecialidadId());
         event.setidVoluntarioMedico(null);
         event.setSintomas(sintomas.getText().toString());
         return event;
@@ -171,7 +173,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
 
                 EventoServices eventos =retrofit.create(EventoServices.class);
                 ///TODO cambiar a base del endpoint
-                Call<Void> http_call = eventos.updateEvento(event.getId(), event.getIdEspecialidad());;
+                Call<Void> http_call = eventos.updateEvento(event.getId(), event.getEspecialidadId());;
 
                 http_call.enqueue(new Callback<Void>() {
                     @Override
@@ -257,6 +259,9 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                         }
                     }
                 }
+
+
+
 
                 @Override
                 public void onFailure(Call<List<EspecialidadDTO>> call, Throwable t) {
