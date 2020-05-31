@@ -33,5 +33,7 @@ public interface EventoServices {
     Call<EventoDTO> getEventoById(@Path("id") String id);
 
     //Obtener eventos
-
+    String API_ROUT_GET_EVENTS = "api/evento";
+    @GET(API_ROUT_GET_EVENTS)
+    Call<EventoDTO> getEventos();
 }

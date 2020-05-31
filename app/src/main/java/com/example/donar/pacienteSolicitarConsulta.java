@@ -1,8 +1,10 @@
 package com.example.donar;
 import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -43,6 +45,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
     private TextView edad;
     private Button solicitar;
     private Toolbar toolbar;
+    private String idPacient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +64,6 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
 
     private void configView(){
         try {
-
             nombre = (TextView) findViewById(R.id.txtNombre);
             apellido = (TextView) findViewById(R.id.txtApellido);
             detalle = (TextView) findViewById(R.id.medtSintomasYMedicamentos);
@@ -142,45 +144,66 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
     }
 
     private void getUserData() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://donar.azurewebsites.net/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://donar.azurewebsites.net/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
-        //PacientesService pacientesService = retrofit.create(PacientesService.class);
-        PacientesService pacientesService = retrofit.create(PacientesService.class);
-        Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico("1"); ///TODO cambiar el 1 por el id del usuario desde el xml
-        http_call.enqueue(new Callback<PacienteDTO>() {
-            @Override
-            public void onResponse(Call<PacienteDTO> call, Response<PacienteDTO> response) {
-                try {
-                    if (response.body() != null) {
-                        PacienteDTO paciente = (PacienteDTO) response.body();
-                        nombre.setText( nombre.getText() +"\n"+ paciente.getNombre());
-                        //apellido.setText(apellido.getText() +"\n"+ paciente.getApellido());
-                        telefono.setText(telefono.getText() +"\n"+ paciente.getTelefono());
-                        edad.setText(edad.getText() +"\n"+  Integer.valueOf(paciente.getEdad()).toString() );
-                    } else {
-                        Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
-                                " por favor vuelva a loguearse.");
-                        throw new Exception("No hay usuario logueado");
-                    }
-                }
-                catch (Exception ex)
-                {
+            SharedPreferences preferencias = getSharedPreferences
+                    ("ID usuario", Context.MODE_PRIVATE);
+
+
+            idPacient = preferencias.getString("ID", "0");
+
+            if(idPacient.equals("0")) {
+                throw new Exception("Es necesario volver a loguearse.");
+            }
+
+            PacientesService pacientesService = retrofit.create(PacientesService.class);
+
+            //Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico(idPacient);
+
+            Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico("1");
+            http_call.enqueue(new Callback<PacienteDTO>() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onResponse(Call<PacienteDTO> call, Response<PacienteDTO> response) {
                     try {
-                        throw new Exception(ex.getMessage());
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        if (response.body() != null) {
+                            PacienteDTO paciente = (PacienteDTO) response.body();
+                            nombre.setText(nombre.getText() + "\n" + paciente.getNombre());
+                            //apellido.setText(apellido.getText() +"\n"+ paciente.getApellido());
+                            telefono.setText(telefono.getText() + "\n" + paciente.getTelefono());
+                            edad.setText(edad.getText() + "\n" + Integer.valueOf(paciente.getEdad()).toString());
+                        } else {
+                            Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
+                                    " por favor vuelva a loguearse.");
+                            throw new Exception("No hay usuario logueado");
+                        }
+                    } catch (Exception ex) {
+                        try {
+                            throw new Exception(ex.getMessage());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<PacienteDTO> call, Throwable t) {
-                Log.e("CALL API FAIL", "Hubo un problema al llamar a la API.");
-            }
-        });
+                @Override
+                public void onFailure(Call<PacienteDTO> call, Throwable t) {
+                    Log.e("CALL API FAIL", "Hubo un problema al llamar a la API.");
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(this.getApplicationContext(),
+                    "Ocurrio un error, por favor vuelva a loguearse"
+                    , Toast.LENGTH_LONG).show();
+            Intent i = new Intent(this.getApplicationContext(), LoginActivity.class);
+            startActivity(i);
+        }
     }
 
     @Override
@@ -223,7 +246,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
         CharSequence s  = DateFormat.format("MMMM d, yyyy ", d.getTime());
 
         e.setId(BigInteger.valueOf(0)); ///TODO: Revisar con Kevin si le mando un 0 o que
-        e.setPacienteId(BigInteger.valueOf(1));///TODO: Poner acá el id del usuario tomandolo del XML
+        e.setPacienteId( new BigInteger(idPacient) );
         e.setSintomas(detalle.getText().toString());
         //e.setFecha(s.toString());
         e.setEspecialidadId(null);

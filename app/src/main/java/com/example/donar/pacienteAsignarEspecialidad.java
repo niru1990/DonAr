@@ -6,7 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.EventLog;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,16 +22,15 @@ import android.widget.Toast;
 import org.jetbrains.annotations.NotNull;
 
 //Negocio
-import java.lang.reflect.Array;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import DonArDato.EspecialidadDTO;
 import DonArDato.EventoDTO;
-import DonArDato.VoluntarioDTO;
+import DonArDato.PacienteDTO;
 import Negocio.Evento;
-import Negocio.Voluntario;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,8 +44,9 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
     private TextView nombre;
     private TextView apellido;
     private TextView telefono;
-    private EditText sintomas;
+    private TextView edad;
     private TextView especialidadText;
+    private EditText sintomas;
     private Spinner especialidad;
     private Button asignar;
     private Toolbar toolbar;
@@ -66,18 +66,22 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
         nombre = (TextView) findViewById(R.id.txtNombre);
         apellido = (TextView) findViewById(R.id.txtApellido);
         telefono = (TextView) findViewById(R.id.txtTelefono);
+        edad = (TextView) findViewById(R.id.txtEdad);
+        especialidadText = (TextView) findViewById(R.id.txtEspecialidad);
         sintomas = (EditText) findViewById(R.id.medtSintomasYMedicamentos);
         especialidad = (Spinner) findViewById(R.id.spnEspecialidad);
-        especialidadText = (TextView) findViewById(R.id.txtEspecialidad);
         asignar = (Button) findViewById(R.id.btnAsignar);
         asignar.setOnClickListener(this);
-        cargarSpinner(especialidad);
+
+        loadData();
+        /*
         especialidad.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 espinerValue = (EventoDTO) parent.getSelectedItem();
             }
         });
+         */
         toolbar = (Toolbar) findViewById(R.id.donArToolBar);
         setSupportActionBar(toolbar);
 
@@ -89,6 +93,19 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
 
     }
 
+    private void loadData(){
+        try {
+            //cargarSpinner(especialidad);
+            //Obtener evento y cargarlo. Esto obliga a obtener el paciente.
+            getEvento();
+            //getPacienteData(idPaciente.getText().toString());
+        }
+        catch (Exception ex) {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
     /**
      * Aqui creamos las opciones de Menu con el toolbar.
      * @param menu
@@ -97,7 +114,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        getMenuInflater().inflate(R.menu.toolbar_menu_logueado, menu);
         return true;
     }
 
@@ -149,8 +166,6 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
     }
 
     private EventoDTO formToObject() {
-
-
         EventoDTO event = new EventoDTO();
         event.setId(BigInteger.valueOf(Long.parseLong(id.getText().toString())));
         event.setPacienteId(BigInteger.valueOf(Long.parseLong(idPaciente.getText().toString())));
@@ -260,9 +275,6 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                     }
                 }
 
-
-
-
                 @Override
                 public void onFailure(Call<List<EspecialidadDTO>> call, Throwable t) {
                     Toast.makeText(pacienteAsignarEspecialidad.this,
@@ -276,6 +288,110 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
             Toast.makeText(this,
                     "Por favor verifique si su conexion con internet",
                     Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void getEvento() throws Exception {
+        try {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://donar.azurewebsites.net/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            EventoServices eventoServices = retrofit.create(EventoServices.class);
+            //String idEvento = getIntent().getStringExtra("idEvento");
+            //Call<EventoDTO> http_call = eventoServices.getEventoById(idEvento);
+            Call<EventoDTO> http_call = eventoServices.getEventoById("1");//TODO: Modificar despues de hacer el automach
+            http_call.enqueue(new Callback<EventoDTO>() {
+                @Override
+                public void onResponse(Call<EventoDTO> call, Response<EventoDTO> response){
+                    try {
+                        if(response.code() == 200){
+                            if(response.isSuccessful() && response.body() != null) {
+                                EventoDTO event = (EventoDTO)response.body();
+                                idPaciente.setText(event.getPacienteId().toString());
+
+                                Log.i("idPaciente", idPaciente.getText().toString());
+
+                                idPaciente.setVisibility(View.INVISIBLE);
+                                sintomas.setText(event.getSintomas());
+
+                                //Handler
+                            }
+                        }
+                        else {
+                            throw new Exception((Integer.valueOf(response.code())).toString() +
+                                    ": error " + response.message());
+                        }
+                    }
+                    catch (Exception ex) {
+                        Log.e("errors", ex.getMessage());
+                    }
+                }
+
+
+                @Override
+                public void onFailure(Call<EventoDTO> call, Throwable t) {
+                    Log.i("error123", "ocurrio un errro al llamar a la API");
+                    Toast.makeText(pacienteAsignarEspecialidad.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    //apellido.setText(t.getMessage());
+                }
+            });
+
+        }
+        catch (Exception ex){
+            Log.i("errorCall", "ocurrio un errro al llamar a la API");
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    private void getPacienteData(String paciente) {
+        try {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://donar.azurewebsites.net/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            //PacientesService pacientesService = retrofit.create(PacientesService.class);
+            PacientesService pacientesService = retrofit.create(PacientesService.class);
+            Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico(paciente); ///TODO cambiar el 1 por el id del usuario desde el xml
+            http_call.enqueue(new Callback<PacienteDTO>() {
+                @Override
+                public void onResponse(Call<PacienteDTO> call, Response<PacienteDTO> response) {
+                    try {
+                        if (response.body() != null) {
+                            PacienteDTO paciente = (PacienteDTO) response.body();
+                            nombre.setText( nombre.getText() +"\n"+ paciente.getNombre());
+                            //apellido.setText(apellido.getText() +"\n"+ paciente.getApellido());
+                            telefono.setText(telefono.getText() +"\n"+ paciente.getTelefono());
+                            edad.setText(edad.getText() +"\n"+  Integer.valueOf(paciente.getEdad()).toString() );
+                        } else {
+                            Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
+                                    " por favor vuelva a loguearse.");
+                            throw new Exception("No hay usuario logueado");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        try {
+                            throw new Exception(ex.getMessage());
+                        } catch (Exception e) {
+                                e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PacienteDTO> call, Throwable t) {
+                    Log.e("CALL API FAIL", "Hubo un problema al llamar a la API.");
+                }
+            });
+        }
+        catch (Exception ex){
+            Log.i("error", "ocurrio un errro al llamar a la API");
         }
     }
 }
