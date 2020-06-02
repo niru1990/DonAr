@@ -105,7 +105,7 @@
 
     <Spinner
         android:id="@+id/spnEspecialidad"
-        android:layout_width="304dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/btnAsignar"
         app:layout_constraintEnd_toEndOf="parent"

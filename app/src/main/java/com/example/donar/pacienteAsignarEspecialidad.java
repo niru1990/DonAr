@@ -87,6 +87,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
         miAdaptador = new SpinnerAdaptor(pacienteAsignarEspecialidad.this, misEspecialidades);
         especialidad.setAdapter(miAdaptador);
 
+        //Asigno accion al onclick
         especialidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -100,28 +101,13 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                //NADA, ABSOLUTAMENTE NADA
             }
         });
-
-        /*
-        especialidad.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                espinerValue = (EventoDTO) parent.getSelectedItem();
-            }
-        });
-         */
 
         //Toolbar
         toolbar = (Toolbar) findViewById(R.id.donArToolBar);
         setSupportActionBar(toolbar);
-
-        /**
-         * Testeo de la llamada a la API
-        Voluntario voluntario = new Voluntario();
-        voluntario.obtenerListadoVoluntarios();
-        */
 
     }
 
@@ -197,6 +183,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
         }
     }
 
+    @NotNull
     private EventoDTO formToObject() {
         EventoDTO event = new EventoDTO();
         event.setId(BigInteger.valueOf(Long.parseLong(id.getText().toString())));
@@ -266,27 +253,33 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
 
     private void cargarSpinner(Spinner spinner){
         try {
+            //Creo llamada
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://donar.azurewebsites.net/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-
             EspecialidadServices especialidadServices = retrofit.create(EspecialidadServices.class);
-
             Call<List<EspecialidadDTO>> http_call = especialidadServices.getEspecialidades();
+            //Encolo llamda
             http_call.enqueue(new Callback<List<EspecialidadDTO>>() {
                 @SuppressLint("ResourceType")
                 @Override
                 public void onResponse(Call<List<EspecialidadDTO>> call, Response<List<EspecialidadDTO>> response) {
                     try {
-                        if (response.body() != null) {
+                        //Trabajo con la respuesta
+                        if (response.body() != null && response.code() == 200) {
+                            //Cargo valor señuelo para saber si asigno lo que corresponde
                             misEspecialidades.add(new SpinnerItem("0", "Seleccione..." ));
-                            for(EspecialidadDTO esp: response.body())
-                            {
-                                String texto = esp.getEspecialidad();
+                            //Cargo mi lista con valores de la tabla
+                            for(EspecialidadDTO esp: response.body()) {
                                 misEspecialidades.add(new SpinnerItem(esp.getId(),
                                         esp.getEspecialidad()));
                             }
+                            //Aviso al adaptor que se actualizo la información
+                            miAdaptador.notifyDataSetChanged();
+                        }
+                        else {
+                            throw new Exception("codigo de respuesta: " + response.code());
                         }
                     }
                     catch (Exception ex)
@@ -294,7 +287,8 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                         Log.e("Cargar especialidades", ex.getMessage());
                         try {
                             throw new Exception(ex.getMessage());
-                        } catch (Exception e) {
+                        }
+                        catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
