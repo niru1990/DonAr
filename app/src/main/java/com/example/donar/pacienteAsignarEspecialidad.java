@@ -6,13 +6,11 @@ import androidx.appcompat.widget.Toolbar;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -25,11 +23,12 @@ import org.jetbrains.annotations.NotNull;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
+import Adapters.SpinnerAdaptor;
 import DonArDato.EspecialidadDTO;
 import DonArDato.EventoDTO;
 import DonArDato.PacienteDTO;
+import DonArDato.SpinnerItem;
 import Negocio.Evento;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,7 +50,11 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
     private Button asignar;
     private Toolbar toolbar;
 
-    private EventoDTO espinerValue;
+    private String idEspecialidad;
+
+    //Listado para el spinner
+    private ArrayList<SpinnerItem> misEspecialidades = new ArrayList<>();
+    private SpinnerAdaptor miAdaptador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,8 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
     }
 
     private void configView() {
+
+        //Textos
         id = (TextView) findViewById(R.id.txtIdConsulta);
         idPaciente = (TextView) findViewById(R.id.txtIdPaciente);
         nombre = (TextView) findViewById(R.id.txtNombre);
@@ -69,11 +74,36 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
         edad = (TextView) findViewById(R.id.txtEdad);
         especialidadText = (TextView) findViewById(R.id.txtEspecialidad);
         sintomas = (EditText) findViewById(R.id.medtSintomasYMedicamentos);
-        especialidad = (Spinner) findViewById(R.id.spnEspecialidad);
+        //Boton
         asignar = (Button) findViewById(R.id.btnAsignar);
         asignar.setOnClickListener(this);
 
+
+        //Conseguir la información
         loadData();
+
+        //Spinner y adaptor
+        especialidad = (Spinner) findViewById(R.id.spnEspecialidad);
+        miAdaptador = new SpinnerAdaptor(pacienteAsignarEspecialidad.this, misEspecialidades);
+        especialidad.setAdapter(miAdaptador);
+
+        especialidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                SpinnerItem clickItem = (SpinnerItem) parent.getItemAtPosition(position);
+                idEspecialidad = clickItem.getIdData();
+                String eds = clickItem.getDescriptionData();
+                Toast.makeText(pacienteAsignarEspecialidad.this,
+                        "La especialidad seleccionada fue: " + eds,
+                        Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         /*
         especialidad.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -82,6 +112,8 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
             }
         });
          */
+
+        //Toolbar
         toolbar = (Toolbar) findViewById(R.id.donArToolBar);
         setSupportActionBar(toolbar);
 
@@ -95,9 +127,9 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
 
     private void loadData(){
         try {
-            //cargarSpinner(especialidad);
+            cargarSpinner(especialidad);
             //Obtener evento y cargarlo. Esto obliga a obtener el paciente.
-            getEvento();
+//            getEvento();
             //getPacienteData(idPaciente.getText().toString());
         }
         catch (Exception ex) {
@@ -170,7 +202,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
         event.setId(BigInteger.valueOf(Long.parseLong(id.getText().toString())));
         event.setPacienteId(BigInteger.valueOf(Long.parseLong(idPaciente.getText().toString())));
         //event.getidVoluntario();//Tomarlo del Xml
-        event.setEspecialidadId(espinerValue.getEspecialidadId());
+        event.setEspecialidadId(Integer.valueOf(idEspecialidad));
         event.setidVoluntarioMedico(null);
         event.setSintomas(sintomas.getText().toString());
         return event;
@@ -233,7 +265,6 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
     }
 
     private void cargarSpinner(Spinner spinner){
-
         try {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://donar.azurewebsites.net/")
@@ -249,19 +280,13 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                 public void onResponse(Call<List<EspecialidadDTO>> call, Response<List<EspecialidadDTO>> response) {
                     try {
                         if (response.body() != null) {
-                            ArrayList<EspecialidadDTO> especialidadesDto = new ArrayList<EspecialidadDTO>();
-                            EspecialidadDTO ed = new EspecialidadDTO();
-                            ed.setId(0);
-                            ed.setEspecialidad("Seleccione una especialidad.");
-                            especialidadesDto.add(ed);
-                            for (EspecialidadDTO e : response.body()) {
-                                especialidadesDto.add(e);
+                            misEspecialidades.add(new SpinnerItem("0", "Seleccione..." ));
+                            for(EspecialidadDTO esp: response.body())
+                            {
+                                String texto = esp.getEspecialidad();
+                                misEspecialidades.add(new SpinnerItem(esp.getId(),
+                                        esp.getEspecialidad()));
                             }
-
-                            ArrayAdapter<EspecialidadDTO> addapter = new ArrayAdapter(getApplicationContext(),
-                                    android.R.layout.simple_spinner_item,
-                                    especialidadesDto);
-                            especialidad.setAdapter(addapter);
                         }
                     }
                     catch (Exception ex)
@@ -300,9 +325,9 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                     .build();
 
             EventoServices eventoServices = retrofit.create(EventoServices.class);
-            //String idEvento = getIntent().getStringExtra("idEvento");
-            //Call<EventoDTO> http_call = eventoServices.getEventoById(idEvento);
-            Call<EventoDTO> http_call = eventoServices.getEventoById("1");//TODO: Modificar despues de hacer el automach
+            String idEvento = getIntent().getStringExtra("idEvento");
+            Call<EventoDTO> http_call = eventoServices.getEventoById(idEvento);
+            //Call<EventoDTO> http_call = eventoServices.getEventoById("1");//TODO: Modificar despues de hacer el automach
             http_call.enqueue(new Callback<EventoDTO>() {
                 @Override
                 public void onResponse(Call<EventoDTO> call, Response<EventoDTO> response){

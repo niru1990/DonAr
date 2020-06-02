@@ -2,11 +2,11 @@ package DonArDato;
 
 public class EspecialidadDTO {
 
-    private Integer _id;
-    private String _especialidad;
+    private String id;
+    private String nombre;
 
-    public Integer getId(){return  this._id;}
-    public String getEspecialidad(){return this._especialidad;}
-    public void setId(Integer id){this._id = id;}
-    public void setEspecialidad(String especialidad){this._especialidad = especialidad;}
+    public String getId(){return  this.id;}
+    public String getEspecialidad(){return this.nombre;}
+    public void setId(String id){this.id = id;}
+    public void setEspecialidad(String especialidad){this.nombre = especialidad;}
 }

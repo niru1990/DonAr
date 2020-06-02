@@ -1,6 +1,7 @@
 package com.example.donar;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import DonArDato.EventoDTO;
 import DonArDato.PacienteDTO;
@@ -31,6 +32,12 @@ public interface EventoServices {
     String API_ROUTE_GET_BY_ID = "api/evento/{id}";
     @GET(API_ROUTE_GET_BY_ID)
     Call<EventoDTO> getEventoById(@Path("id") String id);
+
+
+    //Obtener evento por id de voluntario
+    String API_ROUTE_GET_BY_VoluntarioID = "api/evento/{id}";
+    @GET(API_ROUTE_GET_BY_VoluntarioID)
+    Call<List<EventoDTO>> getEventoByVoluntarioId(@Path("id") String id);
 
     //Obtener eventos
     String API_ROUT_GET_EVENTS = "api/evento";

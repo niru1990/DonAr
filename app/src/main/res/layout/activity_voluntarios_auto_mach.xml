@@ -11,11 +11,15 @@
         layout="@layout/activity_don_ar_tool_bar"></include>
 
     <ListView
-        android:layout_width="328dp"
+        android:id="@+id/listaPacientes"
+        android:layout_width="match_parent"
         android:layout_height="514dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline28" />
+        app:layout_constraintTop_toTopOf="@+id/guideline28" >
+
+
+    </ListView>
 
     <TextView
         android:id="@+id/txtPacientes"
