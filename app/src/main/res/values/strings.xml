@@ -5,7 +5,7 @@
     <string name="txtNombre">Nombre: </string>
     <string name="txtApellido">Apellido: </string>
     <string name="txtDNI">DNI: </string>
-    <string name="txtMail">Mail: </string>
+    <string name="txtMail">E_mail: </string>
     <string name="txtTelefono">Telefono: </string>
     <string name="txtMatricula">Matricula: </string>
     <string name="txtEspecialidad">Especialidad: </string>

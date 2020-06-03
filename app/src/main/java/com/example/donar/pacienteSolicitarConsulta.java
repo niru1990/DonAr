@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -37,13 +38,7 @@ import Negocio.Evento;
 
 public class pacienteSolicitarConsulta extends AppCompatActivity implements View.OnClickListener{
 
-    private TextView nombre;
-    private TextView apellido;
-    private  TextView telefono;
-    private TextView detalle;
-    private TextView sintomas;
-    private TextView id;
-    private TextView edad;
+    private TextView nombre,  apellido,  telefono,  detalle,  sintomas, id,  edad, email;
     private Button solicitar;
     private Toolbar toolbar;
     private String idPacient;
@@ -69,6 +64,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
             apellido = (TextView) findViewById(R.id.txtApellido);
             detalle = (TextView) findViewById(R.id.medtSintomasYMedicamentos);
             telefono = (TextView) findViewById(R.id.txtTelefono);
+            email = (TextView) findViewById(R.id.txtEmail);
             id = (TextView) findViewById(R.id.txtIdSolicitud);
             edad = (TextView) findViewById(R.id.txtEdad);
             sintomas = (TextView) findViewById(R.id.txtSintomasYMedicamentos);
@@ -177,6 +173,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
                             apellido.setText(apellido.getText() +"\n"+ paciente.getApellidoPaciente());
                             telefono.setText(telefono.getText() + "\n" + paciente.getTelefonoPaciente());
                             edad.setText(edad.getText() + "\n" + Integer.valueOf(paciente.getEdad()).toString());
+                            email.setText(email.getText() + "\n" + paciente.getEmail());
                         } else {
                             Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
                                     " por favor vuelva a loguearse.");
