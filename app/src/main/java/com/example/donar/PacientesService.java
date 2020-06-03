@@ -2,12 +2,15 @@ package com.example.donar;
 
 import java.util.List;
 
+import DonArDato.PacienteConsultaDTO;
 import DonArDato.PacienteDTO;
+import DonArDato.PacienteConsultaDTO;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+
 
 public interface PacientesService {
 
@@ -20,5 +23,9 @@ public interface PacientesService {
     String API_ROUTE_GET_ESPECIFIC= "api/Paciente/{id}";
     @GET(API_ROUTE_GET_ESPECIFIC)
     Call<PacienteDTO> getPacienteEspecifico(@Path("id") String id);
+
+
+    @GET(API_ROUTE_GET_ESPECIFIC)
+    Call<PacienteConsultaDTO> getPacienteEspecifico2(@Path("id") String id);
 
 }
