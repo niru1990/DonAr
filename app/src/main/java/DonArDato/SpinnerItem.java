@@ -9,7 +9,7 @@ public class SpinnerItem {
         this.idData = idData;
         this.descriptionData = descriptionData;
     }
-
+//
     public String getIdData(){return this.idData;}
     public String getDescriptionData(){return this.descriptionData;}
 }

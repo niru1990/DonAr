@@ -48,8 +48,6 @@ public class LoginActivity extends AppCompatActivity {
             String personId = acct.getId();
             saveID(personId);
 
-
-
         }
 
         googleButton = (SignInButton) findViewById(R.id.sign_in_button);
@@ -65,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("749769909165-eu682b4ak518svj464drdevub29ak00j.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
         GoogleSignInClient = GoogleSignIn.getClient(this, gso);

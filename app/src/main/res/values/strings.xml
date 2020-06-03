@@ -25,7 +25,7 @@
     <string name="txtSinInternet3">Por favor intente mas tarde</string>
 
     <!-- Botones -->
-    <string name="btnRegistrar">Registrar</string>
+    <string name="btnRegistrar">Registrarse</string>
     <string name="btnSiguiente">Siguiente</string>
     <string name="btnRegistro">Registrate</string>
 
@@ -46,6 +46,18 @@
     <string name="action_logout">Logout</string>
     <string name="vacio"> </string>
     <string name="btnRegistrarse">Registrarse</string>
+
+    <!-- Validaciones formulario -->
+    <string name="nombre_invalido">Por favor, inserte un nombre válido.</string>
+    <string name="telefono_invalido">Por favor, inserte un número de teléfono válido.</string>
+    <string name="TyC_invalido">Debe aceptar los términos y condiciones.</string>
+    <string name="apellido_invalido">Por favor, inserte su apellido.</string>
+    <string name="edad_invalida">Por favor, ingrese su edad.</string>
+    <string name="DNI_invalido">Por favor, inserte su DNI.</string>
+    <string name="tipo_usuario_invalido">Por favor, seleccione un tipo de usuario.</string>
+    <string name="txtNacionalidad">Nacionalidad</string>
+    <string name="txtProvincia">Provincia</string>
+    <string name="txtLocalidad">Localidad</string>
 
 
 </resources>

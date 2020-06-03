@@ -4,23 +4,34 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-import Negocio.Usuario;
-
-public class PersonaDTO extends UsuarioDTO {
+public class PersonaRegistroDTO extends UsuarioDTO {
 
     private String _nombre;
     private String _apellido;
+    private Integer DNI;
     private Date _fechaNacimiento;
     private String _telefono;
     private Integer _edad;
     private String _provincia;
     private String _localidad;
+
+    public PersonaRegistroDTO(String _nombre, String _apellido, Integer DNI, String _telefono , String _provincia, String _localidad) {
+        this._nombre = _nombre;
+        this._apellido = _apellido;
+        this.DNI = DNI;
+        this._telefono = _telefono;
+        this._provincia = _provincia;
+        this._localidad = _localidad;
+    }
+
+    public PersonaRegistroDTO(){
+
+    }
 
     public String getNombre(){return this._nombre;}
     public void setNombre(String value){this._nombre = value;}
@@ -39,6 +50,9 @@ public class PersonaDTO extends UsuarioDTO {
 
     public String get_localidad() { return _localidad; }
     public void set_localidad(String _localidad) { this._localidad = _localidad; }
+
+    public Integer getDNI() { return DNI; }
+    public void setDNI(Integer DNI) { this.DNI = DNI; }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setEdad(){

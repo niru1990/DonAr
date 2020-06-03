@@ -14,4 +14,5 @@ public interface EspecialidadServices {
     String API_ROUTE_BASICO= "api/especialidad/";
     @GET(API_ROUTE_BASICO)
     Call<List<EspecialidadDTO>> getEspecialidades();
+
 }
