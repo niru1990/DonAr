@@ -26,6 +26,7 @@ import java.math.BigInteger;
 import java.util.Date;
 
 import DonArDato.EventoDTO;
+import DonArDato.PacienteConsultaDTO;
 import DonArDato.PacienteDTO;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -154,7 +155,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
                     ("ID usuario", Context.MODE_PRIVATE);
 
 
-            idPacient = preferencias.getString("ID", "0");
+            idPacient = preferencias.getString("ID", "1");
 
             if(idPacient.equals("0")) {
                 throw new Exception("Es necesario volver a loguearse.");
@@ -162,19 +163,19 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
 
             PacientesService pacientesService = retrofit.create(PacientesService.class);
 
-            //Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico(idPacient);
+            Call<PacienteConsultaDTO> http_call = pacientesService.getPacienteEspecifico2(idPacient);
 
-            Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico("1");
-            http_call.enqueue(new Callback<PacienteDTO>() {
+            //Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico("1");
+            http_call.enqueue(new Callback<PacienteConsultaDTO>() {
                 @SuppressLint("SetTextI18n")
                 @Override
-                public void onResponse(Call<PacienteDTO> call, Response<PacienteDTO> response) {
+                public void onResponse(Call<PacienteConsultaDTO> call, Response<PacienteConsultaDTO> response) {
                     try {
                         if (response.body() != null) {
-                            PacienteDTO paciente = (PacienteDTO) response.body();
-                            nombre.setText(nombre.getText() + "\n" + paciente.getNombre());
-                            //apellido.setText(apellido.getText() +"\n"+ paciente.getApellido());
-                            telefono.setText(telefono.getText() + "\n" + paciente.getTelefono());
+                            PacienteConsultaDTO paciente = (PacienteConsultaDTO) response.body();
+                            nombre.setText(nombre.getText() + "\n" + paciente.getNombrePaciente());
+                            apellido.setText(apellido.getText() +"\n"+ paciente.getApellidoPaciente());
+                            telefono.setText(telefono.getText() + "\n" + paciente.getTelefonoPaciente());
                             edad.setText(edad.getText() + "\n" + Integer.valueOf(paciente.getEdad()).toString());
                         } else {
                             Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
@@ -191,7 +192,8 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
                 }
 
                 @Override
-                public void onFailure(Call<PacienteDTO> call, Throwable t) {
+                public void onFailure(Call<PacienteConsultaDTO> call, Throwable t) {
+                    Log.e("detail", t.getMessage());
                     Log.e("CALL API FAIL", "Hubo un problema al llamar a la API.");
                 }
             });
