@@ -1,9 +1,11 @@
+
 package com.example.donar;
 
 import java.math.BigInteger;
 import java.util.List;
 
 import DonArDato.EventoDTO;
+import DonArDato.EventoRedicidoDTO;
 import DonArDato.PacienteDTO;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -28,19 +30,45 @@ public interface EventoServices {
     Call<Void> updateEvento(@Path("evento") BigInteger id,
                           @Field("idEspecialidad") Integer idEspecialidad);
 
+    //Obtener evento por id de voluntario
+    String API_ROUTE_GET_BY_VoluntarioID = "api/evento/eventosporvoluntario/{id}";
+    @GET(API_ROUTE_GET_BY_VoluntarioID)
+    Call<List<EventoDTO>> getEventoByVoluntarioId(@Path("id") String id);
+
+    //Obtengo evento reducido
+    String API_ROUTE_GET_EVENT_REDUCED_BY_ID = "api/evento/eventoDTO/{id}";
+    @GET(API_ROUTE_GET_EVENT_REDUCED_BY_ID)
+    Call<EventoRedicidoDTO> getEventoReducidoById(@Path("id") String id);
+
+
+
+
+
+
+
+
+
+
     //Obtener evento por id
     String API_ROUTE_GET_BY_ID = "api/evento/{id}";
     @GET(API_ROUTE_GET_BY_ID)
     Call<EventoDTO> getEventoById(@Path("id") String id);
 
 
-    //Obtener evento por id de voluntario
-    String API_ROUTE_GET_BY_VoluntarioID = "api/evento/{id}";
-    @GET(API_ROUTE_GET_BY_VoluntarioID)
-    Call<List<EventoDTO>> getEventoByVoluntarioId(@Path("id") String id);
+
 
     //Obtener eventos
     String API_ROUT_GET_EVENTS = "api/evento";
     @GET(API_ROUT_GET_EVENTS)
     Call<EventoDTO> getEventos();
+
+    //Aceptar eventos
+    String API_ROUT_GET_EVENTS_ACCEPT = "api/aceptarevento";
+    @GET(API_ROUT_GET_EVENTS_ACCEPT)
+    Call<EventoDTO> aceptarEvento();
+
+    //rechazar eventos
+    String API_ROUT_GET_EVENTS_REJECT = "api/rechazarevento";
+    @GET(API_ROUT_GET_EVENTS_REJECT)
+    Call<EventoDTO> rechazarEvento();
 }

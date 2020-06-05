@@ -8,13 +8,16 @@ public class EventoDTO {
 
     private BigInteger id;
     private BigInteger PacienteId;
-    //private String Fecha;
+    private String Fecha;
     private String Sintomas;
     private boolean Seguimiento;
     @Nullable
     private BigInteger VoluntarioMedicoId;
     private BigInteger VoluntarioBasicoId;
     private Integer EspecialidadId;
+    private Integer estado;
+
+
 
     public BigInteger getId() {
         return this.id;
@@ -22,8 +25,8 @@ public class EventoDTO {
     public void setId(BigInteger value) {
         this.id = value;
     }
-    //public String getFecha(){return this.Fecha;}
-    //public void setFecha(String value){this.Fecha = value;}
+    public String getFecha(){return this.Fecha;}
+    public void setFecha(String value){this.Fecha = value;}
     public BigInteger getPacienteId() {
         return this.PacienteId;
     }
@@ -47,5 +50,8 @@ public class EventoDTO {
     }
     public void setEspecialidadId(@Nullable Integer value) { this.EspecialidadId = value;}
     public void setSeguimiento(boolean value ){ this.Seguimiento = value;}
+
+    public Integer getEstado(){return this.estado;}
+    public void setEstado(Integer estado){this.estado = estado;}
 
 }

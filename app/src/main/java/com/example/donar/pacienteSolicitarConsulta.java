@@ -290,6 +290,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
                                     , message
                                     , Toast.LENGTH_SHORT).show();
                             limpiar();
+                            goHome();
                         }
                         else
                         {
@@ -326,5 +327,10 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
      */
     private void limpiar() {
         this.detalle.setText("");
+    }
+
+    private void goHome(){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 }

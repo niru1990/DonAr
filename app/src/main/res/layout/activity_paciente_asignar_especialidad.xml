@@ -56,7 +56,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/txtTelefono"
-        app:layout_constraintBottom_toTopOf="@+id/txtSintomasYMedicamentos"
         app:layout_constraintStart_toStartOf="@+id/guideline30"
         app:layout_constraintTop_toBottomOf="@+id/txtNombre" />
 
@@ -72,6 +71,7 @@
         android:id="@+id/medtSintomasYMedicamentos"
         android:layout_width="304dp"
         android:layout_height="251dp"
+        android:editable="false"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
@@ -125,8 +125,8 @@
         android:id="@+id/txtIdConsulta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="123dp"
-        tools:layout_editor_absoluteY="111dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="invisible" />
 
     <TextView
@@ -134,8 +134,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" "
-        tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="111dp"
+        app:layout_constraintStart_toEndOf="@+id/txtIdConsulta"
+        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="invisible" />
 
     <TextView
@@ -143,9 +143,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/txtEdad"
-        app:layout_constraintBottom_toTopOf="@+id/txtSintomasYMedicamentos"
         app:layout_constraintStart_toStartOf="@+id/guideline37"
         app:layout_constraintTop_toBottomOf="@+id/txtApellido" />
+
+    <TextView
+        android:id="@+id/txtEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txtMail"
+        app:layout_constraintStart_toStartOf="@+id/guideline30"
+        app:layout_constraintTop_toBottomOf="@+id/txtTelefono" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
