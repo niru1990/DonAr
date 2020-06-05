@@ -3,7 +3,7 @@ package DonArDato;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
-
+import DonArDato.UsuarioDTO;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -18,15 +18,15 @@ public class PersonaRegistroDTO extends UsuarioDTO {
     private String _telefono;
     private Integer _edad;
     private String _provincia;
-    private String _localidad;
+    private String _pais;
 
-    public PersonaRegistroDTO(String _nombre, String _apellido, Integer DNI, String _telefono , String _provincia, String _localidad) {
+    public PersonaRegistroDTO(String _nombre, String _apellido, Integer DNI, String _telefono , String _provincia, String _pais) {
         this._nombre = _nombre;
         this._apellido = _apellido;
         this.DNI = DNI;
         this._telefono = _telefono;
         this._provincia = _provincia;
-        this._localidad = _localidad;
+        this._pais = _pais;
     }
 
     public PersonaRegistroDTO(){
@@ -48,8 +48,8 @@ public class PersonaRegistroDTO extends UsuarioDTO {
     public String get_provincia() { return _provincia; }
     public void set_provincia(String _provincia) { this._provincia = _provincia; }
 
-    public String get_localidad() { return _localidad; }
-    public void set_localidad(String _localidad) { this._localidad = _localidad; }
+    public String get_pais() { return _pais; }
+    public void set_pais(String _pais) { this._pais = _pais; }
 
     public Integer getDNI() { return DNI; }
     public void setDNI(Integer DNI) { this.DNI = DNI; }
