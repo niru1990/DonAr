@@ -40,19 +40,18 @@ public interface EventoServices {
     @GET(API_ROUTE_GET_EVENT_REDUCED_BY_ID)
     Call<EventoRedicidoDTO> getEventoReducidoById(@Path("id") String id);
 
-
-
-
-
-
-
-
-
-
     //Obtener evento por id
     String API_ROUTE_GET_BY_ID = "api/evento/{id}";
     @GET(API_ROUTE_GET_BY_ID)
     Call<EventoDTO> getEventoById(@Path("id") String id);
+
+
+
+
+
+
+
+
 
 
 
