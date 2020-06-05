@@ -2,7 +2,7 @@ package DonArDato;
 
 import java.math.BigInteger;
 
-public class EventoRedicidoDTO {
+public class EventoReducidoDTO {
 
     private BigInteger id;
     private String nombrePaciente;
