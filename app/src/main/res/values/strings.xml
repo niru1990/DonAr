@@ -13,16 +13,19 @@
     <string name="txtAplicacionYModulo">DonAr</string>
     <string name="txtUsuario">Aca va el nombre de usuario</string>
     <string name="txtPacientes">Pacientes: </string>
-    <string name="txtSintomasYMedicamentos">Sintomas y medicamentos: </string>
+    <string name="txtSintomasYMedicamentos">Sintomas y prescripción: </string>
     <string name="txtDetalle">Detalle: </string>
     <string name="txtHorarios">Horarios </string>
     <string name="txtHorarioIngreso">Horario de ingreso </string>
     <string name="txtHorarioSalida">Horarios de salida</string>
-
     <string name="txtEdad">Edad: </string>
     <string name="txtSinInternet1">Por el momento no cuenta con internet</string>
     <string name="txtSinInternet2">para realizar esta acción.</string>
     <string name="txtSinInternet3">Por favor intente mas tarde</string>
+    <string name="historiaClinicaTitle">Historia clinica</string>
+
+    <!--Switch-->
+    <string name="seguimiento">Seguimiento </string>
 
     <!-- Botones -->
     <string name="btnRegistrar">Registrarse</string>
