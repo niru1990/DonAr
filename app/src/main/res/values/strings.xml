@@ -46,6 +46,18 @@
     <string name="action_logout">Logout</string>
     <string name="vacio"> </string>
     <string name="btnRegistrarse">Registrarse</string>
+    <string name="donacionDescripcion">¿Que Quiere Donar?</string>
+    <string name="donacionVencimiento">¿Tiene Vencimiento?</string>
+    <string name="donacionCantidad">¿Cuantos dona?</string>
+    <string name="title_activity_donacion_crear">activity_donacion_crear</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 
 </resources>
