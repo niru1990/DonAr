@@ -58,6 +58,10 @@
     <string name="txtNacionalidad">Nacionalidad</string>
     <string name="txtProvincia">Provincia</string>
     <string name="txtLocalidad">Localidad</string>
+    <string name="matricula_invalida">Por favor, ingrese una matricula válida.</string>
+    <string name="seguro_invalido">Por favor, ingrese un seguro válido.</string>
+    <string name="horarioIngreso_invalido">Por favor, ingrese un horario de ingreso válido.</string>
+    <string name="horarioSalida_invalido">Por favor, ingrese un horario de salida válido.</string>
 
 
 </resources>
