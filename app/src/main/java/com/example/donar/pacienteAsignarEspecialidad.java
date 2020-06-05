@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.SpinnerAdaptor;
+import DonArDato.AsignarEspecialidadDTO;
 import DonArDato.EspecialidadDTO;
 import DonArDato.EventoDTO;
 import DonArDato.PacienteConsultaDTO;
@@ -56,6 +57,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
     private Toolbar toolbar;
 
     private String idEspecialidad;
+    private String sintomasSave;
 
     //Listado para el spinner
     private ArrayList<SpinnerItem> misEspecialidades = new ArrayList<>();
@@ -95,9 +97,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                 SpinnerItem clickItem = (SpinnerItem) parent.getItemAtPosition(position);
                 idEspecialidad = clickItem.getIdData();
                 String eds = clickItem.getDescriptionData();
-                Toast.makeText(pacienteAsignarEspecialidad.this,
-                        "La especialidad seleccionada fue: " + eds,
-                        Toast.LENGTH_LONG).show();
+                //Toast.makeText(pacienteAsignarEspecialidad.this,"La especialidad seleccionada fue: " + eds, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -199,20 +199,36 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 EventoServices eventos =retrofit.create(EventoServices.class);
-                ///TODO cambiar a endpoint AsignarEspecialidad
-                Call<Void> http_call = eventos.updateEvento(event.getId(), event.getEspecialidadId());
-                http_call.enqueue(new Callback<Void>() {
+
+                Call<EventoDTO> http_call = eventos.updateEvento(new AsignarEspecialidadDTO(event.getId(), event.getEspecialidadId()));
+                http_call.enqueue(new Callback<EventoDTO>() {
                     @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
+                    public void onResponse(Call<EventoDTO> call, Response<EventoDTO> response) {
                         try {
-                            if (response.code() == 200) {
-                                if (response.body() != null) {
-                                    //limpiar la pantalla
-                                    //TODO acá iria el msg al handler para obtener medico si vuelve false
+                            if(response.isSuccessful()) {
+                                switch (response.code()) {
+                                    case 200:
+                                        if(response.body() != null)
+                                        {
+                                            Toast.makeText(pacienteAsignarEspecialidad.this,
+                                                    "Se asigno la especialidad correctamente.",
+                                                    Toast.LENGTH_SHORT).show();
+
+                                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                        }
+                                        break;
+                                    case 404:
+                                        Toast.makeText(pacienteAsignarEspecialidad.this,
+                                                "404 - Recurso no encontrado",
+                                                Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 500:
+                                        Toast.makeText(pacienteAsignarEspecialidad.this,
+                                                response.code() +  "" + response.message(),
+                                                Toast.LENGTH_LONG).show();
+                                    default:
+                                        throw new Exception("codigo: " + response.code() + " Comuniquese con su administrador de sistemas");
                                 }
-                            }
-                            else {
-                                throw new Exception("codigo: " + response.code() + " Comuniquese con su administrador de sistemas");
                             }
                         }
                         catch (Exception ex)
@@ -224,7 +240,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                     }
 
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
+                    public void onFailure(Call<EventoDTO> call, Throwable t) {
                         Toast.makeText(pacienteAsignarEspecialidad.this,
                                 "Ocurrio un error al llamar a la API",
                                 Toast.LENGTH_SHORT).show();
@@ -241,7 +257,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
         catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
-    }//TODO terminar
+    }
 
     private void cargarSpinner(Spinner spinner){
         try {
@@ -312,7 +328,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
 
 
             String idEvento = getIntent().getStringExtra("idEvento");
-
+            id.setText(idEvento);
             EventoServices eventoServices = retrofit.create(EventoServices.class);
             Call<EventoDTO> http_call = eventoServices.getEventoById(idEvento);
 
@@ -325,7 +341,8 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                                 if(response.body() != null)
                                 {
                                     EventoDTO event = (EventoDTO) response.body();
-                                    sintomas.setText(event.getSintomas());
+                                    idPaciente.setText(event.getPacienteId().toString());
+                                    sintomasSave = event.getSintomas();
                                     getUserData(event.getPacienteId().toString());
                                 }
                                 break;
@@ -348,7 +365,6 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
         }
     }
 
-
     private void getUserData(String idPacient) {
         try {
             Retrofit retrofit = new Retrofit.Builder()
@@ -367,17 +383,30 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                 @Override
                 public void onResponse(Call<PacienteConsultaDTO> call, Response<PacienteConsultaDTO> response) {
                     try {
-                        if (response.body() != null) {
-                            PacienteConsultaDTO paciente = (PacienteConsultaDTO) response.body();
-                            nombre.setText(nombre.getText() + "\n" + paciente.getNombrePaciente());
-                            apellido.setText(apellido.getText() +"\n"+ paciente.getApellidoPaciente());
-                            telefono.setText(telefono.getText() + "\n" + paciente.getTelefonoPaciente());
-                            edad.setText(edad.getText() + "\n" + Integer.valueOf(paciente.getEdad()).toString());
-                            email.setText(email.getText() + "\n" + paciente.getEmail());
-                        } else {
-                            Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
-                                    " por favor vuelva a loguearse.");
-                            throw new Exception("No hay usuario logueado");
+                        if(response.isSuccessful()) {
+                            switch (response.code()) {
+                                case 200:
+                                    if (response.body() != null) {
+                                        PacienteConsultaDTO paciente = (PacienteConsultaDTO) response.body();
+                                        nombre.setText(nombre.getText() + "\n" + paciente.getNombrePaciente());
+                                        apellido.setText(apellido.getText() + "\n" + paciente.getApellidoPaciente());
+                                        telefono.setText(telefono.getText() + "\n" + paciente.getTelefonoPaciente());
+                                        edad.setText(edad.getText() + "\n" + Integer.valueOf(paciente.getEdad()).toString());
+                                        email.setText(email.getText() + "\n" + paciente.getEmail());
+                                        sintomas.setText(sintomasSave);
+                                        sintomas.setEnabled(false);
+                                    } else {
+                                        Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
+                                                " por favor vuelva a loguearse.");
+                                        throw new Exception("No hay usuario logueado");
+                                    }
+                                break;
+                                case 404:
+                                    Toast.makeText(getApplicationContext(), "Recurso no encontrado.", Toast.LENGTH_LONG).show();
+                                    break;
+                                default:
+                                    throw new Exception("Codigo de error: " +  response.code());
+                            }
                         }
                     } catch (Exception ex) {
                         try {
