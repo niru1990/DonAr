@@ -151,7 +151,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
                     ("ID usuario", Context.MODE_PRIVATE);
 
 
-            idPacient = preferencias.getString("ID", "1");
+            idPacient = preferencias.getString("ID", "1"); //TODO modificar por 0 cuando se reciba el id
 
             if(idPacient.equals("0")) {
                 throw new Exception("Es necesario volver a loguearse.");
@@ -242,12 +242,12 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
         EventoDTO e = new EventoDTO();
 
         Date d = new Date();
-        CharSequence s  = DateFormat.format("MMMM d, yyyy ", d.getTime());
+        CharSequence Fecha  = DateFormat.format("dd-MM-yyyy", d.getTime());
 
-        e.setId(BigInteger.valueOf(0)); ///TODO: Revisar con Kevin si le mando un 0 o que
+        e.setId(BigInteger.valueOf(0));
         e.setPacienteId( new BigInteger(idPacient) );
         e.setSintomas(detalle.getText().toString());
-        //e.setFecha(s.toString());
+        e.setFecha(Fecha.toString());
         e.setEspecialidadId(null);
         e.setidVoluntarioMedico(null);
         e.setidVoluntario(null);
