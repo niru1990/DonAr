@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -37,13 +38,7 @@ import Negocio.Evento;
 
 public class pacienteSolicitarConsulta extends AppCompatActivity implements View.OnClickListener{
 
-    private TextView nombre;
-    private TextView apellido;
-    private  TextView telefono;
-    private TextView detalle;
-    private TextView sintomas;
-    private TextView id;
-    private TextView edad;
+    private TextView nombre,  apellido,  telefono,  detalle,  sintomas, id,  edad, email;
     private Button solicitar;
     private Toolbar toolbar;
     private String idPacient;
@@ -69,6 +64,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
             apellido = (TextView) findViewById(R.id.txtApellido);
             detalle = (TextView) findViewById(R.id.medtSintomasYMedicamentos);
             telefono = (TextView) findViewById(R.id.txtTelefono);
+            email = (TextView) findViewById(R.id.txtEmail);
             id = (TextView) findViewById(R.id.txtIdSolicitud);
             edad = (TextView) findViewById(R.id.txtEdad);
             sintomas = (TextView) findViewById(R.id.txtSintomasYMedicamentos);
@@ -146,57 +142,65 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
 
     private void getUserData() {
         try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://donar.azurewebsites.net/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+            if(verificarConexion()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://donar.azurewebsites.net/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
-            SharedPreferences preferencias = getSharedPreferences
-                    ("ID usuario", Context.MODE_PRIVATE);
+                SharedPreferences preferencias = getSharedPreferences
+                        ("ID usuario", Context.MODE_PRIVATE);
 
 
-            idPacient = preferencias.getString("ID", "1");
+                idPacient = preferencias.getString("ID", "0");
 
-            if(idPacient.equals("0")) {
-                throw new Exception("Es necesario volver a loguearse.");
-            }
+                if (idPacient.equals("0")) {
+                    throw new Exception("Es necesario volver a loguearse.");
+                }
 
-            PacientesService pacientesService = retrofit.create(PacientesService.class);
+                PacientesService pacientesService = retrofit.create(PacientesService.class);
 
-            Call<PacienteConsultaDTO> http_call = pacientesService.getPacienteEspecifico2(idPacient);
+                Call<PacienteConsultaDTO> http_call = pacientesService.getPacienteEspecifico2(idPacient);
 
-            //Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico("1");
-            http_call.enqueue(new Callback<PacienteConsultaDTO>() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onResponse(Call<PacienteConsultaDTO> call, Response<PacienteConsultaDTO> response) {
-                    try {
-                        if (response.body() != null) {
-                            PacienteConsultaDTO paciente = (PacienteConsultaDTO) response.body();
-                            nombre.setText(nombre.getText() + "\n" + paciente.getNombrePaciente());
-                            apellido.setText(apellido.getText() +"\n"+ paciente.getApellidoPaciente());
-                            telefono.setText(telefono.getText() + "\n" + paciente.getTelefonoPaciente());
-                            edad.setText(edad.getText() + "\n" + Integer.valueOf(paciente.getEdad()).toString());
-                        } else {
-                            Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
-                                    " por favor vuelva a loguearse.");
-                            throw new Exception("No hay usuario logueado");
-                        }
-                    } catch (Exception ex) {
+                //Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico("1");
+                http_call.enqueue(new Callback<PacienteConsultaDTO>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onResponse(Call<PacienteConsultaDTO> call, Response<PacienteConsultaDTO> response) {
                         try {
-                            throw new Exception(ex.getMessage());
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            if (response.body() != null) {
+                                PacienteConsultaDTO paciente = (PacienteConsultaDTO) response.body();
+                                nombre.setText(nombre.getText() + "\n" + paciente.getNombrePaciente());
+                                apellido.setText(apellido.getText() + "\n" + paciente.getApellidoPaciente());
+                                telefono.setText(telefono.getText() + "\n" + paciente.getTelefonoPaciente());
+                                edad.setText(edad.getText() + "\n" + Integer.valueOf(paciente.getEdad()).toString());
+                                email.setText(email.getText() + "\n" + paciente.getEmail());
+                            } else {
+                                Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
+                                        " por favor vuelva a loguearse.");
+                                throw new Exception("No hay usuario logueado");
+                            }
+                        } catch (Exception ex) {
+                            try {
+                                throw new Exception(ex.getMessage());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<PacienteConsultaDTO> call, Throwable t) {
-                    Log.e("detail", t.getMessage());
-                    Log.e("CALL API FAIL", "Hubo un problema al llamar a la API.");
-                }
-            });
+                    @Override
+                    public void onFailure(Call<PacienteConsultaDTO> call, Throwable t) {
+                        Log.e("detail", t.getMessage());
+                        Log.e("CALL API FAIL", "Hubo un problema al llamar a la API.");
+                    }
+                });
+            }
+            else
+            {
+                Intent intent = new Intent(getApplicationContext(), sinConexionInternet.class);
+                startActivity(intent);
+            }
         }
         catch (Exception ex)
         {
@@ -245,12 +249,12 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
         EventoDTO e = new EventoDTO();
 
         Date d = new Date();
-        CharSequence s  = DateFormat.format("MMMM d, yyyy ", d.getTime());
+        CharSequence Fecha  = DateFormat.format("dd-MM-yyyy", d.getTime());
 
-        e.setId(BigInteger.valueOf(0)); ///TODO: Revisar con Kevin si le mando un 0 o que
+        e.setId(BigInteger.valueOf(0));
         e.setPacienteId( new BigInteger(idPacient) );
         e.setSintomas(detalle.getText().toString());
-        //e.setFecha(s.toString());
+        e.setFecha(Fecha.toString());
         e.setEspecialidadId(null);
         e.setidVoluntarioMedico(null);
         e.setidVoluntario(null);
@@ -270,52 +274,59 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
     }
 
     private void save(EventoDTO event){
-        try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://donar.azurewebsites.net/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+        try
+        {
+            if(verificarConexion()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://donar.azurewebsites.net/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
-            EventoServices eventoServices = retrofit.create(EventoServices.class);
-            Call<Void> http_call = eventoServices.addEvento(event);
+                EventoServices eventoServices = retrofit.create(EventoServices.class);
+                Call<Void> http_call = eventoServices.addEvento(event);
 
-            http_call.enqueue(new Callback<Void>() {
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    try {
-                        if (response.isSuccessful()) {
-                            String message = "";
-                            if (response.isSuccessful())
-                                message = "Su solicitud de consulta fue generada exitosamente";
-                            else
-                                message = "Ocurrio algo inesperado.";
-
-                            Toast.makeText(pacienteSolicitarConsulta.this
-                                    , message
-                                    , Toast.LENGTH_SHORT).show();
-                            limpiar();
-                        }
-                        else
-                        {
-                            Log.i(((Integer) response.code()).toString(), "No fue posible guardar la consulta, " +
-                                    "por favor intente mas tarde");
-                            throw new Exception("No fue posible guardar la consulta, " +
-                                    "por favor intente mas tarde");
-                        }
-                    } catch (Exception ex) {
+                http_call.enqueue(new Callback<Void>() {
+                    public void onResponse(Call<Void> call, Response<Void> response) {
                         try {
-                            throw new Exception(ex.getMessage());
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            if (response.isSuccessful()) {
+                                String message = "";
+                                if (response.isSuccessful())
+                                    message = "Su solicitud de consulta fue generada exitosamente";
+                                else
+                                    message = "Ocurrio algo inesperado.";
+
+                                Toast.makeText(pacienteSolicitarConsulta.this
+                                        , message
+                                        , Toast.LENGTH_SHORT).show();
+                                limpiar();
+                                goHome();
+                            } else {
+                                Log.i(((Integer) response.code()).toString(), "No fue posible guardar la consulta, " +
+                                        "por favor intente mas tarde");
+                                throw new Exception("No fue posible guardar la consulta, " +
+                                        "por favor intente mas tarde");
+                            }
+                        } catch (Exception ex) {
+                            try {
+                                throw new Exception(ex.getMessage());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                }
 
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(pacienteSolicitarConsulta.this,
-                            "Hubo un error con la llamada a la API",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(pacienteSolicitarConsulta.this,
+                                "Hubo un error con la llamada a la API",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else
+            {
+                Intent intent = new Intent(getApplicationContext(), sinConexionInternet.class);
+                startActivity(intent);
+            }
         }
         catch (Exception ex){
             Toast.makeText(this,
@@ -329,5 +340,10 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
      */
     private void limpiar() {
         this.detalle.setText("");
+    }
+
+    private void goHome(){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 }

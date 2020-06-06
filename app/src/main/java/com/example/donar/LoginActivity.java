@@ -39,13 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //txtID = findViewById(R.id.txtID);
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        if(acct!=null){
 
-            String personId = acct.getId();
-            saveID(personId);
-
-        }
 
         googleButton = (SignInButton) findViewById(R.id.sign_in_button);
         googleButton.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view){
                 switch (view.getId()){
                     case R.id.sign_in_button:
-                        singIn();
+                        signIn();
                         break;
                 }
             }
@@ -66,9 +60,10 @@ public class LoginActivity extends AppCompatActivity {
         GoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-    private void singIn(){
+    private void signIn(){
         Intent signInIntent = GoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
     }
 
     @Override
@@ -77,6 +72,15 @@ public class LoginActivity extends AppCompatActivity {
         if(requestCode==RC_SIGN_IN){
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
+
+            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+            if(acct!=null){
+
+                String personId = acct.getId();
+                Log.i("Mensaje",personId);
+                saveID(personId);
+
+            }
         }
     }
 

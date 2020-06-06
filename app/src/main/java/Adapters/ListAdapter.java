@@ -1,6 +1,7 @@
 package Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import androidx.annotation.Nullable;
 
 import com.example.donar.R;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import DonArDato.EventoAutoMach;
@@ -26,7 +29,8 @@ public class ListAdapter extends ArrayAdapter<EventoAutoMach>{
     private int resourse;
     private TextView idEvento;
     private TextView nombre;
-    private TextView apellido;
+    private TextView nombreMedico;
+    //private TextView apellido;
     private ImageButton aceptar;
     private ImageButton rechazar;
 
@@ -42,15 +46,19 @@ public class ListAdapter extends ArrayAdapter<EventoAutoMach>{
     public View getView(final int position, @Nullable View convertView, @NonNull final ViewGroup parent) {
         try {
             View view = convertView;
+
             if (convertView == null)
                 view = LayoutInflater.from(this.context).inflate(this.resourse, null);
+
             EventoAutoMach eventoAutoMach = mList.get(position);
             idEvento = (TextView) view.findViewById(R.id.idEvento);
             idEvento.setText(eventoAutoMach.getIdEvento());
             nombre = (TextView) view.findViewById(R.id.nombre);
-            nombre.setText(eventoAutoMach.getNombre());
-            apellido = (TextView) view.findViewById(R.id.apellido);
-            apellido.setText(eventoAutoMach.getApellido());
+            nombre.setText(eventoAutoMach.getNombre() + " " + eventoAutoMach.getApellido());
+            nombreMedico = (TextView) view.findViewById(R.id.txtNombreMedico);
+            nombreMedico.setText(eventoAutoMach.getNombreMedico());
+            //apellido = (TextView) view.findViewById(R.id.apellido);
+            //apellido.setText(eventoAutoMach.getApellido());
             aceptar = (ImageButton) view.findViewById(R.id.aceptar);
             rechazar = (ImageButton) view.findViewById(R.id.rechazar);
 
@@ -67,6 +75,12 @@ public class ListAdapter extends ArrayAdapter<EventoAutoMach>{
                     ((ListView) parent).performItemClick(view, position, 1);
                 }
             });
+
+            if(position % 2 == 1)
+                view.setBackgroundColor(Color.WHITE);
+            else
+                view.setBackgroundColor(Color.GRAY);
+
             return view;
         }
         catch (Exception ex){

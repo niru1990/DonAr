@@ -5,4 +5,6 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="toolbarBackground">#56ccdc</color>
     <color name="textBlack">#000000</color>
+    <color name="AutomachPaciente">#2C61A6</color>
+    <color name="titleAutomach">#49AC47</color>
 </resources>

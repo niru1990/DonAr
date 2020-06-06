@@ -14,8 +14,8 @@ public class Evento {
             valido = false;
         if(tieneEspecialidad && datos.getEspecialidadId() == null || datos.getEspecialidadId() <= 0)
                 valido = false;
-        if (tieneEspecialidad && datos.getidVoluntario() != BigInteger.valueOf(0))
-            valido = false;
+        //if (tieneEspecialidad && datos.getidVoluntario() != BigInteger.valueOf(0))
+        //    valido = false;
             return valido;
     }
 

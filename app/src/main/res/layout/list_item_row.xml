@@ -14,24 +14,35 @@
         android:text=" " />
 
     <TextView
-        android:id="@+id/nombre"
+        android:id="@+id/txtNombreMedico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/idEvento"
-        android:text=" " />
+        android:text="@string/vacio"
+        android:visibility="invisible"
+        android:layout_toRightOf="@+id/idEvento"
+        />
 
     <TextView
-        android:id="@+id/apellido"
+        android:id="@+id/nombre"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/nombre"
+        android:layout_height="50dp"
+        android:layout_marginStart="-3dp"
+        android:layout_marginLeft="-3dp"
+        android:layout_marginEnd="-4dp"
+        android:layout_marginRight="-4dp"
+        android:layout_toStartOf="@+id/aceptar"
+        android:layout_toLeftOf="@+id/aceptar"
+        android:layout_toEndOf="@+id/idEvento"
+        android:layout_toRightOf="@+id/idEvento"
+        android:gravity="center_horizontal|center_vertical"
+        android:textColor="@color/AutomachPaciente"
         android:text=" " />
 
     <ImageButton
         android:id="@+id/aceptar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/rechazar"
+        android:layout_alignParentRight="true"
         android:focusable="false"
         android:src="@android:drawable/ic_input_add" />
 
@@ -39,7 +50,9 @@
         android:id="@+id/rechazar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_toLeftOf="@id/aceptar"
         app:srcCompat="@android:drawable/ic_delete" />
+
+
 
 </RelativeLayout>

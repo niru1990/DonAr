@@ -3,7 +3,6 @@ package com.example.donar;
 import DonArDato.PacienteDTO;
 import DonArDato.VoluntarioDTO;
 import DonArDato.VoluntarioMedicoDTO;
-import Negocio.Paciente;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

@@ -28,7 +28,9 @@
         android:text="@string/txtPacientes"
         app:layout_constraintBottom_toTopOf="@+id/guideline28"
         app:layout_constraintStart_toStartOf="@+id/guideline22"
-        app:layout_constraintTop_toTopOf="@+id/guideline29" />
+        app:layout_constraintTop_toTopOf="@+id/guideline29"
+        android:textSize="40sp"
+        />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline22"
