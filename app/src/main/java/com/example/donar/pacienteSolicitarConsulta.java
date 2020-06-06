@@ -142,58 +142,65 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
 
     private void getUserData() {
         try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://donar.azurewebsites.net/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+            if(verificarConexion()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://donar.azurewebsites.net/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
-            SharedPreferences preferencias = getSharedPreferences
-                    ("ID usuario", Context.MODE_PRIVATE);
+                SharedPreferences preferencias = getSharedPreferences
+                        ("ID usuario", Context.MODE_PRIVATE);
 
 
-            idPacient = preferencias.getString("ID", "1"); //TODO modificar por 0 cuando se reciba el id
+                idPacient = preferencias.getString("ID", "1"); //TODO modificar por 0 cuando se reciba el id
 
-            if(idPacient.equals("0")) {
-                throw new Exception("Es necesario volver a loguearse.");
-            }
+                if (idPacient.equals("0")) {
+                    throw new Exception("Es necesario volver a loguearse.");
+                }
 
-            PacientesService pacientesService = retrofit.create(PacientesService.class);
+                PacientesService pacientesService = retrofit.create(PacientesService.class);
 
-            Call<PacienteConsultaDTO> http_call = pacientesService.getPacienteEspecifico2(idPacient);
+                Call<PacienteConsultaDTO> http_call = pacientesService.getPacienteEspecifico2(idPacient);
 
-            //Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico("1");
-            http_call.enqueue(new Callback<PacienteConsultaDTO>() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onResponse(Call<PacienteConsultaDTO> call, Response<PacienteConsultaDTO> response) {
-                    try {
-                        if (response.body() != null) {
-                            PacienteConsultaDTO paciente = (PacienteConsultaDTO) response.body();
-                            nombre.setText(nombre.getText() + "\n" + paciente.getNombrePaciente());
-                            apellido.setText(apellido.getText() +"\n"+ paciente.getApellidoPaciente());
-                            telefono.setText(telefono.getText() + "\n" + paciente.getTelefonoPaciente());
-                            edad.setText(edad.getText() + "\n" + Integer.valueOf(paciente.getEdad()).toString());
-                            email.setText(email.getText() + "\n" + paciente.getEmail());
-                        } else {
-                            Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
-                                    " por favor vuelva a loguearse.");
-                            throw new Exception("No hay usuario logueado");
-                        }
-                    } catch (Exception ex) {
+                //Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico("1");
+                http_call.enqueue(new Callback<PacienteConsultaDTO>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onResponse(Call<PacienteConsultaDTO> call, Response<PacienteConsultaDTO> response) {
                         try {
-                            throw new Exception(ex.getMessage());
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            if (response.body() != null) {
+                                PacienteConsultaDTO paciente = (PacienteConsultaDTO) response.body();
+                                nombre.setText(nombre.getText() + "\n" + paciente.getNombrePaciente());
+                                apellido.setText(apellido.getText() + "\n" + paciente.getApellidoPaciente());
+                                telefono.setText(telefono.getText() + "\n" + paciente.getTelefonoPaciente());
+                                edad.setText(edad.getText() + "\n" + Integer.valueOf(paciente.getEdad()).toString());
+                                email.setText(email.getText() + "\n" + paciente.getEmail());
+                            } else {
+                                Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
+                                        " por favor vuelva a loguearse.");
+                                throw new Exception("No hay usuario logueado");
+                            }
+                        } catch (Exception ex) {
+                            try {
+                                throw new Exception(ex.getMessage());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<PacienteConsultaDTO> call, Throwable t) {
-                    Log.e("detail", t.getMessage());
-                    Log.e("CALL API FAIL", "Hubo un problema al llamar a la API.");
-                }
-            });
+                    @Override
+                    public void onFailure(Call<PacienteConsultaDTO> call, Throwable t) {
+                        Log.e("detail", t.getMessage());
+                        Log.e("CALL API FAIL", "Hubo un problema al llamar a la API.");
+                    }
+                });
+            }
+            else
+            {
+                Intent intent = new Intent(getApplicationContext(), sinConexionInternet.class);
+                startActivity(intent);
+            }
         }
         catch (Exception ex)
         {
@@ -267,53 +274,59 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
     }
 
     private void save(EventoDTO event){
-        try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://donar.azurewebsites.net/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+        try
+        {
+            if(verificarConexion()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://donar.azurewebsites.net/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
-            EventoServices eventoServices = retrofit.create(EventoServices.class);
-            Call<Void> http_call = eventoServices.addEvento(event);
+                EventoServices eventoServices = retrofit.create(EventoServices.class);
+                Call<Void> http_call = eventoServices.addEvento(event);
 
-            http_call.enqueue(new Callback<Void>() {
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    try {
-                        if (response.isSuccessful()) {
-                            String message = "";
-                            if (response.isSuccessful())
-                                message = "Su solicitud de consulta fue generada exitosamente";
-                            else
-                                message = "Ocurrio algo inesperado.";
-
-                            Toast.makeText(pacienteSolicitarConsulta.this
-                                    , message
-                                    , Toast.LENGTH_SHORT).show();
-                            limpiar();
-                            goHome();
-                        }
-                        else
-                        {
-                            Log.i(((Integer) response.code()).toString(), "No fue posible guardar la consulta, " +
-                                    "por favor intente mas tarde");
-                            throw new Exception("No fue posible guardar la consulta, " +
-                                    "por favor intente mas tarde");
-                        }
-                    } catch (Exception ex) {
+                http_call.enqueue(new Callback<Void>() {
+                    public void onResponse(Call<Void> call, Response<Void> response) {
                         try {
-                            throw new Exception(ex.getMessage());
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            if (response.isSuccessful()) {
+                                String message = "";
+                                if (response.isSuccessful())
+                                    message = "Su solicitud de consulta fue generada exitosamente";
+                                else
+                                    message = "Ocurrio algo inesperado.";
+
+                                Toast.makeText(pacienteSolicitarConsulta.this
+                                        , message
+                                        , Toast.LENGTH_SHORT).show();
+                                limpiar();
+                                goHome();
+                            } else {
+                                Log.i(((Integer) response.code()).toString(), "No fue posible guardar la consulta, " +
+                                        "por favor intente mas tarde");
+                                throw new Exception("No fue posible guardar la consulta, " +
+                                        "por favor intente mas tarde");
+                            }
+                        } catch (Exception ex) {
+                            try {
+                                throw new Exception(ex.getMessage());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                }
 
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(pacienteSolicitarConsulta.this,
-                            "Hubo un error con la llamada a la API",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(pacienteSolicitarConsulta.this,
+                                "Hubo un error con la llamada a la API",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else
+            {
+                Intent intent = new Intent(getApplicationContext(), sinConexionInternet.class);
+                startActivity(intent);
+            }
         }
         catch (Exception ex){
             Toast.makeText(this,
