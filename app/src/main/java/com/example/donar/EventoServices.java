@@ -1,6 +1,7 @@
 
 package com.example.donar;
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.common.reflect.Parameter;
 
 import java.math.BigInteger;
@@ -9,6 +10,7 @@ import java.util.List;
 import DonArDato.AsignarEspecialidadDTO;
 import DonArDato.EventoDTO;
 import DonArDato.EventoReducidoDTO;
+import DonArDato.cambiarEstado;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -48,29 +50,12 @@ public interface EventoServices {
     @GET(API_ROUTE_GET_BY_ID)
     Call<EventoDTO> getEventoById(@Path("id") String id);
 
-
-
-
-
-
-
-
-
-
-
-
-    //Obtener eventos
-    String API_ROUT_GET_EVENTS = "api/evento";
-    @GET(API_ROUT_GET_EVENTS)
-    Call<EventoDTO> getEventos();
-
     //Aceptar eventos
-    String API_ROUT_GET_EVENTS_ACCEPT = "api/aceptarevento";
-    @GET(API_ROUT_GET_EVENTS_ACCEPT)
-    Call<EventoDTO> aceptarEvento();
+    String API_ROUT_MODIFY_STATUS= "api/evento/modificarestado ";
+    @Headers("Content-Type: application/json")
+    @PUT(API_ROUT_MODIFY_STATUS)
+    //@FormUrlEncoded
+    Call<EventoDTO> modifyStatus (@Body cambiarEstado c);
 
-    //rechazar eventos
-    String API_ROUT_GET_EVENTS_REJECT = "api/rechazarevento";
-    @GET(API_ROUT_GET_EVENTS_REJECT)
-    Call<EventoDTO> rechazarEvento();
+
 }
