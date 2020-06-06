@@ -356,8 +356,19 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                         .build();
 
 
-                String idEvento = getIntent().getStringExtra("idEvento");
+                //String idEvento = getIntent().getStringExtra("idEvento");
+
+
+
+                SharedPreferences preferencias = getSharedPreferences
+                        ("ID usuario", Context.MODE_PRIVATE);
+
+
+                String idEvento = preferencias.getString("idEvento", "0");
                 id.setText(idEvento);
+
+
+
                 EventoServices eventoServices = retrofit.create(EventoServices.class);
                 Call<EventoDTO> http_call = eventoServices.getEventoById(idEvento);
 
