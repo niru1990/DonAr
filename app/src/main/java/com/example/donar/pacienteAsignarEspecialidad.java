@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -85,7 +87,14 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
         asignar = (Button) findViewById(R.id.btnAsignar);
         asignar.setOnClickListener(this);
         //Conseguir la información
-        loadData();
+        if(verificarConexion())
+            loadData();
+        else
+        {
+            Intent intent = new Intent(this.getApplicationContext(), sinConexionInternet.class );
+            startActivity(intent);
+        }
+
         //Spinner y adaptor
         especialidad = (Spinner) findViewById(R.id.spnEspecialidad);
         miAdaptador = new SpinnerAdaptor(pacienteAsignarEspecialidad.this, misEspecialidades);
@@ -112,10 +121,17 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
 
     private void loadData(){
         try {
-            cargarSpinner(especialidad);
-            //Obtener evento y cargarlo. Esto obliga a obtener el paciente.
-            getEvento();
-            //getPacienteData(idPaciente.getText().toString());
+            if(verificarConexion()) {
+                cargarSpinner(especialidad);
+                //Obtener evento y cargarlo. Esto obliga a obtener el paciente.
+                getEvento();
+                //getPacienteData(idPaciente.getText().toString());
+            }
+            else
+            {
+                Intent intent = new Intent(this.getApplicationContext(), sinConexionInternet.class );
+                startActivity(intent);
+            }
         }
         catch (Exception ex) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
@@ -191,67 +207,72 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
 
     private void actualizar() throws Exception {
         try{
-            EventoDTO event =  formToObject();
-            if(new Evento().validar(event, true))
-            {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://donar.azurewebsites.net/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                EventoServices eventos =retrofit.create(EventoServices.class);
+            if(verificarConexion()) {
+                EventoDTO event = formToObject();
+                if (new Evento().validar(event, true)) {
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl("https://donar.azurewebsites.net/")
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                    EventoServices eventos = retrofit.create(EventoServices.class);
 
-                Call<EventoDTO> http_call = eventos.updateEvento(new AsignarEspecialidadDTO(event.getId(), event.getEspecialidadId()));
-                http_call.enqueue(new Callback<EventoDTO>() {
-                    @Override
-                    public void onResponse(Call<EventoDTO> call, Response<EventoDTO> response) {
-                        try {
-                            if(response.isSuccessful()) {
-                                switch (response.code()) {
-                                    case 200:
-                                        if(response.body() != null)
-                                        {
+                    Call<EventoDTO> http_call = eventos.updateEvento(new AsignarEspecialidadDTO(event.getId(), event.getEspecialidadId()));
+                    http_call.enqueue(new Callback<EventoDTO>() {
+                        @Override
+                        public void onResponse(Call<EventoDTO> call, Response<EventoDTO> response) {
+                            try {
+                                if (response.isSuccessful()) {
+                                    switch (response.code()) {
+                                        case 200:
+                                            if (response.body() != null) {
+                                                Toast.makeText(pacienteAsignarEspecialidad.this,
+                                                        "Se asigno la especialidad correctamente.",
+                                                        Toast.LENGTH_SHORT).show();
+
+                                                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                            }
+                                            break;
+                                        case 404:
                                             Toast.makeText(pacienteAsignarEspecialidad.this,
-                                                    "Se asigno la especialidad correctamente.",
+                                                    "404 - Recurso no encontrado",
                                                     Toast.LENGTH_SHORT).show();
-
-                                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                                        }
-                                        break;
-                                    case 404:
-                                        Toast.makeText(pacienteAsignarEspecialidad.this,
-                                                "404 - Recurso no encontrado",
-                                                Toast.LENGTH_SHORT).show();
-                                        break;
-                                    case 500:
-                                        Toast.makeText(pacienteAsignarEspecialidad.this,
-                                                response.code() +  "" + response.message(),
-                                                Toast.LENGTH_LONG).show();
-                                    default:
-                                        throw new Exception("codigo: " + response.code() + " Comuniquese con su administrador de sistemas");
+                                            break;
+                                        case 500:
+                                            Toast.makeText(pacienteAsignarEspecialidad.this,
+                                                    response.code() + "" + response.message(),
+                                                    Toast.LENGTH_LONG).show();
+                                        default:
+                                            throw new Exception("codigo: " + response.code() + " Comuniquese con su administrador de sistemas");
+                                    }
                                 }
+                            } catch (Exception ex) {
+                                Toast.makeText(pacienteAsignarEspecialidad.this,
+                                        ex.getMessage(),
+                                        Toast.LENGTH_SHORT).show();
                             }
                         }
-                        catch (Exception ex)
-                        {
+
+                        @Override
+                        public void onFailure(Call<EventoDTO> call, Throwable t) {
                             Toast.makeText(pacienteAsignarEspecialidad.this,
-                                    ex.getMessage(),
+                                    "Ocurrio un error al llamar a la API",
                                     Toast.LENGTH_SHORT).show();
                         }
-                    }
+                    });
 
-                    @Override
-                    public void onFailure(Call<EventoDTO> call, Throwable t) {
-                        Toast.makeText(pacienteAsignarEspecialidad.this,
-                                "Ocurrio un error al llamar a la API",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+                } else {
+                    Toast.makeText(this, "Por favor cargue los campos obligatorios",
+                            Toast.LENGTH_SHORT).show();
+                    especialidadText.setTextColor(Color.RED);
+                }
             }
             else
             {
-                Toast.makeText(this, "Por favor cargue los campos obligatorios",
-                        Toast.LENGTH_SHORT).show();
-                especialidadText.setTextColor(Color.RED);
+                Toast.makeText(this,
+                        "El dispositivo no cuenta con conexion a internet en este momento",
+                        Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this.getApplicationContext(), sinConexionInternet.class );
+                startActivity(intent);
             }
         }
         catch (Exception ex) {
@@ -261,55 +282,62 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
 
     private void cargarSpinner(Spinner spinner){
         try {
-            //Creo llamada
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://donar.azurewebsites.net/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            EspecialidadServices especialidadServices = retrofit.create(EspecialidadServices.class);
-            Call<List<EspecialidadDTO>> http_call = especialidadServices.getEspecialidades();
-            //Encolo llamda
-            http_call.enqueue(new Callback<List<EspecialidadDTO>>() {
-                @SuppressLint("ResourceType")
-                @Override
-                public void onResponse(Call<List<EspecialidadDTO>> call, Response<List<EspecialidadDTO>> response) {
-                    try {
-                        //Trabajo con la respuesta
-                        if (response.body() != null && response.code() == 200) {
-                            //limpio la lista
-                            misEspecialidades.clear();
-                            //Cargo valor señuelo para saber si asigno lo que corresponde
-                            misEspecialidades.add(new SpinnerItem("0", "Seleccione..." ));
-                            //Cargo mi lista con valores de la tabla
-                            for(EspecialidadDTO esp: response.body()) {
-                                misEspecialidades.add(new SpinnerItem(esp.getId(),
-                                        esp.getEspecialidad()));
-                            }
-                            //Aviso al adaptor que se actualizo la información
-                            miAdaptador.notifyDataSetChanged();
-                        }
-                        else {
-                            throw new Exception("codigo de respuesta: " + response.code());
-                        }
-                    }
-                    catch (Exception ex) {
-                        Log.e("Cargar especialidades", ex.getMessage());
+            if(verificarConexion()) {
+                //Creo llamada
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://donar.azurewebsites.net/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                EspecialidadServices especialidadServices = retrofit.create(EspecialidadServices.class);
+                Call<List<EspecialidadDTO>> http_call = especialidadServices.getEspecialidades();
+                //Encolo llamda
+                http_call.enqueue(new Callback<List<EspecialidadDTO>>() {
+                    @SuppressLint("ResourceType")
+                    @Override
+                    public void onResponse(Call<List<EspecialidadDTO>> call, Response<List<EspecialidadDTO>> response) {
                         try {
-                            throw new Exception(ex.getMessage());
-                        }
-                        catch (Exception e) {
-                            e.printStackTrace();
+                            //Trabajo con la respuesta
+                            if (response.body() != null && response.code() == 200) {
+                                //limpio la lista
+                                misEspecialidades.clear();
+                                //Cargo valor señuelo para saber si asigno lo que corresponde
+                                misEspecialidades.add(new SpinnerItem("0", "Seleccione..."));
+                                //Cargo mi lista con valores de la tabla
+                                for (EspecialidadDTO esp : response.body()) {
+                                    misEspecialidades.add(new SpinnerItem(esp.getId(),
+                                            esp.getEspecialidad()));
+                                }
+                                //Aviso al adaptor que se actualizo la información
+                                miAdaptador.notifyDataSetChanged();
+                            } else {
+                                throw new Exception("codigo de respuesta: " + response.code());
+                            }
+                        } catch (Exception ex) {
+                            Log.e("Cargar especialidades", ex.getMessage());
+                            try {
+                                throw new Exception(ex.getMessage());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<List<EspecialidadDTO>> call, Throwable t) {
-                    Toast.makeText(pacienteAsignarEspecialidad.this,
-                            "Ocurrio un error al intentar llamar a la API",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<List<EspecialidadDTO>> call, Throwable t) {
+                        Toast.makeText(pacienteAsignarEspecialidad.this,
+                                "Ocurrio un error al intentar llamar a la API",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else
+            {
+                Toast.makeText(this,
+                        "El dispositivo no cuenta con conexion a internet en este momento",
+                        Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this.getApplicationContext(), sinConexionInternet.class );
+                startActivity(intent);
+            }
         }
         catch (Exception ex)
         {
@@ -321,44 +349,52 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
 
     private void getEvento() throws Exception {
         try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://donar.azurewebsites.net/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+            if(verificarConexion()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://donar.azurewebsites.net/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
 
-            String idEvento = getIntent().getStringExtra("idEvento");
-            id.setText(idEvento);
-            EventoServices eventoServices = retrofit.create(EventoServices.class);
-            Call<EventoDTO> http_call = eventoServices.getEventoById(idEvento);
+                String idEvento = getIntent().getStringExtra("idEvento");
+                id.setText(idEvento);
+                EventoServices eventoServices = retrofit.create(EventoServices.class);
+                Call<EventoDTO> http_call = eventoServices.getEventoById(idEvento);
 
-            http_call.enqueue(new Callback<EventoDTO>() {
-                @Override
-                public void onResponse(Call<EventoDTO> call, Response<EventoDTO> response) {
-                    if(response.isSuccessful()){
-                        switch (response.code()){
-                            case 200:
-                                if(response.body() != null)
-                                {
-                                    EventoDTO event = (EventoDTO) response.body();
-                                    idPaciente.setText(event.getPacienteId().toString());
-                                    sintomasSave = event.getSintomas();
-                                    getUserData(event.getPacienteId().toString());
-                                }
-                                break;
-                            default:
-                                break;
+                http_call.enqueue(new Callback<EventoDTO>() {
+                    @Override
+                    public void onResponse(Call<EventoDTO> call, Response<EventoDTO> response) {
+                        if (response.isSuccessful()) {
+                            switch (response.code()) {
+                                case 200:
+                                    if (response.body() != null) {
+                                        EventoDTO event = (EventoDTO) response.body();
+                                        idPaciente.setText(event.getPacienteId().toString());
+                                        sintomasSave = event.getSintomas();
+                                        getUserData(event.getPacienteId().toString());
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<EventoDTO> call, Throwable t) {
-                    String s = "n";
-                }
-            });
+                    @Override
+                    public void onFailure(Call<EventoDTO> call, Throwable t) {
+                        String s = "n";
+                    }
+                });
 
-
+            }
+            else
+            {
+                Toast.makeText(this,
+                        "El dispositivo no cuenta con conexion a internet en este momento",
+                        Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this.getApplicationContext(), sinConexionInternet.class );
+                startActivity(intent);
+            }
         }
         catch (Exception ex){
             Toast.makeText(pacienteAsignarEspecialidad.this, ex.getMessage(), Toast.LENGTH_LONG ).show();
@@ -367,62 +403,72 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
 
     private void getUserData(String idPacient) {
         try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://donar.azurewebsites.net/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+            if(verificarConexion()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://donar.azurewebsites.net/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
-            SharedPreferences preferencias = getSharedPreferences
-                    ("ID usuario", Context.MODE_PRIVATE);
+                SharedPreferences preferencias = getSharedPreferences
+                        ("ID usuario", Context.MODE_PRIVATE);
 
-            PacientesService pacientesService = retrofit.create(PacientesService.class);
-            Call<PacienteConsultaDTO> http_call = pacientesService.getPacienteEspecifico2(idPacient);
-            //Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico("1");
-            http_call.enqueue(new Callback<PacienteConsultaDTO>() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onResponse(Call<PacienteConsultaDTO> call, Response<PacienteConsultaDTO> response) {
-                    try {
-                        if(response.isSuccessful()) {
-                            switch (response.code()) {
-                                case 200:
-                                    if (response.body() != null) {
-                                        PacienteConsultaDTO paciente = (PacienteConsultaDTO) response.body();
-                                        nombre.setText(nombre.getText() + "\n" + paciente.getNombrePaciente());
-                                        apellido.setText(apellido.getText() + "\n" + paciente.getApellidoPaciente());
-                                        telefono.setText(telefono.getText() + "\n" + paciente.getTelefonoPaciente());
-                                        edad.setText(edad.getText() + "\n" + Integer.valueOf(paciente.getEdad()).toString());
-                                        email.setText(email.getText() + "\n" + paciente.getEmail());
-                                        sintomas.setText(sintomasSave);
-                                        sintomas.setEnabled(false);
-                                    } else {
-                                        Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
-                                                " por favor vuelva a loguearse.");
-                                        throw new Exception("No hay usuario logueado");
-                                    }
-                                break;
-                                case 404:
-                                    Toast.makeText(getApplicationContext(), "Recurso no encontrado.", Toast.LENGTH_LONG).show();
-                                    break;
-                                default:
-                                    throw new Exception("Codigo de error: " +  response.code());
+                PacientesService pacientesService = retrofit.create(PacientesService.class);
+                Call<PacienteConsultaDTO> http_call = pacientesService.getPacienteEspecifico2(idPacient);
+                //Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico("1");
+                http_call.enqueue(new Callback<PacienteConsultaDTO>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onResponse(Call<PacienteConsultaDTO> call, Response<PacienteConsultaDTO> response) {
+                        try {
+                            if (response.isSuccessful()) {
+                                switch (response.code()) {
+                                    case 200:
+                                        if (response.body() != null) {
+                                            PacienteConsultaDTO paciente = (PacienteConsultaDTO) response.body();
+                                            nombre.setText(nombre.getText() + "\n" + paciente.getNombrePaciente());
+                                            apellido.setText(apellido.getText() + "\n" + paciente.getApellidoPaciente());
+                                            telefono.setText(telefono.getText() + "\n" + paciente.getTelefonoPaciente());
+                                            edad.setText(edad.getText() + "\n" + Integer.valueOf(paciente.getEdad()).toString());
+                                            email.setText(email.getText() + "\n" + paciente.getEmail());
+                                            sintomas.setText(sintomasSave);
+                                            sintomas.setEnabled(false);
+                                        } else {
+                                            Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
+                                                    " por favor vuelva a loguearse.");
+                                            throw new Exception("No hay usuario logueado");
+                                        }
+                                        break;
+                                    case 404:
+                                        Toast.makeText(getApplicationContext(), "Recurso no encontrado.", Toast.LENGTH_LONG).show();
+                                        break;
+                                    default:
+                                        throw new Exception("Codigo de error: " + response.code());
+                                }
+                            }
+                        } catch (Exception ex) {
+                            try {
+                                throw new Exception(ex.getMessage());
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                         }
-                    } catch (Exception ex) {
-                        try {
-                            throw new Exception(ex.getMessage());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<PacienteConsultaDTO> call, Throwable t) {
-                    Log.e("detail", t.getMessage());
-                    Log.e("CALL API FAIL", "Hubo un problema al llamar a la API.");
-                }
-            });
+                    @Override
+                    public void onFailure(Call<PacienteConsultaDTO> call, Throwable t) {
+                        Log.e("detail", t.getMessage());
+                        Log.e("CALL API FAIL", "Hubo un problema al llamar a la API.");
+                    }
+                });
+            }
+            else
+            {
+                Toast.makeText(this,
+                        "El dispositivo no cuenta con conexion a intenret en este momento",
+                        Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this.getApplicationContext(), sinConexionInternet.class );
+                startActivity(intent);
+            }
         }
         catch (Exception ex)
         {
@@ -432,5 +478,13 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
             Intent i = new Intent(this.getApplicationContext(), LoginActivity.class);
             startActivity(i);
         }
+    }
+
+    private boolean verificarConexion() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return (networkInfo != null && networkInfo.isConnected());
     }
 }
