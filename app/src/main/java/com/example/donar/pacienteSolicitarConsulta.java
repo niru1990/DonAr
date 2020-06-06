@@ -152,7 +152,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
                         ("ID usuario", Context.MODE_PRIVATE);
 
 
-                idPacient = preferencias.getString("ID", "1"); //TODO modificar por 0 cuando se reciba el id
+                idPacient = preferencias.getString("ID", "0");
 
                 if (idPacient.equals("0")) {
                     throw new Exception("Es necesario volver a loguearse.");
