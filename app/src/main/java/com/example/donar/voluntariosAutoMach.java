@@ -92,9 +92,9 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                 EventoServices eventoServices = retrofit.create(EventoServices.class);
 
                 //Obtengo los eventos a base del id del voluntario o voluntario medico.
-                Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId(idVoluntario); //Como debería quedar finalmente
+                //Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId(idVoluntario); //Como debería quedar finalmente
                 //Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId("1");//Voluntario basico
-                //Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId("3"); //Voluntario medico
+                Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId("3"); //Voluntario medico
                 http_call.enqueue(new Callback<List<EventoDTO>>() {
                     @Override
                     public void onResponse(Call<List<EventoDTO>> call, Response<List<EventoDTO>> response) {
@@ -247,7 +247,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                                         else
                                             intent = new Intent(context, pacientesHistoriaCLinica.class);
 
-                                        intent.putExtra("idEvento", e.getId());
+                                        SaveEventId(e.getId().toString());
                                         startActivity(intent);
                                     }
                                     else
@@ -307,6 +307,16 @@ public class voluntariosAutoMach extends AppCompatActivity  {
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
         return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    private void SaveEventId(String id)
+    {
+        SharedPreferences preferencias = getSharedPreferences
+                ("ID usuario", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString("idEvento",id);
+        editor.commit();
     }
 
 }
