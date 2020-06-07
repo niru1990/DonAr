@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 public interface PaisService {
 
     //Get voluntario basico
-    String API_ROUTE_BASICO= "api/pais/";
+    String API_ROUTE_BASICO= "api/Nacionalidad/";
     @GET(API_ROUTE_BASICO)
     Call<List<PaisDTO>> getPaises();
 

@@ -23,9 +23,15 @@
     <string name="txtSinInternet2">para realizar esta acción.</string>
     <string name="txtSinInternet3">Por favor intente mas tarde</string>
     <string name="historiaClinicaTitle">Historia clinica</string>
+    <string name="txtGenero">Genero: </string>
+    <string name="txtNombreCompleto">Nombre completo: </string>
+    <string name="txtContacto">Contacto: </string>
+    <string name="txtTituloHC">Historia Clinica</string>
 
     <!--Switch-->
     <string name="seguimiento">Seguimiento </string>
+    <string name="diagnosticoPresuntivo">Diagnostico presuntivo</string>
+    <string name="tratamientoFarmacologico">Tratamiento farmacologico</string>
 
     <!-- Botones -->
     <string name="btnRegistrar">Registrarse</string>
@@ -61,11 +67,7 @@
     <string name="txtNacionalidad">Nacionalidad</string>
     <string name="txtProvincia">Provincia</string>
     <string name="txtLocalidad">Localidad</string>
-    <string name="matricula_invalida">Por favor, ingrese una matricula válida.</string>
-    <string name="seguro_invalido">Por favor, ingrese un seguro válido.</string>
-    <string name="horarioIngreso_invalido">Por favor, ingrese un horario de ingreso válido.</string>
-    <string name="horarioSalida_invalido">Por favor, ingrese un horario de salida válido.</string>
-    <string name="txtGenero">Género</string>
+    <string name="loginWarningDescr">Por favor, primero registrate antes de iniciar sesión.</string>
 
 
 </resources>

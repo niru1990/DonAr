@@ -7,8 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -92,6 +90,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public GoogleSignInAccount getCuentaLogueada(){
+        return GoogleSignIn.getLastSignedInAccount(this);
+    }
+
     private void handleSignInResult(@NotNull Task<GoogleSignInAccount> completedTask){
         try{
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -129,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private String getEmail(){
+    public String getEmail(){
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         String personEmail="";
         if (acct != null) {

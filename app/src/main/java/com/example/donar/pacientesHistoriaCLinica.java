@@ -45,7 +45,7 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
         apellido = (TextView) findViewById(R.id.txtApellido);
         id = (TextView) findViewById(R.id.txtIdHistorial);
         detalle = (EditText) findViewById(R.id.edtDetalle);
-        historial = (ListView) findViewById(R.id.lstHistorial);
+        //historial = (ListView) findViewById(R.id.lstHistorial);
 
         agregar.setOnClickListener(this);
         cancelar.setOnClickListener(this);

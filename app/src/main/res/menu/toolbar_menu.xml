@@ -17,13 +17,14 @@
         app:showAsAction="ifRoom"/>
 
     <!-- Tambien pueden tenerlo oculto a menos que se deplieguen las opciones (app:showAsAction="never") -->
-    <!-- LOGIN -->
-    <item android:id="@+id/action_login_oculto"
-        android:title="@string/action_login"
-        app:showAsAction="never"/>
     <!-- REGISTRO -->
     <item android:id="@+id/action_registro_oculto"
         android:title="@string/action_registro"
         app:showAsAction="never"/>
+    <!-- LOGIN -->
+    <item android:id="@+id/action_login_oculto"
+        android:title="@string/action_login"
+        app:showAsAction="never"/>
+
 
 </menu>

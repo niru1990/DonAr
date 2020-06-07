@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -55,6 +56,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
     private ArrayList<SpinnerItem> misPaises = new ArrayList<>();
     private ArrayList<SpinnerItem> misProvincias = new ArrayList<>();
     private String idTDU,idPais,idProvincia, nombrePais, nombreProvincia;
+    private Integer idUsuario;
     private TextView txtProvincia;
 
 
@@ -78,10 +80,12 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         campoApellido = findViewById(R.id.edtApellido);
         radioGroupGenero = findViewById(R.id.generoGroup);
         //radioButtonGenero = findViewById(R.id.)
+        campoMail = findViewById(R.id.edtEmail);
         campoEdad = findViewById(R.id.edtEdad);
         campoDNI = findViewById(R.id.edtDNI);
         campoTelefono = findViewById(R.id.edtTelefono);
         campoTyC = findViewById(R.id.checkBoxTerminosYcondiciones);
+        txtProvincia = findViewById(R.id.txtProvincia);
 
 
         botonRegistrarse = findViewById(R.id.btnRegistrarPacienteOVoluntarioBasico);
@@ -216,9 +220,8 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                 SpinnerItem clickItemPais = (SpinnerItem) parentPais.getItemAtPosition(positionPais);
                 idPais = clickItemPais.getIdData();
                 nombrePais = clickItemPais.getDescriptionData();
-                String paisData = clickItemPais.getDescriptionData();
 
-                if(paisData.equals("Argentina"))
+                if(nombrePais.equals("Argentina"))
                 {
                     txtProvincia.setVisibility(View.VISIBLE);
                     spinnerProvincia.setVisibility(View.VISIBLE);
@@ -228,7 +231,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                 {
                     txtProvincia.setVisibility(View.GONE);
                     spinnerProvincia.setVisibility(View.GONE);
-
+;
                 }
 
             }
@@ -395,7 +398,12 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         //Chequeo validez de campos
         if(awesomeValidation.validate()) {
            if(campoTyC.isChecked()){
-
+/*
+               LoginActivity login = new LoginActivity();
+               if(login.getCuentaLogueada()!=null){
+                   idUsuario = Integer.valueOf(login.getCuentaLogueada().getId());
+               }
+*/
                //Validacion EXITOSA ;)
         switch(v.getId())
         {
@@ -406,11 +414,12 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
 
+                   Log.i("mensaje",idTDU);
                         switch (Integer.valueOf(idTDU)) {
                             //Paciente
                             case 1:
-                               String nombre = campoNombre.getText().toString();
-                                PacienteDTO paciente = new PacienteDTO(0,
+
+                                PacienteDTO paciente = new PacienteDTO(idUsuario,
                                         campoNombre.getText().toString(),
                                         campoApellido.getText().toString(), 1,
                                         campoMail.getText().toString(),
