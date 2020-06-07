@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +23,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
+import Negocio.Login;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -87,11 +95,27 @@ public class LoginActivity extends AppCompatActivity {
     private void handleSignInResult(@NotNull Task<GoogleSignInAccount> completedTask){
         try{
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            Intent intent = new Intent (LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+
+            checkBD();
+
+           // Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+           // startActivity(intent);
+
         }catch (ApiException e){
             Log.w("Error", "signInResult:failed code="+e.getStatusCode());
         }
+    }
+
+    private void signOut() {
+        GoogleSignInOptions gso = new GoogleSignInOptions
+                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("749769909165-eu682b4ak518svj464drdevub29ak00j.apps.googleusercontent.com")
+                .build();
+
+        GoogleSignInClient googleSignInClient=GoogleSignIn.getClient(this,gso);
+        googleSignInClient.signOut();
+        finish();
+        startActivity(getIntent());
     }
 
     private void saveID(String ID){
@@ -103,6 +127,50 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("ID",ID);
         editor.commit();
 
+    }
+
+    private String getEmail(){
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        String personEmail="";
+        if (acct != null) {
+            personEmail = acct.getEmail();
+        }
+        return personEmail;
+    }
+
+    public void checkBD() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://donar.azurewebsites.net//")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        final LoginService lg = retrofit.create(LoginService.class);
+        //String correo = getEmail();
+        String correo ="carly.magico@gmail.com";
+        Call<Login> http_call = lg.checkCorreo(correo);
+        http_call.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, Response<Login> response) {
+                Intent intent;
+                Login login = response.body();
+                if(login.getIicio()==1){
+                    Log.i("Tag_sesion","Inicio correcto");
+                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                }else{
+                    signOut();
+                    intent = new Intent(LoginActivity.this, LoginActivity.class);
+                    Log.i("Tag_sesion","No se pudo iniciar sesion");
+                }
+                startActivity(intent);
+            }
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+                signOut();
+                Intent intent = new Intent (LoginActivity.this, LoginActivity.class);
+                startActivity(intent);
+                Log.i("Tag_sesion", "No se pudo iniciar sesion |"+t.getMessage()+" | "+call);
+            }
+        });
     }
 
 }
