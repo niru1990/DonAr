@@ -22,6 +22,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
 import org.jetbrains.annotations.NotNull;
 
 //Negocio
@@ -146,7 +150,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.toolbar_menu_logueado, menu);
+        getMenuInflater().inflate(R.menu.toolbar_menu2, menu);
         return true;
     }
 
@@ -170,10 +174,26 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
             case R.id.action_registro_oculto:
                 Toast.makeText(this, "Haglo click en el boton registro oculto", Toast.LENGTH_LONG).show();
                 return true;
+            case R.id.action_cerrarSesion:
+                signOut();
+                return true;
+
             default:
                 //Aqui la accion del usuario no fue reconocida
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void signOut() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.
+                Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                build();
+
+        GoogleSignInClient googleSignInClient= GoogleSignIn.getClient(this,gso);
+        googleSignInClient.signOut();
+        finish();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -198,7 +218,6 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
         EventoDTO event = new EventoDTO();
         event.setId(BigInteger.valueOf(Long.parseLong(id.getText().toString())));
         event.setPacienteId(BigInteger.valueOf(Long.parseLong(idPaciente.getText().toString())));
-        //event.getidVoluntario();//Tomarlo del Xml
         event.setEspecialidadId(Integer.valueOf(idEspecialidad));
         event.setidVoluntarioMedico(null);
         event.setSintomas(sintomas.getText().toString());
@@ -230,6 +249,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                                                         Toast.LENGTH_SHORT).show();
 
                                                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                                startActivity(i);
                                             }
                                             break;
                                         case 404:
