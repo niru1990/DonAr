@@ -143,8 +143,8 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         final LoginService lg = retrofit.create(LoginService.class);
-        //String correo = getEmail();
-        String correo ="carly.magico@gmail.com";
+        String correo = getEmail();
+        //String correo ="carly.magico@gmail.com";
         Call<Login> http_call = lg.checkCorreo(correo);
         http_call.enqueue(new Callback<Login>() {
             @Override
