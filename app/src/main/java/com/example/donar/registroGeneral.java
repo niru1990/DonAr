@@ -55,8 +55,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
     private ArrayList<SpinnerItem> misTiposDeUsuario = new ArrayList<>();
     private ArrayList<SpinnerItem> misPaises = new ArrayList<>();
     private ArrayList<SpinnerItem> misProvincias = new ArrayList<>();
-    private String idTDU,idPais,idProvincia, nombrePais, nombreProvincia;
-    private Integer idUsuario;
+    private String idTDU,idPais,idProvincia, nombrePais, nombreProvincia, getIdUsuario;
     private TextView txtProvincia;
 
 
@@ -79,7 +78,6 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         campoNombre = findViewById(R.id.edtNombre);
         campoApellido = findViewById(R.id.edtApellido);
         radioGroupGenero = findViewById(R.id.generoGroup);
-        //radioButtonGenero = findViewById(R.id.)
         campoMail = findViewById(R.id.edtEmail);
         campoEdad = findViewById(R.id.edtEdad);
         campoDNI = findViewById(R.id.edtDNI);
@@ -225,13 +223,11 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                 {
                     txtProvincia.setVisibility(View.VISIBLE);
                     spinnerProvincia.setVisibility(View.VISIBLE);
-
                 }
                 else
                 {
                     txtProvincia.setVisibility(View.GONE);
                     spinnerProvincia.setVisibility(View.GONE);
-;
                 }
 
             }
@@ -419,7 +415,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                             //Paciente
                             case 1:
 
-                                PacienteDTO paciente = new PacienteDTO(idUsuario,
+                                PacienteDTO paciente = new PacienteDTO("0",null,
                                         campoNombre.getText().toString(),
                                         campoApellido.getText().toString(), 1,
                                         campoMail.getText().toString(),
@@ -451,7 +447,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                             //Voluntario
                                 case 2:
 
-                                VoluntarioDTO voluntarioDTO = new VoluntarioDTO(0,
+                                VoluntarioDTO voluntarioDTO = new VoluntarioDTO("0",null,
                                         campoNombre.getText().toString(),
                                         campoApellido.getText().toString(), 2,
                                         getGeneroValue().getText().toString(),

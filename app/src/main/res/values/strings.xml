@@ -67,7 +67,7 @@
     <string name="txtNacionalidad">Nacionalidad</string>
     <string name="txtProvincia">Provincia</string>
     <string name="txtLocalidad">Localidad</string>
-    <string name="loginWarningDescr">Por favor, primero registrate antes de iniciar sesión.</string>
+    <string name="loginWarningDescr">Para poder utilizar esta aplicación debe estar registrado.</string>
 
 
 </resources>
