@@ -20,6 +20,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.jetbrains.annotations.NotNull;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -63,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
     private void signIn(){
         Intent signInIntent = GoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-
     }
 
     @Override
@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask){
+    private void handleSignInResult(@NotNull Task<GoogleSignInAccount> completedTask){
         try{
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             Intent intent = new Intent (LoginActivity.this, MainActivity.class);

@@ -23,16 +23,16 @@
         android:id="@+id/txtRegisterMedicoTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Creá tu cuenta"
         android:layout_marginHorizontal="10sp"
+        android:text="Creá tu cuenta"
         android:textSize="40sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1"
-        />
+        app:layout_constraintVertical_bias="0.1" />
 
 
     <EditText
@@ -41,28 +41,28 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10sp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Matrícula"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.238"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.245" />
+        app:layout_constraintVertical_bias="0.193" />
 
     <TextView
         android:id="@+id/txtEspecialidad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10sp"
-        android:layout_marginTop="30dp"
         android:text="@string/txtEspecialidad"
-        android:textSize="30sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/spnEspecialidad"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtMatricula"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.821" />
 
     <Spinner
         android:id="@+id/spnEspecialidad"
@@ -72,24 +72,25 @@
         android:layout_marginTop="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtMatricula"
-        app:layout_constraintVertical_bias="0.171" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.429" />
+
 
     <EditText
         android:id="@+id/edtSeguro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="268dp"
+        android:layout_marginBottom="540dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Seguro"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnEspecialidad" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <TextView
@@ -98,46 +99,69 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10sp"
         android:text="@string/txtHorarios"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/edtHorarioIngreso"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnHorarioIngreso"
         app:layout_constraintEnd_toEndOf="@+id/include3"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtSeguro"
 
-        app:layout_constraintVertical_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.937"
         tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/edtHorarioIngreso"
-        android:layout_width="100sp"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/btnHorarioIngreso"
+        android:layout_width="142dp"
+        android:layout_height="59dp"
         android:layout_marginHorizontal="10sp"
         android:ems="10"
-        android:hint="Ingreso"
+        android:hint="Seleccionar Ingreso"
         android:inputType="datetime"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/include3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.742" />
+        app:layout_constraintVertical_bias="0.666" />
 
-    <EditText
-        android:id="@+id/edtHorarioSalida"
-        android:layout_width="100sp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Salida"
-        android:inputType="datetime"
-        android:layout_marginHorizontal="10sp"
+    <TextView
+        android:id="@+id/ingresoTextView"
+        android:layout_width="128dp"
+        android:layout_height="35dp"
+        android:text="Horario de Ingreso: xx:xx hs."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.743"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.829" />
+        app:layout_constraintVertical_bias="0.598"></TextView>
+
+    <Button
+        android:id="@+id/btnHorarioSalida"
+        android:layout_width="143dp"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="10sp"
+        android:ems="10"
+        android:hint="Seleccionar Salida"
+        android:inputType="datetime"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtHorarios"
+        app:layout_constraintVertical_bias="0.601" />
+
+    <TextView
+        android:id="@+id/salidaTextView"
+        android:layout_width="117dp"
+        android:layout_height="40dp"
+        android:text="Horario de Salida: xx:xx hs."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.681"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.707"></TextView>
 
     <Button
         android:id="@+id/btnRegistrarMedico"
@@ -147,10 +171,10 @@
         android:text="@string/btnRegistrarse"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.934" />
+        app:layout_constraintVertical_bias="0.948" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

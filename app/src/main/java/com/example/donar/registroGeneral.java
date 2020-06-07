@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,7 @@ import DonArDato.ProvinciaDTO;
 import DonArDato.SpinnerItem;
 import DonArDato.TipoDeUsuarioDTO;
 import DonArDato.VoluntarioDTO;
+import Negocio.Paciente;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,14 +45,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class registroGeneral extends AppCompatActivity implements View.OnClickListener{
 
     private Spinner spinnerTipoUsuario,spinnerProvincia,spinnerPais;
-    private EditText campoNombre,campoApellido,campoDNI,campoMail,campoTelefono,campoNacionalidad,campoEdad;
+    private EditText campoNombre,campoApellido,campoDNI,campoMail,campoTelefono,campoEdad;
     private Button botonRegistrarse, botonSiguiente;
     private CheckBox campoTyC;
-    private SpinnerAdaptor miAdaptador;
+    private RadioGroup radioGroupGenero;
+    private RadioButton radioButtonGenero;
+    private SpinnerAdaptor adaptadorTDU,adaptadorPais,adaptadorProvincia;
     private ArrayList<SpinnerItem> misTiposDeUsuario = new ArrayList<>();
     private ArrayList<SpinnerItem> misPaises = new ArrayList<>();
     private ArrayList<SpinnerItem> misProvincias = new ArrayList<>();
-    private String idUsuario;
+    private String idTDU,idPais,idProvincia, nombrePais, nombreProvincia;
     private TextView txtProvincia;
 
 
@@ -63,11 +68,6 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         //Seteo variables
         configView();
 
-        //Seteo valores a los spinners
-        cargarSpinnerTipoDeUsuario();
-        cargarSpinnerPais();
-        cargarSpinnerProvincia();
-
     }
 
 
@@ -76,12 +76,13 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
 
         campoNombre = findViewById(R.id.edtNombre);
         campoApellido = findViewById(R.id.edtApellido);
+        radioGroupGenero = findViewById(R.id.generoGroup);
+        //radioButtonGenero = findViewById(R.id.)
         campoEdad = findViewById(R.id.edtEdad);
         campoDNI = findViewById(R.id.edtDNI);
         campoTelefono = findViewById(R.id.edtTelefono);
-        spinnerPais = findViewById(R.id.spnNacionalidad);
-        spinnerProvincia = findViewById(R.id.spnProvincia);
         campoTyC = findViewById(R.id.checkBoxTerminosYcondiciones);
+
 
         botonRegistrarse = findViewById(R.id.btnRegistrarPacienteOVoluntarioBasico);
         botonSiguiente = findViewById(R.id.btnSiguiente);
@@ -103,19 +104,25 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         //Valido teléfono
         awesomeValidation.addValidation(this,R.id.edtTelefono,"[10-13]{1}[0-9]{9}$",R.string.telefono_invalido);
 
+        //Seteo valores a los spinners
+        cargarSpinnerTipoDeUsuario();
+        cargarSpinnerProvincia();
+        cargarSpinnerPais();
+
     }
 
     private void cargarSpinnerTipoDeUsuario() {
         spinnerTipoUsuario = (Spinner) findViewById(R.id.spnTipoVoluntario);
-        miAdaptador = new SpinnerAdaptor(registroGeneral.this, misTiposDeUsuario);
-        spinnerTipoUsuario.setAdapter(miAdaptador);
+        adaptadorTDU = new SpinnerAdaptor(registroGeneral.this, misTiposDeUsuario);
+        spinnerTipoUsuario.setAdapter(adaptadorTDU);
 
         spinnerTipoUsuario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                SpinnerItem clickItem = (SpinnerItem) parent.getItemAtPosition(position);
-                idUsuario = clickItem.getIdData();
-                String eds = clickItem.getDescriptionData();
+            public void onItemSelected(AdapterView<?> parentTDU, View view, int position, long id) {
+                SpinnerItem clickItemTDU = (SpinnerItem) parentTDU.getItemAtPosition(position);
+                idTDU = clickItemTDU.getIdData();
+                String eds = clickItemTDU.getDescriptionData();
+
 
                 if(eds.equals("Voluntario Medico"))
                 {
@@ -136,15 +143,14 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-
         try {
             //Creo llamada
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://donar.azurewebsites.net/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-            //UsuarioService usuarioService = retrofit.create(UsuarioService.class);
-            Call<List<TipoDeUsuarioDTO>> http_call = retrofit.create(UsuarioService.class).getTiposDeUsuario();
+            UsuarioService usuarioService = retrofit.create(UsuarioService.class);
+            Call<List<TipoDeUsuarioDTO>> http_call = usuarioService.getTiposDeUsuario();
 
             //Encolo llamda
             http_call.enqueue(new Callback<List<TipoDeUsuarioDTO>>() {
@@ -162,7 +168,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                                         item.getTipoDeUsuario()));
                             }
                             //Aviso al adaptor que se actualizo la información
-                            miAdaptador.notifyDataSetChanged();
+                            adaptadorTDU.notifyDataSetChanged();
                         }
                         else {
                             throw new Exception("Código de respuesta: " + response.code());
@@ -170,7 +176,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                     }
                     catch (Exception ex)
                     {
-                        Log.e("Cargar especialidades", ex.getMessage());
+                        Log.e("Cargar tipos de usuario", ex.getMessage());
                         try {
                             throw new Exception(ex.getMessage());
                         }
@@ -201,17 +207,18 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
 
     private void cargarSpinnerPais() {
         spinnerPais = (Spinner) findViewById(R.id.spnNacionalidad);
-        miAdaptador = new SpinnerAdaptor(registroGeneral.this, misPaises);
-        spinnerPais.setAdapter(miAdaptador);
+        adaptadorPais = new SpinnerAdaptor(registroGeneral.this, misPaises);
+        spinnerPais.setAdapter(adaptadorPais);
 
         spinnerPais.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                SpinnerItem clickItem = (SpinnerItem) parent.getItemAtPosition(position);
-                idUsuario = clickItem.getIdData();
-                String eds = clickItem.getDescriptionData();
+            public void onItemSelected(AdapterView<?> parentPais, View view, int positionPais, long id) {
+                SpinnerItem clickItemPais = (SpinnerItem) parentPais.getItemAtPosition(positionPais);
+                idPais = clickItemPais.getIdData();
+                nombrePais = clickItemPais.getDescriptionData();
+                String paisData = clickItemPais.getDescriptionData();
 
-                if(eds.equals("Argentina"))
+                if(paisData.equals("Argentina"))
                 {
                     txtProvincia.setVisibility(View.VISIBLE);
                     spinnerProvincia.setVisibility(View.VISIBLE);
@@ -239,6 +246,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                     .baseUrl("https://donar.azurewebsites.net/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
+
             //UsuarioService usuarioService = retrofit.create(UsuarioService.class);
             Call<List<PaisDTO>> http_call = retrofit.create(PaisService.class).getPaises();
 
@@ -258,7 +266,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                                         item.getPais()));
                             }
                             //Aviso al adaptor que se actualizo la información
-                            miAdaptador.notifyDataSetChanged();
+                            adaptadorPais.notifyDataSetChanged();
                         }
                         else {
                             throw new Exception("Código de respuesta: " + response.code());
@@ -298,15 +306,15 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
 
     private void cargarSpinnerProvincia(){
         spinnerProvincia = (Spinner) findViewById(R.id.spnProvincia);
-        miAdaptador = new SpinnerAdaptor(registroGeneral.this, misProvincias);
-        spinnerProvincia.setAdapter(miAdaptador);
+        adaptadorProvincia = new SpinnerAdaptor(registroGeneral.this, misProvincias);
+        spinnerProvincia.setAdapter(adaptadorProvincia);
 
         spinnerProvincia.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SpinnerItem clickItem = (SpinnerItem) parent.getItemAtPosition(position);
-                idUsuario = clickItem.getIdData();
-                String eds = clickItem.getDescriptionData();
+                idProvincia = clickItem.getIdData();
+                nombreProvincia = clickItem.getDescriptionData();
 
             }
 
@@ -338,11 +346,11 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                             misProvincias.add(new SpinnerItem("0", "Seleccione..." ));
                             //Cargo mi lista con valores de la tabla
                             for(ProvinciaDTO item: response.body()) {
-                                misPaises.add(new SpinnerItem(item.getId(),
+                                misProvincias.add(new SpinnerItem(item.getId(),
                                         item.getProvincia()));
                             }
                             //Aviso al adaptor que se actualizo la información
-                            miAdaptador.notifyDataSetChanged();
+                            adaptadorProvincia.notifyDataSetChanged();
                         }
                         else {
                             throw new Exception("Código de respuesta: " + response.code());
@@ -379,37 +387,10 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
 
 
     }
-    /*
-    private Object ObtenerService(String spinnerName) {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://donar.azurewebsites.net/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        switch(spinnerName) {
-            case "Tipo de usuarios":
-                return retrofit.create(UsuarioService.class).getTiposDeUsuario();
-
-            case "Paises":
-                return retrofit.create(PaisService.class).getPaises();
-
-            case "Provincias":
-                return retrofit.create(ProvinciaService.class).getProvincias();
-
-            default:
-                return null;
-        }
-    }
-    */
 
 
     @Override
     public void onClick(@NotNull View v) {
-        Log.i("ID toolbar", String.valueOf(v.getId()));
-        //Intent intent;
-        Spinner spinner = findViewById(R.id.spnTipoVoluntario);
-        String tipoDeUsuario = spinner.getSelectedItem().toString();
 
         //Chequeo validez de campos
         if(awesomeValidation.validate()) {
@@ -425,13 +406,20 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
 
-                        switch (tipoDeUsuario) {
-                            case "Paciente":
-
-                                PacienteDTO paciente = new PacienteDTO(campoNombre.getText().toString(),
-                                        campoApellido.getText().toString(),Integer.parseInt(campoDNI.getText().toString()),campoTelefono.getText().toString(),
-                                        spinnerProvincia.getSelectedItem().toString(),
-                                        spinnerPais.getSelectedItem().toString());
+                        switch (Integer.valueOf(idTDU)) {
+                            //Paciente
+                            case 1:
+                               String nombre = campoNombre.getText().toString();
+                                PacienteDTO paciente = new PacienteDTO(0,
+                                        campoNombre.getText().toString(),
+                                        campoApellido.getText().toString(), 1,
+                                        campoMail.getText().toString(),
+                                        getGeneroValue().getText().toString(),
+                                        Integer.parseInt(campoDNI.getText().toString()),
+                                        campoTelefono.getText().toString(),
+                                        Integer.parseInt(campoEdad.getText().toString()),
+                                        null,
+                                        idProvincia,0);
 
                                 PacientesService pacienteService = retrofit.create(PacientesService.class);
 
@@ -451,11 +439,45 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                                 });
 
                                 break;
-                            case "Voluntario":
+                            //Voluntario
+                                case 2:
+
+                                VoluntarioDTO voluntarioDTO = new VoluntarioDTO(0,
+                                        campoNombre.getText().toString(),
+                                        campoApellido.getText().toString(), 2,
+                                        getGeneroValue().getText().toString(),
+                                        Integer.parseInt(campoDNI.getText().toString()),
+                                        campoMail.getText().toString(),
+                                        campoTelefono.getText().toString(),
+                                        Integer.parseInt(campoEdad.getText().toString()), idPais,
+                                        idProvincia);
+
+
+                                VoluntariosService voluntarioBasicoService = retrofit.create(VoluntariosService.class);
+
+                                Call<Void> http_call_voluntarioBasico = voluntarioBasicoService.addVoluntarioBasico(voluntarioDTO);
+
+                                http_call_voluntarioBasico.enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                        startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+                                        Log.i("HTTP ERROR", t.getMessage());
+                                    }
+                                });
+
+                                    //Voluntario fundacion
+                           /*
+                            case 3:
 
                                 VoluntarioDTO voluntarioDTO = new VoluntarioDTO(campoNombre.getText().toString(),
-                                        campoApellido.getText().toString(),Integer.parseInt
-                                        (campoDNI.getText().toString()),campoTelefono.getText().toString(),
+                                        campoApellido.getText().toString(),
+                                        getGeneroValue().getText().toString(),
+                                        Integer.parseInt(campoDNI.getText().toString()),campoTelefono.getText().toString(),
                                         spinnerProvincia.getSelectedItem().toString(),
                                         spinnerPais.getSelectedItem().toString());
 
@@ -476,15 +498,16 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                                         Log.i("HTTP ERROR", t.getMessage());
                                     }
                                 });
+*/
 
                                 break;
 
                             default:
-                                Toast.makeText(getApplicationContext(), R.string.tipo_usuario_invalido, Toast.LENGTH_SHORT).show();
                         }
 
                         break;
 
+                        //Voluntario medico
                         case R.id.btnSiguiente:
                             guardarPreferencias(v);
                             break;
@@ -501,33 +524,41 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    public void guardarPreferencias(View v) {
+    public void guardarPreferencias(@NotNull View v) {
 
         SharedPreferences preferencias = getSharedPreferences
                 ("Datos generales medico", Context.MODE_PRIVATE);
 
         String nombre = campoNombre.getText().toString();
         String apellido = campoApellido.getText().toString();
+        String genero = getGeneroValue().getText().toString();
+        String email = campoMail.getText().toString();
         String edad = campoEdad.getText().toString();
         String DNI = campoDNI.getText().toString();
         String telefono = campoTelefono.getText().toString();
-        String nacionalidad = spinnerPais.getSelectedItem().toString();
+        String pais = spinnerPais.getSelectedItem().toString();
         String provincia = spinnerProvincia.getSelectedItem().toString();
 
         SharedPreferences.Editor editor = preferencias.edit();
-        editor.putString("nombre",nombre);
-        editor.putString("apellido",apellido);
-        editor.putString("Edad",edad);
-        editor.putString("DNI",DNI);
-        editor.putString("telefono",telefono);
-        editor.putString("nacionalidad",telefono);
-        editor.putString("provincia",telefono);
+        editor.putString("nombre", nombre);
+        editor.putString("apellido", apellido);
+        editor.putString("genero", genero);
+        editor.putString("email", email);
+        editor.putString("Edad", edad);
+        editor.putString("DNI", DNI);
+        editor.putString("telefono", telefono);
+        //editor.putString("nacionalidad",pais);
+        editor.putString("provincia",provincia);
 
         editor.commit();
         Intent intent = new Intent(v.getContext(), registroMedico.class);
         startActivity(intent);
     }
 
+    public RadioButton getGeneroValue(){
+        int radioId = radioGroupGenero.getCheckedRadioButtonId();
+        return radioButtonGenero = findViewById(radioId);
+    }
 
 
 
