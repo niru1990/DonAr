@@ -23,9 +23,15 @@
     <string name="txtSinInternet2">para realizar esta acción.</string>
     <string name="txtSinInternet3">Por favor intente mas tarde</string>
     <string name="historiaClinicaTitle">Historia clinica</string>
+    <string name="txtGenero">Genero: </string>
+    <string name="txtNombreCompleto">Nombre completo: </string>
+    <string name="txtContacto">Contacto: </string>
+    <string name="txtTituloHC">Historia Clinica</string>
 
     <!--Switch-->
     <string name="seguimiento">Seguimiento </string>
+    <string name="diagnosticoPresuntivo">Diagnostico presuntivo</string>
+    <string name="tratamientoFarmacologico">Tratamiento farmacologico</string>
 
     <!-- Botones -->
     <string name="btnRegistrar">Registrarse</string>
