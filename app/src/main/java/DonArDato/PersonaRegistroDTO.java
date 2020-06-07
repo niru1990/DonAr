@@ -22,12 +22,12 @@ public class PersonaRegistroDTO extends UsuarioDTO {
     private Date _fechaNacimiento;
     private String _telefono;
     private Integer _edad;
-    private String _pais;
-    private String _provincia;
+    private Integer _pais;
+    private Integer _provincia;
 
     public PersonaRegistroDTO(String _id, String _idGoogle, String _nombre, String _apellido, Integer _tipoUsuario_Id,
                               String _genero, Integer DNI, String _email, String _telefono , Integer _edad,
-                              String _pais, String _provincia) {
+                              Integer _pais, Integer _provincia) {
         this._id = _id;
         this._idGoogle = _idGoogle;
         this._nombre = _nombre;
@@ -64,11 +64,21 @@ public class PersonaRegistroDTO extends UsuarioDTO {
     public String getTelefono(){return this._telefono;}
     public void setTelefono(String value){this._telefono = value;}
 
-    public String get_provincia() { return _provincia; }
-    public void set_provincia(String _provincia) { this._provincia = _provincia; }
+    public Integer get_pais() {
+        return _pais;
+    }
 
-    public String get_localidad() { return _pais; }
-    public void set_localidad(String _localidad) { this._pais = _localidad; }
+    public void set_pais(Integer _pais) {
+        this._pais = _pais;
+    }
+
+    public Integer get_provincia() {
+        return _provincia;
+    }
+
+    public void set_provincia(Integer _provincia) {
+        this._provincia = _provincia;
+    }
 
     public Integer getDNI() { return DNI; }
     public void setDNI(Integer DNI) { this.DNI = DNI; }

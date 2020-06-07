@@ -11,8 +11,8 @@ public class VoluntarioMedicoDTO extends PersonaRegistroDTO
 
             public VoluntarioMedicoDTO(String _id, String _idGoogle, String _nombre, String _apellido,
                                        Integer _tipoUsuario_Id, String _genero, Integer DNI, String email,
-                                       String _telefono, Integer _edad, String _pais,
-                                       String _provincia, int especialidadId, String matricula,
+                                       String _telefono, Integer _edad, Integer _pais,
+                                       Integer _provincia, int especialidadId, String matricula,
                                        String seguro, String inicioJornada, String finJornada) {
                 super(_id, _idGoogle, _nombre, _apellido, _tipoUsuario_Id, _genero, DNI, email,
                         _telefono, _edad, _pais, _provincia);

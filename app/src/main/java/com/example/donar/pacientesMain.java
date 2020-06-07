@@ -82,13 +82,7 @@ public class pacientesMain extends DonArToolBar implements View.OnClickListener 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_login:
-                Toast.makeText(this, "Hago click en boton login", Toast.LENGTH_SHORT).show();
-                return true;
 
-            case R.id.action_registro:
-                Toast.makeText(this, "Haglo click en el boton registro", Toast.LENGTH_SHORT).show();
-                return true;
 
             case R.id.action_login_oculto:
                 Toast.makeText(this, "Hago click en boton login oculto", Toast.LENGTH_LONG).show();

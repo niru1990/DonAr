@@ -2,19 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- "Item menu para LOGIN", aparece en el toolbar si tiene espacio -->
-    <item
-        android:id="@+id/action_login"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="@string/action_login"
-        app:showAsAction="ifRoom"/>
 
-    <!-- "Item menu para REGISTRO", aparece en el toolbar si tiene espacio -->
-    <item
-        android:id="@+id/action_registro"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="@string/action_registro"
-        app:showAsAction="ifRoom"/>
+
+
 
     <!-- Tambien pueden tenerlo oculto a menos que se deplieguen las opciones (app:showAsAction="never") -->
     <!-- REGISTRO -->

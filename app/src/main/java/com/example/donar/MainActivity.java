@@ -111,16 +111,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(@NotNull MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
-            case R.id.action_login:
-                Toast.makeText(this, "Hago click en boton login", Toast.LENGTH_SHORT).show();
-                intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_registro:
-                Toast.makeText(this, "Hago click en el boton registro", Toast.LENGTH_SHORT).show();
-                return true;
-
             case R.id.action_login_oculto:
                 intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);

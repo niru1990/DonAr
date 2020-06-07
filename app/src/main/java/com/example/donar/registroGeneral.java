@@ -393,13 +393,10 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
 
         //Chequeo validez de campos
         if(awesomeValidation.validate()) {
+
+            //Chequeo validez Terminos y Condiciones
            if(campoTyC.isChecked()){
-/*
-               LoginActivity login = new LoginActivity();
-               if(login.getCuentaLogueada()!=null){
-                   idUsuario = Integer.valueOf(login.getCuentaLogueada().getId());
-               }
-*/
+
                //Validacion EXITOSA ;)
         switch(v.getId())
         {
@@ -423,8 +420,8 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                                         Integer.parseInt(campoDNI.getText().toString()),
                                         campoTelefono.getText().toString(),
                                         Integer.parseInt(campoEdad.getText().toString()),
-                                        null,
-                                        idProvincia,0);
+                                        Integer.valueOf(idPais), Integer.valueOf(idProvincia)
+                                        ,0);
 
                                 PacientesService pacienteService = retrofit.create(PacientesService.class);
 
@@ -451,11 +448,11 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                                         campoNombre.getText().toString(),
                                         campoApellido.getText().toString(), 2,
                                         getGeneroValue().getText().toString(),
-                                        Integer.parseInt(campoDNI.getText().toString()),
+                                        Integer.valueOf(campoDNI.getText().toString()),
                                         campoMail.getText().toString(),
                                         campoTelefono.getText().toString(),
-                                        Integer.parseInt(campoEdad.getText().toString()), idPais,
-                                        idProvincia);
+                                        Integer.valueOf(campoEdad.getText().toString()), Integer.valueOf(idPais),
+                                        Integer.valueOf(idProvincia));
 
 
                                 VoluntariosService voluntarioBasicoService = retrofit.create(VoluntariosService.class);
