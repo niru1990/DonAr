@@ -28,6 +28,11 @@ public interface EventoServices {
     @POST(API_ROUTE_ADD_ITEM)
     Call<Void> addEvento(@Body EventoDTO evento);
 
+    @Headers("Content-Type: application/json")
+    @PUT(API_ROUTE_ADD_ITEM)
+    Call<Void> updateFullEvento(@Body EventoDTO evento);
+
+
     //Actualizar eventos
     String API_ROUTE_UPDATE= "api/evento/asignarEspecialidad/";
     @Headers("Content-Type: application/json")

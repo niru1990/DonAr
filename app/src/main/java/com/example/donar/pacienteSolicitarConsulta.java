@@ -20,6 +20,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Text;
 
@@ -95,7 +99,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        getMenuInflater().inflate(R.menu.toolbar_menu2, menu);
         return true;
     }
 
@@ -117,10 +121,26 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
                 Toast.makeText(this, "Haglo click en el boton registro oculto", Toast.LENGTH_LONG).show();
                 return true;
 
+            case R.id.action_cerrarSesion:
+                signOut();
+                return true;
+
             default:
                 //Aqui la accion del usuario no fue reconocida
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void signOut() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.
+                Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                build();
+
+        GoogleSignInClient googleSignInClient= GoogleSignIn.getClient(this,gso);
+        googleSignInClient.signOut();
+        finish();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     public void loadData(){
@@ -252,7 +272,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
         e.setEspecialidadId(null);
         e.setidVoluntarioMedico(null);
         e.setidVoluntario(null);
-        e.setSeguimiento(false);
+        //e.setSeguimiento(false);
 
         return e;
     }

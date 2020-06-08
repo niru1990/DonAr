@@ -11,6 +11,7 @@ public class EventoReducidoDTO {
     private String apellidoMedico;
     private String fecha;
 
+    //Getters
     public BigInteger getId(){return this.id;}
     public String getNombrePaciente(){return this.nombrePaciente;}
     public String getApellidoPaciente() {return this.apellidoPaciente;}
@@ -18,6 +19,7 @@ public class EventoReducidoDTO {
     public String getApellidoMedico(){return this.apellidoMedico;}
     public String getFecha(){return this.fecha;}
 
+    //Setters
     public void setId (BigInteger value){this.id = value;}
     public void setNombrePaciente (String value){this.nombrePaciente = value;}
     public void setApellidoPaciente (String value){this.apellidoPaciente = value;}
