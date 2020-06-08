@@ -52,26 +52,36 @@ public class ListAdapter extends ArrayAdapter<EventoAutoMach>{
 
             idEvento = (TextView) view.findViewById(R.id.idEvento);
             idEvento.setText(eventoAutoMach.getIdEvento());
+
             nombre = (TextView) view.findViewById(R.id.nombre);
             nombre.setText(eventoAutoMach.getNombre() + " " + eventoAutoMach.getApellido());
             nombreMedico = (TextView) view.findViewById(R.id.txtNombreMedico);
-            nombreMedico.setText(eventoAutoMach.getNombreMedico());
+            if(eventoAutoMach.getNombreMedico().equals(""))
+                nombreMedico.setText("");
+            else
+                nombreMedico.setText(eventoAutoMach.getNombreMedico());
             aceptar = (ImageButton) view.findViewById(R.id.aceptar);
             rechazar = (ImageButton) view.findViewById(R.id.rechazar);
+            if(eventoAutoMach.getButtonsOn()) {
+                aceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((ListView) parent).performItemClick(v, position, 0);
+                    }
+                });
 
-            aceptar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((ListView) parent).performItemClick(v, position, 0);
-                }
-            });
-
-            rechazar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ((ListView) parent).performItemClick(view, position, 1);
-                }
-            });
+                rechazar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((ListView) parent).performItemClick(view, position, 1);
+                    }
+                });
+            }
+            else
+            {
+                aceptar.setVisibility(View.INVISIBLE);
+                rechazar.setVisibility(View.INVISIBLE);
+            }
 
             if(position % 2 == 1)
                 view.setBackgroundColor(Color.WHITE);

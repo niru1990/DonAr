@@ -37,7 +37,6 @@ public interface EventoServices {
     String API_ROUTE_UPDATE= "api/evento/asignarEspecialidad/";
     @Headers("Content-Type: application/json")
     @PUT(API_ROUTE_UPDATE)
-    //@FormUrlEncoded
     Call<EventoDTO> updateEvento(@Body AsignarEspecialidadDTO actualizador);
 
     //Obtener evento por id de voluntario
@@ -59,8 +58,18 @@ public interface EventoServices {
     String API_ROUT_MODIFY_STATUS= "api/evento/modificarestado ";
     @Headers("Content-Type: application/json")
     @PUT(API_ROUT_MODIFY_STATUS)
-    //@FormUrlEncoded
     Call<EventoDTO> modifyStatus (@Body cambiarEstado c);
 
+
+    //Eventos por id de PACIENTE
+
+    String API_ROUTE_GET_BY_PATIENT_ID = "api/evento/eventosporpaciente/{id}";
+    @GET(API_ROUTE_GET_BY_PATIENT_ID)
+    Call<List<EventoDTO>> getEventByPatientId(@Field("id") BigInteger id);
+
+    //Eventos por mail de PACIENTE
+    String API_ROUTE_GET_BY_PATIENT_MAIL = "api/evento/eventosporemailpaciente/{mail}";
+    @GET(API_ROUTE_GET_BY_PATIENT_MAIL)
+    Call<List<EventoDTO>> getEventByPatientMail(@Path("mail") String mail);
 
 }
