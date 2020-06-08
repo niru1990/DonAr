@@ -187,7 +187,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                     String provincia = preferences.getString("provincia","No posee provincia");
 
 
-                    VoluntarioMedicoDTO voluntarioMedico = new VoluntarioMedicoDTO("0",null, nombre,
+                    VoluntarioMedicoDTO voluntarioMedico = new VoluntarioMedicoDTO(null, nombre,
                             apellido, 3, genero, Integer.valueOf(DNI), email,
                             telefono, Integer.valueOf(edad), Integer.valueOf(pais), Integer.valueOf(provincia),
                             Integer.valueOf(idEspecialidad), campoMatricula.getText().toString(),

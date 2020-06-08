@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class PersonaRegistroDTO extends UsuarioDTO {
 
-    private String _id;
+    //private String _id;
     private String _idGoogle;
     private String _nombre;
     private String _apellido;
@@ -25,10 +25,12 @@ public class PersonaRegistroDTO extends UsuarioDTO {
     private Integer _pais;
     private Integer _provincia;
 
-    public PersonaRegistroDTO(String _id, String _idGoogle, String _nombre, String _apellido, Integer _tipoUsuario_Id,
+    public PersonaRegistroDTO(
+            //String _id,
+             String _idGoogle, String _nombre, String _apellido, Integer _tipoUsuario_Id,
                               String _genero, Integer DNI, String _email, String _telefono , Integer _edad,
                               Integer _pais, Integer _provincia) {
-        this._id = _id;
+       // this._id = _id;
         this._idGoogle = _idGoogle;
         this._nombre = _nombre;
         this._apellido = _apellido;
@@ -46,8 +48,8 @@ public class PersonaRegistroDTO extends UsuarioDTO {
 
     }
 
-    public String get_id() { return _id; }
-    public void set_id(String _id) {this._id = _id;}
+    //public String get_id() { return _id; }
+   // public void set_id(String _id) {this._id = _id;}
 
     public String getNombre(){return this._nombre;}
     public void setNombre(String value){this._nombre = value;}

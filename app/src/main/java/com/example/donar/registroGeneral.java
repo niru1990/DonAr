@@ -412,7 +412,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                             //Paciente
                             case 1:
 
-                                PacienteDTO paciente = new PacienteDTO("0",null,
+                                PacienteDTO paciente = new PacienteDTO(null,
                                         campoNombre.getText().toString(),
                                         campoApellido.getText().toString(), 1,
                                         campoMail.getText().toString(),
@@ -444,7 +444,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                             //Voluntario
                                 case 2:
 
-                                VoluntarioDTO voluntarioDTO = new VoluntarioDTO("0",null,
+                                VoluntarioDTO voluntarioDTO = new VoluntarioDTO(null,
                                         campoNombre.getText().toString(),
                                         campoApellido.getText().toString(), 2,
                                         getGeneroValue().getText().toString(),
