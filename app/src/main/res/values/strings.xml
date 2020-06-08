@@ -37,7 +37,7 @@
     <string name="btnRegistrar">Registrarse</string>
     <string name="btnSiguiente">Siguiente</string>
     <string name="btnRegistro">Registrate</string>
-
+    <string name="btnBuscar">Buscar</string>
     <string name="btnLogin">Login</string>
     <string name="btnSolicitar">Solicitar</string>
     <string name="btnSAsignar">Asignar</string>
