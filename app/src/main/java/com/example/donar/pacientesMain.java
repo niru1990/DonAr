@@ -46,7 +46,7 @@ public class pacientesMain extends DonArToolBar implements View.OnClickListener 
             switch(v.getId())
             {
                 case R.id.imbAsignarEspecialidad:
-                    intent = new Intent(v.getContext(), pacienteAsignarEspecialidad.class);
+                    intent = new Intent(v.getContext(), historial_de_consultas.class);
                     break;
                 case R.id.imbHistoriaClinica:
                     intent = new Intent(v.getContext(), pacientesHistoriaCLinica.class);
