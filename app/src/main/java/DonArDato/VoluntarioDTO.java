@@ -4,17 +4,18 @@ import java.math.BigInteger;
 
 public class VoluntarioDTO extends PersonaRegistroDTO{
 
-    public VoluntarioDTO( String _idGoogle, String _nombre, String _apellido,
-                         Integer _tipoUsuario_Id, String _genero, Integer DNI,String _email,
-                         String _telefono, Integer _edad, Integer _pais, Integer _provincia) {
-        super( _idGoogle, _nombre, _apellido, _tipoUsuario_Id, _genero, DNI, _email, _telefono,
-                _edad, _pais, _provincia);
+    public VoluntarioDTO( String idGoogle, String nombre, String apellido,
+                         Integer tipoUsuario_Id, Integer genero, Integer DNI,String email,
+                         String telefono, Integer edad, Integer nacionalidadId, Integer provinciaId) {
+        super( idGoogle, nombre, apellido, tipoUsuario_Id,genero, DNI, email, telefono,
+                edad, nacionalidadId, provinciaId);
 
     }
 
 
-    private BigInteger _idEvento;
-
+/*
     public BigInteger getidEvento(){return this._idEvento;}
     public void setidEvento(BigInteger value){this._idEvento = value;}
+    */
+
 }

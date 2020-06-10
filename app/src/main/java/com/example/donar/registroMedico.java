@@ -180,15 +180,15 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                     String apellido = preferences.getString("apellido", "No posee apellido");
                     String genero = preferences.getString("genero","No posee genero");
                     String email = preferences.getString("email", "No posee email");
-                    String edad = preferences.getString("edad","No posee edad");
+                    String edad = preferences.getString("edad","-1");
                     String DNI = preferences.getString("DNI", "No posee DNI");
                     String telefono = preferences.getString("telefono", "No posee teléfono");
-                    String pais = preferences.getString("pais","No posee país");
+                    String pais = preferences.getString("pais","-1");
                     String provincia = preferences.getString("provincia","No posee provincia");
 
 
                     VoluntarioMedicoDTO voluntarioMedico = new VoluntarioMedicoDTO(null, nombre,
-                            apellido, 3, genero, Integer.valueOf(DNI), email,
+                            apellido, 3, 1, Integer.valueOf(DNI), email,
                             telefono, Integer.valueOf(edad), Integer.valueOf(pais), Integer.valueOf(provincia),
                             Integer.valueOf(idEspecialidad), campoMatricula.getText().toString(),
                             campoSeguro.getText().toString(),
@@ -200,17 +200,17 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
                     VoluntariosService voluntariosService = retrofit.create(VoluntariosService.class);
-                    Call<Void> http_call = voluntariosService.addVoluntarioMedico(voluntarioMedico);
+                    Call<Integer> http_call = voluntariosService.addVoluntarioMedico(voluntarioMedico);
 
-                    http_call.enqueue(new Callback<Void>() {
+                    http_call.enqueue(new Callback<Integer>() {
                         @Override
-                        public void onResponse(Call<Void> call, Response<Void> response) {
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         }
 
                         @Override
-                        public void onFailure(Call<Void> call, Throwable t) {
+                        public void onFailure(Call<Integer> call, Throwable t) {
                             Log.i("HTTP ERROR", t.getMessage());
                         }
                     });
@@ -246,7 +246,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    String stringTiempo =  "Horario de Ingreso: "+ hourOfDay + ":" + minute + " hs.";
+                    String stringTiempo =   hourOfDay + ":" + minute + " hs.";
                     textoHorarioIngreso.setText(stringTiempo);
             }
         }, HORA, MINUTO, false);
@@ -261,7 +261,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String stringTiempo =  "Horario de Salida: "+ hourOfDay + ":" + minute + " hs.";
+                String stringTiempo =  hourOfDay + ":" + minute + " hs.";
                 textoHorarioSalida.setText(stringTiempo);
             }
         }, HORA, MINUTO, false);

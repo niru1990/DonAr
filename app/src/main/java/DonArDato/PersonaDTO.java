@@ -12,7 +12,7 @@ import java.util.Date;
 
 import Negocio.Usuario;
 
-public class PersonaDTO extends UsuarioDTO {
+public class PersonaDTO {
 
     private String _nombre;
     private String _apellido;

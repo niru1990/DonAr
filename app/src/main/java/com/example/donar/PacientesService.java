@@ -17,15 +17,15 @@ public interface PacientesService {
     //Registrar paciente
     String API_ROUTE_ADD_ITEM = "api/Paciente/";
     @POST(API_ROUTE_ADD_ITEM)
-    Call<Void> addPaciente(@Body PacienteDTO paciente);
+    Call<Integer> addPaciente(@Body PacienteDTO paciente);
 
     //Get paciente
     String API_ROUTE_GET_ESPECIFIC= "api/Paciente/{id}";
     @GET(API_ROUTE_GET_ESPECIFIC)
     Call<PacienteDTO> getPacienteEspecifico(@Path("id") String id);
 
-
     @GET(API_ROUTE_GET_ESPECIFIC)
     Call<PacienteConsultaDTO> getPacienteEspecifico2(@Path("id") String id);
+
 
 }

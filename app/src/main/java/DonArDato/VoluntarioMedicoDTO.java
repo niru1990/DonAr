@@ -3,19 +3,19 @@ package DonArDato;
 public class VoluntarioMedicoDTO extends PersonaRegistroDTO
         {
 
-    private int especialidadId;
+    private Integer especialidadId;
     private String matricula;
     private String seguro;
     private String inicioJornada;
     private String finJornada;
 
-            public VoluntarioMedicoDTO( String _idGoogle, String _nombre, String _apellido,
-                                       Integer _tipoUsuario_Id, String _genero, Integer DNI, String email,
-                                       String _telefono, Integer _edad, Integer _pais,
-                                       Integer _provincia, int especialidadId, String matricula,
+            public VoluntarioMedicoDTO( String idGoogle, String nombre, String apellido,
+                                       Integer tipoUsuarioId, Integer genero, Integer DNI, String email,
+                                       String telefono, Integer edad, Integer nacionalidadId,
+                                       Integer provinciaId, int especialidadId, String matricula,
                                        String seguro, String inicioJornada, String finJornada) {
-                super( _idGoogle, _nombre, _apellido, _tipoUsuario_Id, _genero, DNI, email,
-                        _telefono, _edad, _pais, _provincia);
+                super( idGoogle, nombre, apellido, tipoUsuarioId, genero, DNI, email,
+                        telefono, edad, nacionalidadId, provinciaId);
                 this.especialidadId = especialidadId;
                 this.matricula = matricula;
                 this.seguro = seguro;

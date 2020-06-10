@@ -22,7 +22,6 @@ import android.widget.Toast;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,7 +35,6 @@ import DonArDato.ProvinciaDTO;
 import DonArDato.SpinnerItem;
 import DonArDato.TipoDeUsuarioDTO;
 import DonArDato.VoluntarioDTO;
-import Negocio.Paciente;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -78,6 +76,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         campoNombre = findViewById(R.id.edtNombre);
         campoApellido = findViewById(R.id.edtApellido);
         radioGroupGenero = findViewById(R.id.generoGroup);
+      //  radioButtonGenero = findViewById(R.id.)
         campoMail = findViewById(R.id.edtEmail);
         campoEdad = findViewById(R.id.edtEdad);
         campoDNI = findViewById(R.id.edtDNI);
@@ -411,31 +410,68 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                         switch (Integer.valueOf(idTDU)) {
                             //Paciente
                             case 1:
+                                   Log.i("email",campoMail.getText().toString());
+
 
                                 PacienteDTO paciente = new PacienteDTO(null,
                                         campoNombre.getText().toString(),
                                         campoApellido.getText().toString(), 1,
                                         campoMail.getText().toString(),
-                                        getGeneroValue().getText().toString(),
+                                        1,
                                         Integer.parseInt(campoDNI.getText().toString()),
                                         campoTelefono.getText().toString(),
                                         Integer.parseInt(campoEdad.getText().toString()),
                                         Integer.valueOf(idPais), Integer.valueOf(idProvincia)
-                                        ,0);
+                                        ,"");
 
                                 PacientesService pacienteService = retrofit.create(PacientesService.class);
 
-                                Call<Void> http_call_paciente = pacienteService.addPaciente(paciente);
+                                Call<Integer> http_call_paciente = pacienteService.addPaciente(paciente);
 
-                                http_call_paciente.enqueue(new Callback<Void>() {
+
+
+                                http_call_paciente.enqueue(new Callback<Integer>() {
                                     @Override
-                                    public void onResponse(Call<Void> call, Response<Void> response) {
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        startActivity(intent);
+                                    public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                      //String idd = String.valueOf(response.body());
+                                      if(response.body()!=null){
+                                          Log.i("mensaje error",String.valueOf(response.body()));
+                                      }
+
+
+                                        try {
+                                            if (response.isSuccessful()) {
+                                                String message = "";
+                                                if (response.isSuccessful()) {
+                                                    message = "Su solicitud de consulta fue generada exitosamente";
+                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                    startActivity(intent);
+                                                }
+                                                else
+                                                    message = "Ocurrio algo inesperado.";
+
+                                                Toast.makeText(registroGeneral.this
+                                                        , message
+                                                        , Toast.LENGTH_SHORT).show();
+
+                                            } else {
+                                                Log.i(((Integer) response.code()).toString(), "No fue posible guardar la consulta, " +
+                                                        "por favor intente mas tarde");
+                                                throw new Exception("No fue posible guardar la consulta, " +
+                                                        "por favor intente mas tarde");
+                                            }
+                                        } catch (Exception ex) {
+                                            try {
+                                                throw new Exception(ex.getMessage());
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
                                     }
 
                                     @Override
-                                    public void onFailure(Call<Void> call, Throwable t) {
+                                    public void onFailure(Call<Integer> call, Throwable t) {
                                         Log.i("HTTP ERROR", t.getMessage());
                                     }
                                 });
@@ -447,7 +483,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                                 VoluntarioDTO voluntarioDTO = new VoluntarioDTO(null,
                                         campoNombre.getText().toString(),
                                         campoApellido.getText().toString(), 2,
-                                        getGeneroValue().getText().toString(),
+                                        1,
                                         Integer.valueOf(campoDNI.getText().toString()),
                                         campoMail.getText().toString(),
                                         campoTelefono.getText().toString(),
@@ -457,17 +493,17 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
 
                                 VoluntariosService voluntarioBasicoService = retrofit.create(VoluntariosService.class);
 
-                                Call<Void> http_call_voluntarioBasico = voluntarioBasicoService.addVoluntarioBasico(voluntarioDTO);
+                                Call<Integer> http_call_voluntarioBasico = voluntarioBasicoService.addVoluntarioBasico(voluntarioDTO);
 
-                                http_call_voluntarioBasico.enqueue(new Callback<Void>() {
+                                http_call_voluntarioBasico.enqueue(new Callback<Integer>() {
                                     @Override
-                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                    public void onResponse(Call<Integer> call, Response<Integer> response) {
                                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                         startActivity(intent);
                                     }
 
                                     @Override
-                                    public void onFailure(Call<Void> call, Throwable t) {
+                                    public void onFailure(Call<Integer> call, Throwable t) {
                                         Log.i("HTTP ERROR", t.getMessage());
                                     }
                                 });
@@ -525,6 +561,12 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    private Integer calcularGenero() {
+     Integer hola = radioGroupGenero.indexOfChild(findViewById(radioGroupGenero.getCheckedRadioButtonId()));
+        Log.i("hola","Resultado:"+hola);
+        return radioGroupGenero.indexOfChild(findViewById(radioGroupGenero.getCheckedRadioButtonId()));
+    }
+
 
     public void guardarPreferencias(@NotNull View v) {
 
@@ -533,35 +575,29 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
 
         String nombre = campoNombre.getText().toString();
         String apellido = campoApellido.getText().toString();
-        String genero = getGeneroValue().getText().toString();
+        //String genero = getGeneroValue().getText().toString();
         String email = campoMail.getText().toString();
         String edad = campoEdad.getText().toString();
         String DNI = campoDNI.getText().toString();
         String telefono = campoTelefono.getText().toString();
-        String pais = spinnerPais.getSelectedItem().toString();
-        String provincia = spinnerProvincia.getSelectedItem().toString();
+        String pais = idPais;
+        String provincia = idProvincia;
 
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putString("nombre", nombre);
         editor.putString("apellido", apellido);
-        editor.putString("genero", genero);
+       // editor.putString("genero", genero);
         editor.putString("email", email);
-        editor.putString("Edad", edad);
+        editor.putString("edad", edad);
         editor.putString("DNI", DNI);
         editor.putString("telefono", telefono);
-        //editor.putString("nacionalidad",pais);
+        editor.putString("pais",pais);
         editor.putString("provincia",provincia);
 
         editor.commit();
         Intent intent = new Intent(v.getContext(), registroMedico.class);
         startActivity(intent);
     }
-
-    public RadioButton getGeneroValue(){
-        int radioId = radioGroupGenero.getCheckedRadioButtonId();
-        return radioButtonGenero = findViewById(radioId);
-    }
-
 
 
     /*

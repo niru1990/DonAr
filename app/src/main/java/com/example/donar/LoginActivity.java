@@ -4,9 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,7 +24,6 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.jetbrains.annotations.NotNull;
 import Negocio.Login;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -90,19 +93,15 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public GoogleSignInAccount getCuentaLogueada(){
-        return GoogleSignIn.getLastSignedInAccount(this);
-    }
-
-    private void handleSignInResult(@NotNull Task<GoogleSignInAccount> completedTask){
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask){
         try{
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             checkBD();
-
-           // Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-           // startActivity(intent);
-
+/*
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+*/
         }catch (ApiException e){
             Log.w("Error", "signInResult:failed code="+e.getStatusCode());
         }
@@ -131,13 +130,22 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public String getEmail(){
+    private String getEmail(){
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         String personEmail="";
         if (acct != null) {
             personEmail = acct.getEmail();
         }
         return personEmail;
+    }
+
+    private String getId(){
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        String personId="";
+        if (acct != null) {
+            personId = acct.getId();
+        }
+        return personId;
     }
 
     public void checkBD() {
@@ -147,16 +155,17 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         final LoginService lg = retrofit.create(LoginService.class);
-        //String correo = getEmail();
-        String correo ="carly.magico@gmail.com";
-        Call<Login> http_call = lg.checkCorreo(correo);
+        String correo = getEmail();
+        //String correo ="carly.magico@gmail.com";
+        //Call<Login> http_call = lg.checkCorreo(correo);
+        Call<Login> http_call = lg.updateIDGoogle(correo, getId());
         http_call.enqueue(new Callback<Login>() {
             @Override
             public void onResponse(Call<Login> call, Response<Login> response) {
                 Intent intent;
                 Login login = response.body();
                 if(login.getIicio()==1){
-                    Log.i("Tag_sesion","Inicio correcto");
+                    Log.i("Tag_sesion","Inicio correcto "+getEmail()+" | "+getId());
                     intent = new Intent(LoginActivity.this, MainActivity.class);
                 }else{
                     signOut();
