@@ -406,18 +406,15 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
 
-                   Log.i("mensaje",idTDU);
                         switch (Integer.valueOf(idTDU)) {
                             //Paciente
                             case 1:
-                                   Log.i("email",campoMail.getText().toString());
-
 
                                 PacienteDTO paciente = new PacienteDTO(null,
                                         campoNombre.getText().toString(),
                                         campoApellido.getText().toString(), 1,
                                         campoMail.getText().toString(),
-                                        1,
+                                        calcularGenero(),
                                         Integer.parseInt(campoDNI.getText().toString()),
                                         campoTelefono.getText().toString(),
                                         Integer.parseInt(campoEdad.getText().toString()),
@@ -428,22 +425,15 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
 
                                 Call<Integer> http_call_paciente = pacienteService.addPaciente(paciente);
 
-
-
                                 http_call_paciente.enqueue(new Callback<Integer>() {
                                     @Override
                                     public void onResponse(Call<Integer> call, Response<Integer> response) {
-                                      //String idd = String.valueOf(response.body());
-                                      if(response.body()!=null){
-                                          Log.i("mensaje error",String.valueOf(response.body()));
-                                      }
-
 
                                         try {
                                             if (response.isSuccessful()) {
                                                 String message = "";
                                                 if (response.isSuccessful()) {
-                                                    message = "Su solicitud de consulta fue generada exitosamente";
+                                                    message = "Su solicitud de consulta fue generada éxitosamente.";
                                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                                     startActivity(intent);
                                                 }
@@ -483,7 +473,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                                 VoluntarioDTO voluntarioDTO = new VoluntarioDTO(null,
                                         campoNombre.getText().toString(),
                                         campoApellido.getText().toString(), 2,
-                                        1,
+                                        calcularGenero(),
                                         Integer.valueOf(campoDNI.getText().toString()),
                                         campoMail.getText().toString(),
                                         campoTelefono.getText().toString(),
@@ -561,10 +551,12 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    @NotNull
     private Integer calcularGenero() {
      Integer hola = radioGroupGenero.indexOfChild(findViewById(radioGroupGenero.getCheckedRadioButtonId()));
         Log.i("hola","Resultado:"+hola);
-        return radioGroupGenero.indexOfChild(findViewById(radioGroupGenero.getCheckedRadioButtonId()));
+        Integer generoInteger =  radioGroupGenero.indexOfChild(findViewById(radioGroupGenero.getCheckedRadioButtonId()));
+        return generoInteger;
     }
 
 
