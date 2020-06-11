@@ -188,7 +188,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
 
 
                     VoluntarioMedicoDTO voluntarioMedico = new VoluntarioMedicoDTO(null, nombre,
-                            apellido, 3, 1, Integer.valueOf(DNI), email,
+                            apellido, 3, Integer.valueOf(genero), Integer.valueOf(DNI), email,
                             telefono, Integer.valueOf(edad), Integer.valueOf(pais), Integer.valueOf(provincia),
                             Integer.valueOf(idEspecialidad), campoMatricula.getText().toString(),
                             campoSeguro.getText().toString(),
@@ -205,7 +205,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                     http_call.enqueue(new Callback<Integer>() {
                         @Override
                         public void onResponse(Call<Integer> call, Response<Integer> response) {
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(intent);
                         }
 
@@ -215,7 +215,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                         }
                     });
 
-                    intent = new Intent(v.getContext(), MainActivity.class);
+                    intent = new Intent(v.getContext(), LoginActivity.class);
                     }else{
                         //Validacion NO exitosa :(
                         Toast.makeText(getApplicationContext(), "Uno o más campos incorrectos.", Toast.LENGTH_SHORT).show();

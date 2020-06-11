@@ -17,7 +17,7 @@ public class PersonaRegistroDTO{
 
     public PersonaRegistroDTO(
             //String _id,
-             String _idGoogle, String nombre, String apellido, Integer tipoUsuario_Id,
+             String _idGoogle, String nombre, String apellido, Integer tipoUsuarioId,
                               Integer genero, Integer DNI, String email, String telefono , Integer edad,
                               Integer nacionalidadId, Integer provinciaId) {
        // this._id = _id;
