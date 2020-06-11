@@ -251,7 +251,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
             }
         }, HORA, MINUTO, false);
         timePickerDialog.show();
-    }
+    }//
 
     public void setHorarioSalida(){
         Calendar calendar = Calendar.getInstance();
