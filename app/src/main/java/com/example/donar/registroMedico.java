@@ -246,7 +246,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    String stringTiempo =   hourOfDay + ":" + minute + " hs.";
+                    String stringTiempo =   hourOfDay + ":" + minute + "hs.";
                     textoHorarioIngreso.setText(stringTiempo);
             }
         }, HORA, MINUTO, false);
@@ -261,7 +261,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String stringTiempo =  hourOfDay + ":" + minute + " hs.";
+                String stringTiempo =  hourOfDay + ":" + minute + "hs.";
                 textoHorarioSalida.setText(stringTiempo);
             }
         }, HORA, MINUTO, false);
