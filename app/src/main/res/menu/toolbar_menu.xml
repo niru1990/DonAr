@@ -7,6 +7,7 @@
         android:id="@+id/action_login"
         android:icon="@mipmap/ic_launcher_foreground"
         android:title="@string/action_login"
+
         app:showAsAction="ifRoom" />
 
     <!-- "Item menu para REGISTRO", aparece en el toolbar si tiene espacio -->

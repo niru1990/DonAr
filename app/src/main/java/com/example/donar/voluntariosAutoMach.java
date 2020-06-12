@@ -10,16 +10,20 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -42,6 +46,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
     private List<EventoAutoMach> myList = new ArrayList<>();
     ListAdapter myAdapter;
 
+
     private Toolbar toolbar;
 
     private String idVoluntario;
@@ -54,6 +59,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voluntarios_auto_mach);
         myListView = findViewById(R.id.listaPacientes);
+
         toolbar = (Toolbar) findViewById(R.id.donArToolBar);
         setSupportActionBar(toolbar);
 
@@ -72,6 +78,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                         sendStatus = 1;
                         modificarEstado(idEvento,
                                 sendStatus);
+
                         break;
 
                     case R.id.rechazar:
@@ -103,6 +110,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                 EventoServices eventoServices = retrofit.create(EventoServices.class);
 
                 //Obtengo los eventos a base del id del voluntario o voluntario medico.
+
                 Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId(idVoluntario); //Como debería quedar finalmente
                 //Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId("1");//Voluntario basico
                 //Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId("3"); //Voluntario medico
@@ -221,6 +229,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
             Log.e("EventoReducido", ex.getMessage());
         }
     }
+
 
     private void modificarEstado(String idEvento, int estado) {
         try {
@@ -371,7 +380,27 @@ public class voluntariosAutoMach extends AppCompatActivity  {
             default:
                 //Aqui la accion del usuario no fue reconocida
                 return super.onOptionsItemSelected(item);
+
         }
+
+    }
+
+    private boolean verificarConexion() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    private void SaveEventId(String id)
+    {
+        SharedPreferences preferencias = getSharedPreferences
+                ("ID usuario", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString("idEvento",id);
+        editor.commit();
     }
 
     private void signOut() {
