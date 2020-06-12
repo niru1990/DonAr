@@ -5,9 +5,10 @@
     <!-- "Item menu para LOGIN", aparece en el toolbar si tiene espacio -->
     <item
         android:id="@+id/action_login"
-        android:icon="@mipmap/ic_launcher_foreground"
+        android:icon="@drawable/ic_launcher_foreground"
         android:title="@string/action_login"
-        app:showAsAction="ifRoom" />
+        android:visible="false"
+        app:showAsAction="ifRoom"/>
 
     <!-- "Item menu para REGISTRO", aparece en el toolbar si tiene espacio -->
     <item

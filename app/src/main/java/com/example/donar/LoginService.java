@@ -1,9 +1,7 @@
 package com.example.donar;
 
-import Negocio.Login;
-
 import DonArDato.actualizaIG;
-
+import Negocio.Login;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -16,18 +14,14 @@ import retrofit2.http.Path;
 public interface LoginService {
 
     //Editar
-    String API_ROUTE_SAVE_ITEM = "/api/Login/{correo}";
-    @FormUrlEncoded
-    @PUT(API_ROUTE_SAVE_ITEM)
-    Call<Login> updateIDGoogle(
-            @Path("correo") String correo,
-            @Field("IdGoogle") String IdGoogle
-    );
-
-    //Editar con Objeto
-    String API_ROUTE_UPDATE_DATA = "api/Login/";
+    String API_ROUTE_SAVE_ITEM = "api/Login/";
     @Headers("Content-Type: application/json")
-    @PUT(API_ROUTE_UPDATE_DATA)
+    @PUT(API_ROUTE_SAVE_ITEM)
     Call<Login> updateData(@Body actualizaIG aic);
+
+    //Get
+    String API_ROUTE_BASICO= "api/Login/{correo}";
+    @GET(API_ROUTE_BASICO)
+    Call<Login> checkCorreo(@Path("correo") String correo);
 
 }

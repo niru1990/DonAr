@@ -9,7 +9,7 @@ public class Login {
     @Expose
     public int inicio;
 
-    public int getIicio() {
+    public int getInicio() {
         return inicio;
     }
     public void setInicio(int inicio){

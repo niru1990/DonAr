@@ -24,6 +24,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import DonArDato.actualizaIG;
 import Negocio.Login;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -147,32 +148,63 @@ public class LoginActivity extends AppCompatActivity {
         }
         return personId;
     }
+    public void actualizaID() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://donar.azurewebsites.net/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        final LoginService lg = retrofit.create(LoginService.class);
+        actualizaIG aig = new actualizaIG(getEmail(), getId());
+        Call<Login> http_call = lg.updateData(aig);
+        http_call.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, Response<Login> response) {
+                Login login = response.body();
+                if (response.body() != null) {
+                    if (login.getInicio() == 1) {
+                        Log.i("Tag_sesion", "IdUpdate Correcto correcto " + getEmail() + " | " + getId());
+                    } else {
+                        Log.i("Tag_sesion", "Ya se encuentra actualizado");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+
+            }
+        });
+    }
 
     public void checkBD() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://donar.azurewebsites.net//")
+                .baseUrl("https://donar.azurewebsites.net/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         final LoginService lg = retrofit.create(LoginService.class);
-        String correo = getEmail();
-        //String correo ="carly.magico@gmail.com";
-        //Call<Login> http_call = lg.checkCorreo(correo);
-        Call<Login> http_call = lg.updateIDGoogle(correo, getId());
+        Call<Login> http_call = lg.checkCorreo(getEmail());
         http_call.enqueue(new Callback<Login>() {
             @Override
             public void onResponse(Call<Login> call, Response<Login> response) {
                 Intent intent;
                 Login login = response.body();
-                if(login.getIicio()==1){
-                    Log.i("Tag_sesion","Inicio correcto "+getEmail()+" | "+getId());
-                    intent = new Intent(LoginActivity.this, MainActivity.class);
-                }else{
-                    signOut();
-                    intent = new Intent(LoginActivity.this, LoginActivity.class);
-                    Log.i("Tag_sesion","No se pudo iniciar sesion");
+                if(response.body() != null) {
+                    if (login.getInicio() == 1){
+                            actualizaID();
+                            Log.i("Tag_sesion", "Inicio correcto " + getEmail() + " | " + getId());
+                             intent = new Intent(LoginActivity.this, MainActivity.class);
+                    }else {
+                        signOut();
+                        intent = new Intent(LoginActivity.this, LoginActivity.class);
+                        Log.i("Tag_sesion", "No se pudo iniciar sesion");
+                    }
+                    startActivity(intent);
                 }
-                startActivity(intent);
+                else
+                {
+                    Log.e("errorResposne", "NO ME MANDO LO QUE QUERIA LA API");
+                }
             }
             @Override
             public void onFailure(Call<Login> call, Throwable t) {
