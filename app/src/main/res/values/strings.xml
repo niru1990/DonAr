@@ -5,30 +5,43 @@
     <string name="txtNombre">Nombre: </string>
     <string name="txtApellido">Apellido: </string>
     <string name="txtDNI">DNI: </string>
-    <string name="txtMail">E_mail: </string>
-    <string name="txtTelefono">Telefono: </string>
+    <string name="txtMail">Mail: </string>
+    <string name="txtTelefono">Teléfono: </string>
     <string name="txtMatricula">Matricula: </string>
     <string name="txtEspecialidad">Especialidad: </string>
     <string name="txtSeguro">Seguro: </string>
     <string name="txtAplicacionYModulo">DonAr</string>
     <string name="txtUsuario">Aca va el nombre de usuario</string>
     <string name="txtPacientes">Pacientes: </string>
-    <string name="txtSintomasYMedicamentos">Sintomas y medicamentos: </string>
+    <string name="txtSintomasYMedicamentos">Síntomas y prescripción: </string>
     <string name="txtDetalle">Detalle: </string>
     <string name="txtHorarios">Horarios </string>
     <string name="txtHorarioIngreso">Horario de ingreso </string>
     <string name="txtHorarioSalida">Horarios de salida</string>
-
     <string name="txtEdad">Edad: </string>
     <string name="txtSinInternet1">Por el momento no cuenta con internet</string>
     <string name="txtSinInternet2">para realizar esta acción.</string>
-    <string name="txtSinInternet3">Por favor intente mas tarde</string>
+    <string name="txtSinInternet3">Por favor, intente mas tarde.</string>
+    <string name="historiaClinicaTitle">Historia clinica</string>
+    <string name="txtGenero">Género: </string>
+    <string name="txtNombreCompleto">Nombre completo: </string>
+    <string name="txtContacto">Contacto: </string>
+    <string name="txtTituloHC">Historia Clinica</string>
+    <string name="txtProvincia">Provincia</string>
+    <string name="txtLocalidad">Localidad</string>
+    <string name="loginWarningDescr">Para poder utilizar esta aplicación debe estar registrado.</string>
+
+
+    <!--Switch-->
+    <string name="seguimiento">Seguimiento </string>
+    <string name="diagnosticoPresuntivo">Diagnóstico presuntivo</string>
+    <string name="tratamientoFarmacologico">Tratamiento farmacológico</string>
 
     <!-- Botones -->
     <string name="btnRegistrar">Registrarse</string>
     <string name="btnSiguiente">Siguiente</string>
     <string name="btnRegistro">Registrate</string>
-
+    <string name="btnBuscar">Buscar</string>
     <string name="btnLogin">Login</string>
     <string name="btnSolicitar">Solicitar</string>
     <string name="btnSAsignar">Asignar</string>
@@ -56,8 +69,7 @@
     <string name="DNI_invalido">Por favor, inserte su DNI.</string>
     <string name="tipo_usuario_invalido">Por favor, seleccione un tipo de usuario.</string>
     <string name="txtNacionalidad">Nacionalidad</string>
-    <string name="txtProvincia">Provincia</string>
-    <string name="txtLocalidad">Localidad</string>
+    <string name="txtHistorialClinicoTitulo">Historial Clínico</string>
 
 
 </resources>

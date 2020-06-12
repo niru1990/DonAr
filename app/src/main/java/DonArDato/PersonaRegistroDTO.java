@@ -1,59 +1,72 @@
 package DonArDato;
 
-import android.os.Build;
+public class PersonaRegistroDTO{
 
-import androidx.annotation.RequiresApi;
-import DonArDato.UsuarioDTO;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-
-public class PersonaRegistroDTO extends UsuarioDTO {
-
-    private String _nombre;
-    private String _apellido;
+    //private String _id;
+    private String idGoogle;
+    private String nombre;
+    private String apellido;
+    private Integer tipoUsuarioId;
+    private String email;
+    private Integer genero;
     private Integer DNI;
-    private Date _fechaNacimiento;
-    private String _telefono;
-    private Integer _edad;
-    private String _provincia;
-    private String _pais;
+    private String telefono;
+    private Integer edad;
+    private Integer nacionalidadId;
+    private Integer provinciaId;
 
-    public PersonaRegistroDTO(String _nombre, String _apellido, Integer DNI, String _telefono , String _provincia, String _pais) {
-        this._nombre = _nombre;
-        this._apellido = _apellido;
+    public PersonaRegistroDTO(
+            //String _id,
+             String _idGoogle, String nombre, String apellido, Integer tipoUsuarioId,
+                              Integer genero, Integer DNI, String email, String telefono , Integer edad,
+                              Integer nacionalidadId, Integer provinciaId) {
+       // this._id = _id;
+        this.idGoogle = idGoogle;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.tipoUsuarioId = tipoUsuarioId;
+        this.genero = genero;
         this.DNI = DNI;
-        this._telefono = _telefono;
-        this._provincia = _provincia;
-        this._pais = _pais;
+        this.email = email;
+        this.telefono = telefono;
+        this.edad = edad;
+        this.nacionalidadId = nacionalidadId;
+        this.provinciaId = provinciaId;
     }
 
     public PersonaRegistroDTO(){
 
     }
 
-    public String getNombre(){return this._nombre;}
-    public void setNombre(String value){this._nombre = value;}
+    //public String get_id() { return _id; }
+   // public void set_id(String _id) {this._id = _id;}
 
-    public String getApellido(){return this._apellido;}
-    public void setApellido(String value){this._apellido = value;}
+    public String getNombre(){return this.nombre;}
+    public void setNombre(String value){this.nombre = value;}
 
+    public String getApellido(){return this.apellido;}
+    public void setApellido(String value){this.apellido = value;}
+
+    public Integer get_genero() {
+        return genero;
+    }
+
+    public void set_genero(Integer _genero) {
+        this.genero = _genero;
+    }
+/*
     public Date getFechaNacimiento(){return this._fechaNacimiento;}
     public void setFechaNacimiento(Date value){this._fechaNacimiento = value;}
+*/
+    public String getTelefono(){return this.telefono;}
+    public void setTelefono(String value){this.telefono = value;}
 
-    public String getTelefono(){return this._telefono;}
-    public void setTelefono(String value){this._telefono = value;}
 
-    public String get_provincia() { return _provincia; }
-    public void set_provincia(String _provincia) { this._provincia = _provincia; }
-
-    public String get_pais() { return _pais; }
-    public void set_pais(String _pais) { this._pais = _pais; }
 
     public Integer getDNI() { return DNI; }
     public void setDNI(Integer DNI) { this.DNI = DNI; }
 
+    /*
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setEdad(){
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -64,7 +77,9 @@ public class PersonaRegistroDTO extends UsuarioDTO {
         /*
         System.out.printf("Tu edad es: %s años, %s meses y %s días",
                 periodo.getYears(), periodo.getMonths(), periodo.getDays());
-         */
+
     }
-    public Integer getEdad(){return this._edad;}
+    */
+
+    public Integer getEdad(){return this.edad;}
 }

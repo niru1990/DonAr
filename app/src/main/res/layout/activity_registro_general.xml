@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".registroGeneral">
-
+    tools:context=".registroGeneral"
+    android:focusable="true">
     <include
         android:id="@+id/include5"
         layout="@layout/activity_don_ar_tool_bar"
@@ -15,6 +15,133 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></include>
 
+
+    <TextView
+        android:id="@+id/txtRegisterTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:text="Creá tu cuenta"
+        android:textColor="@color/textBlack"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/include5"
+        app:layout_constraintVertical_bias="0.084" />
+
+
+
+
+    <TextView
+        android:id="@+id/txtTipoVoluntario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/txtTipoVoluntario"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/include5"
+        app:layout_constraintVertical_bias="0.182" />
+
+    <Spinner
+        android:id="@+id/spnTipoVoluntario"
+        android:layout_width="match_parent"
+        android:layout_height="30sp"
+        android:layout_marginHorizontal="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTipoVoluntario"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/edtNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:layout_marginBottom="32dp"
+        android:bufferType="normal"
+        android:ems="10"
+        android:hint="Nombre"
+        android:inputType="textCapSentences"
+        app:layout_constraintBottom_toBottomOf="@+id/include5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.284" />
+
+    <EditText
+        android:id="@+id/edtApellido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:ems="10"
+        android:hint="Apellido"
+        android:inputType="textCapSentences"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/include5"
+        app:layout_constraintVertical_bias="0.348" />
+
+    <TextView
+        android:id="@+id/txtGenero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:text="@string/txtGenero"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/include5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtApellido"
+        app:layout_constraintVertical_bias="0.048" />
+
+    <RadioGroup
+        android:id="@+id/generoGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/edtEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtGenero">
+
+        <RadioButton
+            android:id="@+id/masculinoButton"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Masculino"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/femeninoButton"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Femenino"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/otroButton"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Otro"
+            android:textSize="18sp" />
+    </RadioGroup>
 
     <EditText
         android:id="@+id/edtEmail"
@@ -26,72 +153,16 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include5"
-        app:layout_constraintVertical_bias="0.494" />
-
-    <TextView
-        android:id="@+id/txtRegisterTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Creá tu cuenta"
-        android:textSize="40sp"
-        android:layout_marginHorizontal="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/include5"
-        app:layout_constraintVertical_bias="0.1" />
-
-
-    <TextView
-        android:id="@+id/txtTipoVoluntario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10sp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/txtTipoVoluntario"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include5"
-        app:layout_constraintVertical_bias="0.198" />
-
-    <Spinner
-        android:id="@+id/spnTipoVoluntario"
-        android:layout_width="match_parent"
-        android:layout_height="30sp"
-        android:layout_marginHorizontal="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTipoVoluntario"
-        app:layout_constraintVertical_bias="0.016" />
-
-    <EditText
-        android:id="@+id/edtNombre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10sp"
-        android:layout_marginBottom="32dp"
-        android:bufferType="normal"
-        android:ems="10"
-        android:hint="Nombre"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/include5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.325" />
+        app:layout_constraintVertical_bias="0.575" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10sp"
-        android:layout_marginTop="13dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/edtTelefono"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,25 +190,6 @@
 
     </LinearLayout>
 
-
-    <!--
-    <EditText
-        android:id="@+id/edtMail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:layout_marginHorizontal="10sp"
-        android:maxLength="13"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.673" />
-      -->
-
     <EditText
         android:id="@+id/edtTelefono"
         android:layout_width="match_parent"
@@ -148,31 +200,18 @@
         android:inputType="phone"
         app:layout_constraintBottom_toBottomOf="@+id/include5"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.688" />
-
-    <EditText
-        android:id="@+id/edtApellido"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10sp"
-        android:ems="10"
-        android:hint="Apellido"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include5"
-        app:layout_constraintVertical_bias="0.398" />
+        app:layout_constraintVertical_bias="0.721" />
 
     <LinearLayout
+        android:id="@+id/linearLayoutPaisYprovTetxs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8sp"
         android:layout_marginHorizontal="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutPaisYprovSpinners"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtTelefono">
@@ -183,7 +222,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Nacionalidad"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/txtProvincia"
@@ -191,18 +230,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Provincia"
-            android:textSize="14sp" />
+            android:textSize="18sp"
+            android:visibility="visible" />
 
 
     </LinearLayout>
 
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayoutPaisYprovSpinners"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32sp"
         android:layout_marginHorizontal="10sp"
+        android:layout_marginTop="40dp"
         app:layout_constraintBottom_toTopOf="@+id/checkBoxTerminosYcondiciones"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -238,41 +278,45 @@
         android:id="@+id/checkBoxTerminosYcondiciones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Acepto los términos y condiciones"
         android:layout_marginHorizontal="10sp"
+        android:text="Acepto los términos y condiciones"
         app:layout_constraintBottom_toTopOf="@+id/btnSiguiente"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btnSiguiente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
         android:text="@string/btnSiguiente"
         android:visibility="invisible"
-        android:layout_marginHorizontal="10sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.958" />
+        app:layout_constraintVertical_bias="0.976" />
 
     <Button
         android:id="@+id/btnRegistrarPacienteOVoluntarioBasico"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
         android:text="@string/btnRegistrar"
         android:visibility="visible"
-        android:layout_marginHorizontal="10sp"
+        android:background="#2C61A6"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/include5"
-        app:layout_constraintVertical_bias="0.958" />
+        app:layout_constraintVertical_bias="0.976" />
 
 
 

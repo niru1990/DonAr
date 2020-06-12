@@ -1,30 +1,25 @@
 package DonArDato;
 
-import android.app.Person;
-import DonArDato.PersonaRegistroDTO;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Date;
-
-
 public class PacienteDTO extends PersonaRegistroDTO {
 
-    private int id;
-    private Integer historialClinico;
+    private String historialClinico;
 
-    public PacienteDTO(String _nombre, String _apellido, Integer DNI,String _telefono,
-                       String _provincia, String _pais) {
-       super(_nombre,_apellido,DNI,_telefono,_provincia,_pais);
-
+    public PacienteDTO(String idGoogle, String nombre, String apellido,
+                       Integer tipoUsuarioId, String email, Integer genero, Integer DNI,
+                       String telefono, Integer edad, Integer nacionalidadId, Integer provinciaId,
+                       String historialClinico) {
+        super( idGoogle,  nombre, apellido, tipoUsuarioId, genero, DNI, email, telefono, edad, nacionalidadId, provinciaId);
+        this.historialClinico = historialClinico;
     }
 
     public PacienteDTO(){
+        super();
 
     }
 
-    public Integer getId(){return this.id;}
-    public Integer getHistorialClinico(){return this.historialClinico;}
 
-    public void setId(int value){this.id = value;}
-    public void setHistorialClinico(Integer value){}
+
+    public String getHistorialClinico(){return this.historialClinico;}
+
+    public void setHistorialClinico(String value){}
 }

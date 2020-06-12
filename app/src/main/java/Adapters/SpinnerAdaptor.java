@@ -42,17 +42,11 @@ public class SpinnerAdaptor extends ArrayAdapter<SpinnerItem> {
                     parent,
                     false);
         }
-
         TextView id = (TextView) convertView.findViewById(R.id.idData);
         TextView description = (TextView) convertView.findViewById(R.id.descriptionData);
-
         SpinnerItem item = getItem(position);
-
-        //if(convertView != null) {
-            id.setText(item.getIdData());
-            description.setText(item.getDescriptionData());
-        //}
-
+        id.setText(item.getIdData());
+        description.setText(item.getDescriptionData());
         return convertView;
     }
 }

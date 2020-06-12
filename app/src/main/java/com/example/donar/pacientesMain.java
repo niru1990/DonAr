@@ -46,7 +46,7 @@ public class pacientesMain extends DonArToolBar implements View.OnClickListener 
             switch(v.getId())
             {
                 case R.id.imbAsignarEspecialidad:
-                    intent = new Intent(v.getContext(), pacienteAsignarEspecialidad.class);
+                    intent = new Intent(v.getContext(), historial_de_consultas.class);
                     break;
                 case R.id.imbHistoriaClinica:
                     intent = new Intent(v.getContext(), pacientesHistoriaCLinica.class);
@@ -82,7 +82,9 @@ public class pacientesMain extends DonArToolBar implements View.OnClickListener 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-      case R.id.action_login_oculto:
+
+
+            case R.id.action_login_oculto:
                 Toast.makeText(this, "Hago click en boton login oculto", Toast.LENGTH_LONG).show();
                 return true;
 

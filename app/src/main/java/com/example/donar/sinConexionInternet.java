@@ -41,6 +41,8 @@ public class sinConexionInternet extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
+
             case R.id.action_login_oculto:
                 Toast.makeText(this, "Hago click en boton login oculto", Toast.LENGTH_LONG).show();
                 return true;

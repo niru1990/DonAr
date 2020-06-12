@@ -7,45 +7,60 @@ import java.math.BigInteger;
 public class EventoDTO {
 
     private BigInteger id;
-    private BigInteger PacienteId;
-    //private String Fecha;
-    private String Sintomas;
-    private boolean Seguimiento;
+    private BigInteger pacienteId;
+    private String fecha;
+    private String sintomas;
+    private String detalle;
+    private boolean diagnosticoPresuntivo;
+    private boolean tratamientoFarmacologico;
     @Nullable
-    private BigInteger VoluntarioMedicoId;
-    private BigInteger VoluntarioBasicoId;
-    private Integer EspecialidadId;
+    private BigInteger voluntarioMedicoId;
+    @Nullable
+    private BigInteger voluntarioBasicoId;
+    @Nullable
+    private Integer especialidadId;
+    @Nullable
+    private Integer estado;
 
+    //Getters
     public BigInteger getId() {
         return this.id;
     }
+    public String getFecha(){return this.fecha;}
+    public BigInteger getPacienteId() {
+        return this.pacienteId;
+    }
+    public String getSintomas(){return this.sintomas;}
+    public BigInteger getidVoluntario() {
+        return this.voluntarioBasicoId;
+    }
+    public BigInteger getidVoluntarioMedico() {
+        return this.voluntarioMedicoId;
+    }
+    public Integer getEspecialidadId() {
+        return this.especialidadId;
+    }
+    public String getDetalle(){return  this.detalle;}
+    public boolean getDiagnosticoPresuntivo(){return this.diagnosticoPresuntivo;}
+    public boolean getTratamientoFarmacologico(){return this.tratamientoFarmacologico;}
+    public Integer getEstado(){return this.estado;}
+
+    //Setters
     public void setId(BigInteger value) {
         this.id = value;
     }
-    //public String getFecha(){return this.Fecha;}
-    //public void setFecha(String value){this.Fecha = value;}
-    public BigInteger getPacienteId() {
-        return this.PacienteId;
-    }
+    public void setFecha(String value){this.fecha = value;}
     public void setPacienteId(BigInteger value) {
-        this.PacienteId = value;
+        this.pacienteId = value;
     }
-    public String getSintomas(){return this.Sintomas;}
-    public void setSintomas(String sintomas){this.Sintomas = sintomas;}
-    public BigInteger getidVoluntario() {
-        return this.VoluntarioBasicoId;
-    }
+    public void setSintomas(String sintomas){this.sintomas = sintomas;}
     public void setidVoluntario(@Nullable BigInteger value) {
-        this.VoluntarioBasicoId = value;
+        this.voluntarioBasicoId = value;
     }
-    public BigInteger getidVoluntarioMedico() {
-        return this.VoluntarioMedicoId;
-    }
-    public void setidVoluntarioMedico(@Nullable BigInteger value) {this.VoluntarioMedicoId = value;}
-    public Integer getEspecialidadId() {
-        return this.EspecialidadId;
-    }
-    public void setEspecialidadId(@Nullable Integer value) { this.EspecialidadId = value;}
-    public void setSeguimiento(boolean value ){ this.Seguimiento = value;}
-
+    public void setidVoluntarioMedico(@Nullable BigInteger value) {this.voluntarioMedicoId = value;}
+    public void setEspecialidadId(@Nullable Integer value) { this.especialidadId = value;}
+    public void setDetalle(String detalle){this.detalle = detalle;}
+    public void setDiagnosticoPresuntivo(boolean diagnosticoPresuntivo){ this.diagnosticoPresuntivo = diagnosticoPresuntivo;}
+    public void setTratamientoFarmacologico(boolean tratamientoFarmacologico) {this.tratamientoFarmacologico = tratamientoFarmacologico;}
+    public void setEstado(Integer estado){this.estado = estado;}
 }
