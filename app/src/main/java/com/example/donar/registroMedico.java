@@ -176,7 +176,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                     String DNI = preferences.getString("DNI", "No posee DNI");
                     String telefono = preferences.getString("telefono", "No posee teléfono");
                     String pais = preferences.getString("pais","-1");
-                    String provincia = preferences.getString("provincia","No posee provincia");
+                    String provincia = preferences.getString("provincia","0");
 
 
                     VoluntarioMedicoDTO voluntarioMedico = new VoluntarioMedicoDTO(
@@ -208,6 +208,9 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                     http_call.enqueue(new Callback<Integer>() {
                         @Override
                         public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            Toast.makeText(getApplicationContext(),
+                                    "El usuario fue creado",
+                                    Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(intent);
                         }
@@ -215,6 +218,9 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                         @Override
                         public void onFailure(Call<Integer> call, Throwable t) {
                             Log.i("HTTP ERROR", t.getMessage());
+                            Toast.makeText(getApplicationContext(),
+                                    "Algo malo ocurrio! muy malo!! y tu tienes la culpa!",
+                                    Toast.LENGTH_LONG).show();
                         }
                     });
 

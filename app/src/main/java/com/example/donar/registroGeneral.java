@@ -535,8 +535,11 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         String edad = campoEdad.getText().toString();
         String DNI = campoDNI.getText().toString();
         String telefono = campoTelefono.getText().toString();
-        String pais = idPais;
-        String provincia = idProvincia;
+
+        SpinnerItem siPais = (SpinnerItem) spinnerPais.getSelectedItem();
+        String pais = siPais.getIdData();
+        SpinnerItem siProvincia = (SpinnerItem)spinnerProvincia.getSelectedItem();
+        String provincia = siProvincia.getIdData();
 
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putString("nombre", nombre);
