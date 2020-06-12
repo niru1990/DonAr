@@ -2,6 +2,9 @@ package com.example.donar;
 
 import DonArDato.actualizaIG;
 import Negocio.Login;
+
+import DonArDato.actualizaIG;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -23,5 +26,4 @@ public interface LoginService {
     String API_ROUTE_BASICO= "api/Login/{correo}";
     @GET(API_ROUTE_BASICO)
     Call<Login> checkCorreo(@Path("correo") String correo);
-
 }

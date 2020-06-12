@@ -1,6 +1,7 @@
 package com.example.donar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +10,20 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+
+import android.view.Menu;
+import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -35,6 +46,9 @@ public class voluntariosAutoMach extends AppCompatActivity  {
     private List<EventoAutoMach> myList = new ArrayList<>();
     ListAdapter myAdapter;
 
+
+    private Toolbar toolbar;
+
     private String idVoluntario;
     private String idEvento;
     private String nombreMedico;
@@ -45,6 +59,10 @@ public class voluntariosAutoMach extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voluntarios_auto_mach);
         myListView = findViewById(R.id.listaPacientes);
+
+        toolbar = (Toolbar) findViewById(R.id.donArToolBar);
+        setSupportActionBar(toolbar);
+
         loadConsultas();
         myAdapter = new ListAdapter(voluntariosAutoMach.this, R.layout.list_item_row,myList);
         myListView.setAdapter(myAdapter);
@@ -92,9 +110,10 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                 EventoServices eventoServices = retrofit.create(EventoServices.class);
 
                 //Obtengo los eventos a base del id del voluntario o voluntario medico.
-                //Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId(idVoluntario); //Como debería quedar finalmente
+
+                Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId(idVoluntario); //Como debería quedar finalmente
                 //Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId("1");//Voluntario basico
-                Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId("3"); //Voluntario medico
+                //Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId("3"); //Voluntario medico
                 http_call.enqueue(new Callback<List<EventoDTO>>() {
                     @Override
                     public void onResponse(Call<List<EventoDTO>> call, Response<List<EventoDTO>> response) {
@@ -211,8 +230,8 @@ public class voluntariosAutoMach extends AppCompatActivity  {
         }
     }
 
-    private void modificarEstado(String idEvento, int estado)
-    {
+
+    private void modificarEstado(String idEvento, int estado) {
         try {
 
             if(verificarConexion()){
@@ -309,6 +328,71 @@ public class voluntariosAutoMach extends AppCompatActivity  {
         return (networkInfo != null && networkInfo.isConnected());
     }
 
+    private void SaveEventId(String id) {
+        SharedPreferences preferencias = getSharedPreferences
+                ("ID usuario", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString("idEvento",id);
+        editor.commit();
+    }
+
+    /**
+     * Aqui creamos las opciones de Menu con el toolbar.
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.toolbar_menu2, menu);
+        return true;
+    }
+
+    /**
+     * Aqui tenemos las opciones para cada item del menu.
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_login:
+                Toast.makeText(this, "Hago click en boton login", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.action_registro:
+                Toast.makeText(this, "Haglo click en el boton registro", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.action_login_oculto:
+                Toast.makeText(this, "Hago click en boton login oculto", Toast.LENGTH_LONG).show();
+                return true;
+
+            case R.id.action_registro_oculto:
+                Toast.makeText(this, "Haglo click en el boton registro oculto", Toast.LENGTH_LONG).show();
+                return true;
+
+            case R.id.action_cerrarSesion:
+                signOut();
+                return true;
+
+            default:
+                //Aqui la accion del usuario no fue reconocida
+                return super.onOptionsItemSelected(item);
+
+        }
+
+    }
+
+    private boolean verificarConexion() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return (networkInfo != null && networkInfo.isConnected());
+    }
+
     private void SaveEventId(String id)
     {
         SharedPreferences preferencias = getSharedPreferences
@@ -319,4 +403,15 @@ public class voluntariosAutoMach extends AppCompatActivity  {
         editor.commit();
     }
 
+    private void signOut() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.
+                Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                build();
+
+        GoogleSignInClient googleSignInClient= GoogleSignIn.getClient(this,gso);
+        googleSignInClient.signOut();
+        finish();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+    }
 }

@@ -184,6 +184,7 @@ public class LoginActivity extends AppCompatActivity {
 
         final LoginService lg = retrofit.create(LoginService.class);
         Call<Login> http_call = lg.checkCorreo(getEmail());
+
         http_call.enqueue(new Callback<Login>() {
             @Override
             public void onResponse(Call<Login> call, Response<Login> response) {
