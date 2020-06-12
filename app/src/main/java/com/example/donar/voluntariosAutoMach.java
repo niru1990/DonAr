@@ -329,8 +329,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
     }
 
     private void SaveEventId(String id) {
-        SharedPreferences preferencias = getSharedPreferences
-                ("ID usuario", Context.MODE_PRIVATE);
+        SharedPreferences preferencias = getSharedPreferences("ID usuario", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putString("idEvento",id);
@@ -385,23 +384,6 @@ public class voluntariosAutoMach extends AppCompatActivity  {
 
     }
 
-    private boolean verificarConexion() {
-        ConnectivityManager connectivityManager =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-
-        return (networkInfo != null && networkInfo.isConnected());
-    }
-
-    private void SaveEventId(String id)
-    {
-        SharedPreferences preferencias = getSharedPreferences
-                ("ID usuario", Context.MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = preferencias.edit();
-        editor.putString("idEvento",id);
-        editor.commit();
-    }
 
     private void signOut() {
         GoogleSignInOptions gso = new GoogleSignInOptions.
