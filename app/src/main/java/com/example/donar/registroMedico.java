@@ -64,7 +64,6 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
         //awesomeValidation.addValidation(this,R.id.edtMatricula, RegexTemplate.NOT_EMPTY,R.string.matricula_invalida);
         //awesomeValidation.addValidation(this,R.id.edtSeguro, RegexTemplate.NOT_EMPTY,R.string.seguro_invalido);
 
-
         campoMatricula = findViewById(R.id.edtMatricula);
         campoSeguro = findViewById(R.id.edtSeguro);
         textoHorarioIngreso = findViewById(R.id.ingresoTextView);
@@ -75,8 +74,6 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
         botonRegistrarse.setOnClickListener(this);
         botonIngreso.setOnClickListener(this);
         botonSalida.setOnClickListener(this);
-
-
 
         cargarSpinnerEspecialidades();
     }
@@ -140,9 +137,6 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                                 e.printStackTrace();
                             }
                         }
-
-
-
                     }
 
                     @Override
@@ -166,8 +160,6 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         Intent intent;
-
-
             switch (v.getId()) {
                 case R.id.btnRegistrarMedico:
                     if(awesomeValidation.validate()) {
@@ -187,13 +179,24 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                     String provincia = preferences.getString("provincia","No posee provincia");
 
 
-                    VoluntarioMedicoDTO voluntarioMedico = new VoluntarioMedicoDTO(null, nombre,
-                            apellido, 3, Integer.valueOf(genero), Integer.valueOf(DNI), email,
-                            telefono, Integer.valueOf(edad), Integer.valueOf(pais), Integer.valueOf(provincia),
-                            Integer.valueOf(idEspecialidad), campoMatricula.getText().toString(),
+                    VoluntarioMedicoDTO voluntarioMedico = new VoluntarioMedicoDTO(
+                            null,
+                            nombre,
+                            apellido,
+                            3,
+                            Integer.valueOf(genero),
+                            Integer.valueOf(DNI),
+                            email,
+                            telefono,
+                            Integer.valueOf(edad),
+                            Integer.valueOf(pais),
+                            Integer.valueOf(provincia),
+                            Integer.valueOf(idEspecialidad),
+                            campoMatricula.getText().toString(),
                             campoSeguro.getText().toString(),
                             textoHorarioIngreso.getText().toString(),
-                            textoHorarioSalida.getText().toString());
+                            textoHorarioSalida.getText().toString()
+                    );
 
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl("https://donar.azurewebsites.net/")
@@ -267,10 +270,5 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
         }, HORA, MINUTO, false);
         timePickerDialog.show();
     }
-
-
-
-
-
 
 }
