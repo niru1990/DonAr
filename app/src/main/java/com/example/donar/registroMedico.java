@@ -23,9 +23,13 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 import Adapters.SpinnerAdaptor;
 import DonArDato.EspecialidadDTO;
@@ -60,7 +64,6 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
 
     private void configView() {
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-
         //awesomeValidation.addValidation(this,R.id.edtMatricula, RegexTemplate.NOT_EMPTY,R.string.matricula_invalida);
         //awesomeValidation.addValidation(this,R.id.edtSeguro, RegexTemplate.NOT_EMPTY,R.string.seguro_invalido);
 
@@ -179,6 +182,14 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                     String provincia = preferences.getString("provincia","0");
 
 
+                    String horaIngreso = "";
+                    horaIngreso = textoHorarioIngreso.getText().toString();
+                    horaIngreso = ajustarFecha(horaIngreso);
+                    String horaSalida = "";
+                    horaSalida = textoHorarioIngreso.getText().toString();
+                    horaSalida = ajustarFecha(horaSalida);
+
+
                     VoluntarioMedicoDTO voluntarioMedico = new VoluntarioMedicoDTO(
                             null,
                             nombre,
@@ -194,8 +205,8 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                             Integer.valueOf(idEspecialidad),
                             campoMatricula.getText().toString(),
                             campoSeguro.getText().toString(),
-                            textoHorarioIngreso.getText().toString(),
-                            textoHorarioSalida.getText().toString()
+                            horaIngreso,//textoHorarioIngreso.getText().toString(),
+                            horaSalida//textoHorarioSalida.getText().toString()
                     );
 
                     Retrofit retrofit = new Retrofit.Builder()
@@ -275,6 +286,35 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
             }
         }, HORA, MINUTO, false);
         timePickerDialog.show();
+    }
+
+    //Doy formato a la hora para que no pinche el automach
+    private String ajustarFecha(String fecha) {
+        String finale = "";
+        String[] a= fecha.split(":");
+        String horas = "";
+        String minutos = "";
+        String segundos = "00";
+
+        if(a[0].length() != 2)
+            horas = a[0] = "0" + a[0];
+        else
+            horas = a[0];
+
+        if(a[1].length() > 2)
+        {
+            minutos = a[1].substring(0, a[1].length()-3);
+            if(minutos.length() != 2)
+                minutos = "0" + minutos;
+        }
+        else
+        {
+            if(a[1].length() == 1)
+                minutos = "0" + minutos;
+        }
+
+        finale = horas + ":" +  minutos + ":" + segundos;
+         return finale;
     }
 
 }
