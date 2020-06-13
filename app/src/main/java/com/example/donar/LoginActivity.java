@@ -24,6 +24,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import DonArDato.ResponseData;
 import DonArDato.actualizaIG;
 import Negocio.Login;
 import retrofit2.Call;
@@ -36,6 +37,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
 
     //TextView txtID;
+
+    private String idGoogle;
 
     FirebaseAuth.AuthStateListener mAuthListener;
     @SuppressLint("WrongViewCast")
@@ -84,11 +87,12 @@ public class LoginActivity extends AppCompatActivity {
             handleSignInResult(task);
 
             GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+
             if(acct!=null){
 
-                String personId = acct.getId();
-                Log.i("Mensaje",personId);
-                saveID(personId);
+                idGoogle = acct.getId();
+                Log.i("Mensaje",idGoogle);
+                //saveID(personId);
 
             }
         }
@@ -129,6 +133,16 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("ID",ID);
         editor.commit();
 
+    }
+
+    private void saveTipo(String tipo){
+
+        SharedPreferences preferencias = getSharedPreferences
+                ("ID usuario", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString("tipo",tipo);
+        editor.commit();
     }
 
     private String getEmail(){
@@ -189,13 +203,17 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 Intent intent;
-                int idUsuario = response.body();
+                Integer idUsuario =response.body();// (ResponseData) response.body();
                 if(response.body() != null) {
                     if (idUsuario != 0 ){
-                            actualizaID();
-                            Log.i("Tag_sesion", "Inicio correcto // Email: " + getEmail() + " | IdGoogle: " + getId()+" | IdUser: " +idUsuario);
-                             intent = new Intent(LoginActivity.this, MainActivity.class);
-                    }else {
+                        actualizaID();
+                        //ACA GUARDO el ID del USUARIO.
+                        saveID(idUsuario+"");
+                        //saveTipo();
+                        Log.i("Tag_sesion", "Inicio correcto // Email: " + getEmail() + " | IdGoogle: " + getId()+" | IdUser: " +idUsuario);
+                        intent = new Intent(LoginActivity.this, MainActivity.class);
+                    }
+                    else {
                         Toast.makeText(LoginActivity.this
                                 , "El Correo no existe en nuestra base de datos, es necesario que se registre."
                                 , Toast.LENGTH_LONG).show();
