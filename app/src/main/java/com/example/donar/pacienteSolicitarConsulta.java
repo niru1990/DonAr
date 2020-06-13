@@ -205,7 +205,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
 
                     @Override
                     public void onFailure(Call<PacienteConsultaDTO> call, Throwable t) {
-                        Log.e("detail", t.getMessage());
+                            Log.e("detail", t.getMessage());
                         Log.e("CALL API FAIL", "Hubo un problema al llamar a la API.");
                     }
                 });
