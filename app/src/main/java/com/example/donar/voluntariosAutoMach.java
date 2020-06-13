@@ -269,8 +269,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                                         SaveEventId(e.getId().toString());
                                         startActivity(intent);
                                     }
-                                    else
-                                    {
+                                    else {
                                         intent = new Intent(context, voluntariosAutoMach.class);
                                         startActivity(intent);
                                     }
@@ -283,7 +282,8 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                                 default:
                                     try {
                                         throw new Exception(response.code() + " " + response.message());
-                                    } catch (Exception ep) {
+                                    }
+                                    catch (Exception ep) {
                                         ep.printStackTrace();
                                     }
                             }
