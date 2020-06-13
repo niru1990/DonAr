@@ -162,9 +162,9 @@ public class LoginActivity extends AppCompatActivity {
                 Login login = response.body();
                 if (response.body() != null) {
                     if (login.getInicio() == 1) {
-                        Log.i("Tag_sesion", "IdUpdate Correcto correcto " + getEmail() + " | " + getId());
+                        Log.i("Tag_sesion", "IdUpdate Correcto " + getEmail() + " | " + getId());
                     } else {
-                        Log.i("Tag_sesion", "Ya se encuentra actualizado");
+                        Log.i("Tag_sesion", "No se pudo actualizar el idGoogle");
                     }
                 }
             }
@@ -183,19 +183,22 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         final LoginService lg = retrofit.create(LoginService.class);
-        Call<Login> http_call = lg.checkCorreo(getEmail());
+        Call<Integer> http_call = lg.checkCorreo(getEmail());
 
-        http_call.enqueue(new Callback<Login>() {
+        http_call.enqueue(new Callback<Integer>() {
             @Override
-            public void onResponse(Call<Login> call, Response<Login> response) {
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
                 Intent intent;
-                Login login = response.body();
+                int idUsuario = response.body();
                 if(response.body() != null) {
-                    if (login.getInicio() == 1){
+                    if (idUsuario != 0 ){
                             actualizaID();
-                            Log.i("Tag_sesion", "Inicio correcto " + getEmail() + " | " + getId());
+                            Log.i("Tag_sesion", "Inicio correcto // Email: " + getEmail() + " | IdGoogle: " + getId()+" | IdUser: " +idUsuario);
                              intent = new Intent(LoginActivity.this, MainActivity.class);
                     }else {
+                        Toast.makeText(LoginActivity.this
+                                , "El Correo no existe en nuestra base de datos, es necesario que se registre."
+                                , Toast.LENGTH_LONG).show();
                         signOut();
                         intent = new Intent(LoginActivity.this, LoginActivity.class);
                         Log.i("Tag_sesion", "No se pudo iniciar sesion");
@@ -208,7 +211,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<Login> call, Throwable t) {
+            public void onFailure(Call<Integer> call, Throwable t) {
                 signOut();
                 Intent intent = new Intent (LoginActivity.this, LoginActivity.class);
                 startActivity(intent);

@@ -25,5 +25,5 @@ public interface LoginService {
     //Get
     String API_ROUTE_BASICO= "api/Login/{correo}";
     @GET(API_ROUTE_BASICO)
-    Call<Login> checkCorreo(@Path("correo") String correo);
+    Call<Integer> checkCorreo(@Path("correo") String correo);
 }
