@@ -235,7 +235,6 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                         @Override
                         public void onResponse(Call<EventoDTO> call, Response<EventoDTO> response) {
                             try {
-                                if (response.isSuccessful()) {
                                     switch (response.code()) {
                                         case 200:
                                             if (response.body() != null) {
@@ -259,7 +258,6 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                                         default:
                                             throw new Exception("codigo: " + response.code() + " Comuniquese con su administrador de sistemas");
                                     }
-                                }
                             } catch (Exception ex) {
                                 Toast.makeText(pacienteAsignarEspecialidad.this,
                                         ex.getMessage(),
