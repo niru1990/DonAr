@@ -4,12 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -197,20 +194,21 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         final LoginService lg = retrofit.create(LoginService.class);
-        Call<Integer> http_call = lg.checkCorreo(getEmail());
+        Call<ResponseData> http_call = lg.checkCorreo(getEmail());
 
-        http_call.enqueue(new Callback<Integer>() {
+        http_call.enqueue(new Callback<ResponseData>() {
             @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
+            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
                 Intent intent;
-                Integer idUsuario =response.body();// (ResponseData) response.body();
+                //Integer idUsuario =response.body();
+                ResponseData res = (ResponseData) response.body();
                 if(response.body() != null) {
-                    if (idUsuario != 0 ){
+                    if (res.getIdUser() != 0 ){
                         actualizaID();
                         //ACA GUARDO el ID del USUARIO.
-                        saveID(idUsuario+"");
-                        //saveTipo();
-                        Log.i("Tag_sesion", "Inicio correcto // Email: " + getEmail() + " | IdGoogle: " + getId()+" | IdUser: " +idUsuario);
+                        saveID(res.getIdUser()+"");
+                        saveTipo(res.getTipoUser()+"");
+                        Log.i("Tag_sesion", "Inicio correcto // Email: " + getEmail() + " | IdGoogle: " + getId()+" | IdUser: " +res.getIdUser());
                         intent = new Intent(LoginActivity.this, MainActivity.class);
                     }
                     else {
@@ -225,11 +223,18 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                 {
+                    if(response.code() == 204) {
+                        Toast.makeText(getApplicationContext(),
+                                "No se encontro un usuario registrado con ese mail",
+                                Toast.LENGTH_LONG).show();
+                        signOut();
+                    }
+                    else
                     Log.e("errorResposne", "NO ME MANDO LO QUE QUERIA LA API");
                 }
             }
             @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
+            public void onFailure(Call<ResponseData> call, Throwable t) {
                 signOut();
                 Intent intent = new Intent (LoginActivity.this, LoginActivity.class);
                 startActivity(intent);

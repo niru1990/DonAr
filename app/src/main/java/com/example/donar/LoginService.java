@@ -1,5 +1,6 @@
 package com.example.donar;
 
+import DonArDato.ResponseData;
 import DonArDato.actualizaIG;
 import Negocio.Login;
 
@@ -25,5 +26,5 @@ public interface LoginService {
     //Get
     String API_ROUTE_BASICO= "api/Login/{correo}";
     @GET(API_ROUTE_BASICO)
-    Call<Integer> checkCorreo(@Path("correo") String correo);
+    Call<ResponseData> checkCorreo(@Path("correo") String correo);
 }

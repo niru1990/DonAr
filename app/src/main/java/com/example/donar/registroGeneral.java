@@ -430,7 +430,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                                            if (response.isSuccessful()) {
                                                String message = "";
                                                if (response.isSuccessful()) {
-                                                   message = "Su solicitud de consulta fue generada éxitosamente.";
+                                                   message = "Se registro exitosamente su cuenta.";
                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                                    startActivity(intent);
                                                } else

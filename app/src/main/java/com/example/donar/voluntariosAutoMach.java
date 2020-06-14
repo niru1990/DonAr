@@ -50,6 +50,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
     private Toolbar toolbar;
 
     private String idVoluntario;
+    private String tipoUsuario;
     private String idEvento;
     private String nombreMedico;
     private int sendStatus;
@@ -107,11 +108,35 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                         ("ID usuario", Context.MODE_PRIVATE);
 
                 idVoluntario = preferencias.getString("ID", "0");
+                tipoUsuario = preferencias.getString("tipo", "0");
+
                 EventoServices eventoServices = retrofit.create(EventoServices.class);
 
-                //Obtengo los eventos a base del id del voluntario o voluntario medico.
+                /*
+                Tipo de usuario:
+                1 = paciente
+                2 = voluntario
+                3 = medico
+                 */
+                if(tipoUsuario.equals("0") || idVoluntario.equals("0")) {
+                    signOut();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
 
-                Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId(idVoluntario); //Como debería quedar finalmente
+                Call<List<EventoDTO>> http_call;
+                switch (tipoUsuario)
+                {
+                    case "2":
+                        http_call = eventoServices.getEventoByVoluntarioBasicoId(idVoluntario);
+                        break;
+                    case "3":
+                        http_call = eventoServices.getEventoByVoluntarioMedicoId(idVoluntario);
+                        break;
+                    default:
+                        http_call = eventoServices.getEventoByVoluntarioId(idVoluntario);
+                }
+                //Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId(idVoluntario); //Como debería quedar finalmente
                 //Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId("1");//Voluntario basico
                 //Call<List<EventoDTO>> http_call = eventoServices.getEventoByVoluntarioId("3"); //Voluntario medico
                 http_call.enqueue(new Callback<List<EventoDTO>>() {
@@ -176,7 +201,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 EventoServices eventoServices = retrofit.create(EventoServices.class);
-                Call<EventoReducidoDTO> http_call = eventoServices.getEventoReducidoById(id.toString());
+                    Call<EventoReducidoDTO> http_call = eventoServices.getEventoReducidoById(id.toString());
                 http_call.enqueue(new Callback<EventoReducidoDTO>() {
                     @Override
                     public void onResponse(Call<EventoReducidoDTO> call, Response<EventoReducidoDTO> response) {
