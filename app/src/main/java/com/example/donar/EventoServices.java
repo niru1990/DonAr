@@ -72,4 +72,18 @@ public interface EventoServices {
     @GET(API_ROUTE_GET_BY_PATIENT_MAIL)
     Call<List<EventoDTO>> getEventByPatientMail(@Path("mail") String mail);
 
+
+    //Obtener evento por id de voluntario
+    String API_ROUTE_GET_BY_VoluntarioBasico_ID = "api/evento/eventosporvoluntariobasico/{id}";
+    @GET(API_ROUTE_GET_BY_VoluntarioBasico_ID)
+    Call<List<EventoDTO>> getEventoByVoluntarioBasicoId(@Path("id") String id);
+
+
+    //Obtener evento por id de voluntario
+    String API_ROUTE_GET_BY_VoluntarioMedico_ID = "api/evento/eventosporvoluntariomedico/{id}";
+    @GET(API_ROUTE_GET_BY_VoluntarioBasico_ID)
+    Call<List<EventoDTO>> getEventoByVoluntarioMedicoId(@Path("id") String id);
+
+
+
 }

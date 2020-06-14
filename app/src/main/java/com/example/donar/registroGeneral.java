@@ -76,7 +76,6 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         campoNombre = findViewById(R.id.edtNombre);
         campoApellido = findViewById(R.id.edtApellido);
         radioGroupGenero = findViewById(R.id.generoGroup);
-      //  radioButtonGenero = findViewById(R.id.)
         campoMail = findViewById(R.id.edtEmail);
         campoEdad = findViewById(R.id.edtEdad);
         campoDNI = findViewById(R.id.edtDNI);
@@ -394,161 +393,124 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         if(awesomeValidation.validate()) {
 
             //Chequeo validez Terminos y Condiciones
-           if(campoTyC.isChecked()){
+           if(campoTyC.isChecked()) {
 
                //Validacion EXITOSA ;)
-        switch(v.getId())
-        {
-            case R.id.btnRegistrarPacienteOVoluntarioBasico:
+               switch (v.getId()) {
+                   case R.id.btnRegistrarPacienteOVoluntarioBasico:
 
-                        Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl("https://donar.azurewebsites.net/")
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
+                       Retrofit retrofit = new Retrofit.Builder()
+                               .baseUrl("https://donar.azurewebsites.net/")
+                               .addConverterFactory(GsonConverterFactory.create())
+                               .build();
 
-                        switch (Integer.valueOf(idTDU)) {
-                            //Paciente
-                            case 1:
+                       switch (Integer.valueOf(idTDU)) {
+                           //Paciente
+                           case 1:
+                               PacienteDTO paciente = new PacienteDTO(null,
+                                       campoNombre.getText().toString(),
+                                       campoApellido.getText().toString(), 1,
+                                       campoMail.getText().toString(),
+                                       calcularGenero(),
+                                       Integer.parseInt(campoDNI.getText().toString()),
+                                       campoTelefono.getText().toString(),
+                                       Integer.parseInt(campoEdad.getText().toString()),
+                                       Integer.valueOf(idPais), Integer.valueOf(idProvincia)
+                                       , "");
 
-                                PacienteDTO paciente = new PacienteDTO(null,
-                                        campoNombre.getText().toString(),
-                                        campoApellido.getText().toString(), 1,
-                                        campoMail.getText().toString(),
-                                        calcularGenero(),
-                                        Integer.parseInt(campoDNI.getText().toString()),
-                                        campoTelefono.getText().toString(),
-                                        Integer.parseInt(campoEdad.getText().toString()),
-                                        Integer.valueOf(idPais), Integer.valueOf(idProvincia)
-                                        ,"");
+                               PacientesService pacienteService = retrofit.create(PacientesService.class);
 
-                                PacientesService pacienteService = retrofit.create(PacientesService.class);
+                               Call<Integer> http_call_paciente = pacienteService.addPaciente(paciente);
 
-                                Call<Integer> http_call_paciente = pacienteService.addPaciente(paciente);
+                               http_call_paciente.enqueue(new Callback<Integer>() {
+                                   @Override
+                                   public void onResponse(Call<Integer> call, Response<Integer> response) {
 
-                                http_call_paciente.enqueue(new Callback<Integer>() {
-                                    @Override
-                                    public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                       try {
+                                           if (response.isSuccessful()) {
+                                               String message = "";
+                                               if (response.isSuccessful()) {
+                                                   message = "Se registro exitosamente su cuenta.";
+                                                   Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                   startActivity(intent);
+                                               } else
+                                                   message = "Ocurrio algo inesperado.";
 
-                                        try {
-                                            if (response.isSuccessful()) {
-                                                String message = "";
-                                                if (response.isSuccessful()) {
-                                                    message = "Su solicitud de consulta fue generada éxitosamente.";
-                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                                    startActivity(intent);
-                                                }
-                                                else
-                                                    message = "Ocurrio algo inesperado.";
+                                               Toast.makeText(registroGeneral.this
+                                                       , message
+                                                       , Toast.LENGTH_SHORT).show();
 
-                                                Toast.makeText(registroGeneral.this
-                                                        , message
-                                                        , Toast.LENGTH_SHORT).show();
+                                           } else {
+                                               Log.i(((Integer) response.code()).toString(), "No fue posible guardar la consulta, " +
+                                                       "por favor intente mas tarde");
+                                               throw new Exception("No fue posible guardar la consulta, " +
+                                                       "por favor intente mas tarde");
+                                           }
+                                       } catch (Exception ex) {
+                                           try {
+                                               throw new Exception(ex.getMessage());
+                                           } catch (Exception e) {
+                                               e.printStackTrace();
+                                           }
+                                       }
+                                   }
 
-                                            } else {
-                                                Log.i(((Integer) response.code()).toString(), "No fue posible guardar la consulta, " +
-                                                        "por favor intente mas tarde");
-                                                throw new Exception("No fue posible guardar la consulta, " +
-                                                        "por favor intente mas tarde");
-                                            }
-                                        } catch (Exception ex) {
-                                            try {
-                                                throw new Exception(ex.getMessage());
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
+                                   @Override
+                                   public void onFailure(Call<Integer> call, Throwable t) {
+                                       Log.i("HTTP ERROR", t.getMessage());
+                                   }
+                               });
 
-                                    }
+                               break;
+                           //Voluntario
+                           case 2:
 
-                                    @Override
-                                    public void onFailure(Call<Integer> call, Throwable t) {
-                                        Log.i("HTTP ERROR", t.getMessage());
-                                    }
-                                });
-
-                                break;
-                            //Voluntario
-                                case 2:
-
-                                VoluntarioDTO voluntarioDTO = new VoluntarioDTO(null,
-                                        campoNombre.getText().toString(),
-                                        campoApellido.getText().toString(), 2,
-                                        calcularGenero(),
-                                        Integer.valueOf(campoDNI.getText().toString()),
-                                        campoMail.getText().toString(),
-                                        campoTelefono.getText().toString(),
-                                        Integer.valueOf(campoEdad.getText().toString()), Integer.valueOf(idPais),
-                                        Integer.valueOf(idProvincia));
+                               VoluntarioDTO voluntarioDTO = new VoluntarioDTO(null,
+                                       campoNombre.getText().toString(),
+                                       campoApellido.getText().toString(), 2,
+                                       calcularGenero(),
+                                       Integer.valueOf(campoDNI.getText().toString()),
+                                       campoMail.getText().toString(),
+                                       campoTelefono.getText().toString(),
+                                       Integer.valueOf(campoEdad.getText().toString()), Integer.valueOf(idPais),
+                                       Integer.valueOf(idProvincia));
 
 
-                                VoluntariosService voluntarioBasicoService = retrofit.create(VoluntariosService.class);
+                               VoluntariosService voluntarioBasicoService = retrofit.create(VoluntariosService.class);
 
-                                Call<Integer> http_call_voluntarioBasico = voluntarioBasicoService.addVoluntarioBasico(voluntarioDTO);
+                               Call<Integer> http_call_voluntarioBasico = voluntarioBasicoService.addVoluntarioBasico(voluntarioDTO);
 
-                                http_call_voluntarioBasico.enqueue(new Callback<Integer>() {
-                                    @Override
-                                    public void onResponse(Call<Integer> call, Response<Integer> response) {
-                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                        startActivity(intent);
-                                    }
+                               http_call_voluntarioBasico.enqueue(new Callback<Integer>() {
+                                   @Override
+                                   public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                       Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                       startActivity(intent);
+                                   }
 
-                                    @Override
-                                    public void onFailure(Call<Integer> call, Throwable t) {
-                                        Log.i("HTTP ERROR", t.getMessage());
-                                    }
-                                });
+                                   @Override
+                                   public void onFailure(Call<Integer> call, Throwable t) {
+                                       Log.i("HTTP ERROR", t.getMessage());
+                                   }
+                               });
+                               break;
+                           default:
+                               break;
+                       }
 
-                                    //Voluntario fundacion
-                           /*
-                            case 3:
+                       break;
 
-                                VoluntarioDTO voluntarioDTO = new VoluntarioDTO(campoNombre.getText().toString(),
-                                        campoApellido.getText().toString(),
-                                        getGeneroValue().getText().toString(),
-                                        Integer.parseInt(campoDNI.getText().toString()),campoTelefono.getText().toString(),
-                                        spinnerProvincia.getSelectedItem().toString(),
-                                        spinnerPais.getSelectedItem().toString());
+                   //Voluntario medico
+                   case R.id.btnSiguiente:
+                       guardarPreferencias(v);
+                       break;
+               }
 
-
-                                VoluntariosService voluntarioBasicoService = retrofit.create(VoluntariosService.class);
-
-                                Call<Void> http_call_voluntarioBasico = voluntarioBasicoService.addVoluntarioBasico(voluntarioDTO);
-
-                                http_call_voluntarioBasico.enqueue(new Callback<Void>() {
-                                    @Override
-                                    public void onResponse(Call<Void> call, Response<Void> response) {
-                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                        startActivity(intent);
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<Void> call, Throwable t) {
-                                        Log.i("HTTP ERROR", t.getMessage());
-                                    }
-                                });
-*/
-
-                                break;
-
-                            default:
-                        }
-
-                        break;
-
-                        //Voluntario medico
-                        case R.id.btnSiguiente:
-                            guardarPreferencias(v);
-                            break;
-                }
-
-           }else{
-               //No se checkeo el checkbox de terminos y condiciones
-               Toast.makeText(getApplicationContext(), R.string.TyC_invalido, Toast.LENGTH_SHORT).show();
            }
-        }else{
-            //Validacion NO exitosa :(
-            Toast.makeText(getApplicationContext(), "Uno o más campos incorrectos.", Toast.LENGTH_SHORT).show();
+           else//No se checkeo el checkbox de terminos y condiciones
+               Toast.makeText(getApplicationContext(), R.string.TyC_invalido, Toast.LENGTH_SHORT).show();
         }
+        else//Validacion NO exitosa :(
+            Toast.makeText(getApplicationContext(), "Uno o más campos incorrectos.", Toast.LENGTH_SHORT).show();
     }
 
     @NotNull
@@ -568,17 +530,21 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         String nombre = campoNombre.getText().toString();
         String apellido = campoApellido.getText().toString();
         //String genero = getGeneroValue().getText().toString();
+        String genero = calcularGenero().toString();
         String email = campoMail.getText().toString();
         String edad = campoEdad.getText().toString();
         String DNI = campoDNI.getText().toString();
         String telefono = campoTelefono.getText().toString();
-        String pais = idPais;
-        String provincia = idProvincia;
+
+        SpinnerItem siPais = (SpinnerItem) spinnerPais.getSelectedItem();
+        String pais = siPais.getIdData();
+        SpinnerItem siProvincia = (SpinnerItem)spinnerProvincia.getSelectedItem();
+        String provincia = siProvincia.getIdData();
 
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putString("nombre", nombre);
         editor.putString("apellido", apellido);
-       // editor.putString("genero", genero);
+        editor.putString("genero", genero);
         editor.putString("email", email);
         editor.putString("edad", edad);
         editor.putString("DNI", DNI);
@@ -590,33 +556,5 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         Intent intent = new Intent(v.getContext(), registroMedico.class);
         startActivity(intent);
     }
-
-
-    /*
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-       String item = parent.getItemAtPosition(position).toString();
-
-        botonRegistrarse = findViewById(R.id.btnRegistrarPacienteOVoluntarioBasico);
-        botonSiguiente = findViewById(R.id.btnSiguiente);
-
-        if(item.equals("Voluntario Medico"))
-        {
-            botonSiguiente.setVisibility(View.VISIBLE);
-            botonRegistrarse.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
-            botonSiguiente.setVisibility(View.INVISIBLE);
-            botonRegistrarse.setVisibility(View.VISIBLE);
-        }
-
-
-
-    }
-*/
-
-
-
 
 }

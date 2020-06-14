@@ -4,12 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +21,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import DonArDato.ResponseData;
 import DonArDato.actualizaIG;
 import Negocio.Login;
 import retrofit2.Call;
@@ -36,6 +34,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
 
     //TextView txtID;
+
+    private String idGoogle;
 
     FirebaseAuth.AuthStateListener mAuthListener;
     @SuppressLint("WrongViewCast")
@@ -84,11 +84,12 @@ public class LoginActivity extends AppCompatActivity {
             handleSignInResult(task);
 
             GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+
             if(acct!=null){
 
-                String personId = acct.getId();
-                Log.i("Mensaje",personId);
-                saveID(personId);
+                idGoogle = acct.getId();
+                Log.i("Mensaje",idGoogle);
+                //saveID(personId);
 
             }
         }
@@ -131,6 +132,16 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void saveTipo(String tipo){
+
+        SharedPreferences preferencias = getSharedPreferences
+                ("ID usuario", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString("tipo",tipo);
+        editor.commit();
+    }
+
     private String getEmail(){
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         String personEmail="";
@@ -162,9 +173,9 @@ public class LoginActivity extends AppCompatActivity {
                 Login login = response.body();
                 if (response.body() != null) {
                     if (login.getInicio() == 1) {
-                        Log.i("Tag_sesion", "IdUpdate Correcto correcto " + getEmail() + " | " + getId());
+                        Log.i("Tag_sesion", "IdUpdate Correcto " + getEmail() + " | " + getId());
                     } else {
-                        Log.i("Tag_sesion", "Ya se encuentra actualizado");
+                        Log.i("Tag_sesion", "No se pudo actualizar el idGoogle");
                     }
                 }
             }
@@ -183,19 +194,27 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         final LoginService lg = retrofit.create(LoginService.class);
-        Call<Login> http_call = lg.checkCorreo(getEmail());
+        Call<ResponseData> http_call = lg.checkCorreo(getEmail());
 
-        http_call.enqueue(new Callback<Login>() {
+        http_call.enqueue(new Callback<ResponseData>() {
             @Override
-            public void onResponse(Call<Login> call, Response<Login> response) {
+            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
                 Intent intent;
-                Login login = response.body();
+                //Integer idUsuario =response.body();
+                ResponseData res = (ResponseData) response.body();
                 if(response.body() != null) {
-                    if (login.getInicio() == 1){
-                            actualizaID();
-                            Log.i("Tag_sesion", "Inicio correcto " + getEmail() + " | " + getId());
-                             intent = new Intent(LoginActivity.this, MainActivity.class);
-                    }else {
+                    if (res.getIdUser() != 0 ){
+                        actualizaID();
+                        //ACA GUARDO el ID del USUARIO.
+                        saveID(res.getIdUser()+"");
+                        saveTipo(res.getTipoUser()+"");
+                        Log.i("Tag_sesion", "Inicio correcto // Email: " + getEmail() + " | IdGoogle: " + getId()+" | IdUser: " +res.getIdUser());
+                        intent = new Intent(LoginActivity.this, MainActivity.class);
+                    }
+                    else {
+                        Toast.makeText(LoginActivity.this
+                                , "El Correo no existe en nuestra base de datos, es necesario que se registre."
+                                , Toast.LENGTH_LONG).show();
                         signOut();
                         intent = new Intent(LoginActivity.this, LoginActivity.class);
                         Log.i("Tag_sesion", "No se pudo iniciar sesion");
@@ -204,11 +223,18 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                 {
+                    if(response.code() == 204) {
+                        Toast.makeText(getApplicationContext(),
+                                "No se encontro un usuario registrado con ese mail",
+                                Toast.LENGTH_LONG).show();
+                        signOut();
+                    }
+                    else
                     Log.e("errorResposne", "NO ME MANDO LO QUE QUERIA LA API");
                 }
             }
             @Override
-            public void onFailure(Call<Login> call, Throwable t) {
+            public void onFailure(Call<ResponseData> call, Throwable t) {
                 signOut();
                 Intent intent = new Intent (LoginActivity.this, LoginActivity.class);
                 startActivity(intent);

@@ -23,9 +23,13 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 import Adapters.SpinnerAdaptor;
 import DonArDato.EspecialidadDTO;
@@ -60,10 +64,8 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
 
     private void configView() {
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-
         //awesomeValidation.addValidation(this,R.id.edtMatricula, RegexTemplate.NOT_EMPTY,R.string.matricula_invalida);
         //awesomeValidation.addValidation(this,R.id.edtSeguro, RegexTemplate.NOT_EMPTY,R.string.seguro_invalido);
-
 
         campoMatricula = findViewById(R.id.edtMatricula);
         campoSeguro = findViewById(R.id.edtSeguro);
@@ -75,8 +77,6 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
         botonRegistrarse.setOnClickListener(this);
         botonIngreso.setOnClickListener(this);
         botonSalida.setOnClickListener(this);
-
-
 
         cargarSpinnerEspecialidades();
     }
@@ -140,9 +140,6 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                                 e.printStackTrace();
                             }
                         }
-
-
-
                     }
 
                     @Override
@@ -166,8 +163,6 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         Intent intent;
-
-
             switch (v.getId()) {
                 case R.id.btnRegistrarMedico:
                     if(awesomeValidation.validate()) {
@@ -184,16 +179,35 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                     String DNI = preferences.getString("DNI", "No posee DNI");
                     String telefono = preferences.getString("telefono", "No posee teléfono");
                     String pais = preferences.getString("pais","-1");
-                    String provincia = preferences.getString("provincia","No posee provincia");
+                    String provincia = preferences.getString("provincia","0");
 
 
-                    VoluntarioMedicoDTO voluntarioMedico = new VoluntarioMedicoDTO(null, nombre,
-                            apellido, 3, Integer.valueOf(genero), Integer.valueOf(DNI), email,
-                            telefono, Integer.valueOf(edad), Integer.valueOf(pais), Integer.valueOf(provincia),
-                            Integer.valueOf(idEspecialidad), campoMatricula.getText().toString(),
+                    String horaIngreso = "";
+                    horaIngreso = textoHorarioIngreso.getText().toString();
+                    horaIngreso = ajustarFecha(horaIngreso);
+                    String horaSalida = "";
+                    horaSalida = textoHorarioIngreso.getText().toString();
+                    horaSalida = ajustarFecha(horaSalida);
+
+
+                    VoluntarioMedicoDTO voluntarioMedico = new VoluntarioMedicoDTO(
+                            null,
+                            nombre,
+                            apellido,
+                            3,
+                            Integer.valueOf(genero),
+                            Integer.valueOf(DNI),
+                            email,
+                            telefono,
+                            Integer.valueOf(edad),
+                            Integer.valueOf(pais),
+                            Integer.valueOf(provincia),
+                            Integer.valueOf(idEspecialidad),
+                            campoMatricula.getText().toString(),
                             campoSeguro.getText().toString(),
-                            textoHorarioIngreso.getText().toString(),
-                            textoHorarioSalida.getText().toString());
+                            horaIngreso,//textoHorarioIngreso.getText().toString(),
+                            horaSalida//textoHorarioSalida.getText().toString()
+                    );
 
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl("https://donar.azurewebsites.net/")
@@ -205,6 +219,9 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                     http_call.enqueue(new Callback<Integer>() {
                         @Override
                         public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            Toast.makeText(getApplicationContext(),
+                                    "El usuario fue creado",
+                                    Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(intent);
                         }
@@ -212,6 +229,9 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                         @Override
                         public void onFailure(Call<Integer> call, Throwable t) {
                             Log.i("HTTP ERROR", t.getMessage());
+                            Toast.makeText(getApplicationContext(),
+                                    "Algo malo ocurrio! muy malo!! y tu tienes la culpa!",
+                                    Toast.LENGTH_LONG).show();
                         }
                     });
 
@@ -268,9 +288,33 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
         timePickerDialog.show();
     }
 
+    //Doy formato a la hora para que no pinche el automach
+    private String ajustarFecha(String fecha) {
+        String finale = "";
+        String[] a= fecha.split(":");
+        String horas = "";
+        String minutos = "";
+        String segundos = "00";
 
+        if(a[0].length() != 2)
+            horas = a[0] = "0" + a[0];
+        else
+            horas = a[0];
 
+        if(a[1].length() > 2)
+        {
+            minutos = a[1].substring(0, a[1].length()-3);
+            if(minutos.length() != 2)
+                minutos = "0" + minutos;
+        }
+        else
+        {
+            if(a[1].length() == 1)
+                minutos = "0" + minutos;
+        }
 
-
+        finale = horas + ":" +  minutos + ":" + segundos;
+         return finale;
+    }
 
 }
