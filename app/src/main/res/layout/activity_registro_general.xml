@@ -196,7 +196,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10sp"
         android:ems="10"
-        android:hint="Número de teléfono"
+        android:hint="Número de teléfono celular"
         android:inputType="phone"
         app:layout_constraintBottom_toBottomOf="@+id/include5"
         app:layout_constraintEnd_toEndOf="parent"
