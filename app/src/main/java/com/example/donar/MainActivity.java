@@ -165,16 +165,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     intent = new Intent(v.getContext(), pacienteSolicitarConsulta.class); //prueba
                     break;
                 case R.id.imbPacientes:
-                    intent = new Intent(v.getContext(), pacientesMain.class);//prueba
+                    intent = new Intent(v.getContext(), pacientesMain.class);
                     break;
                 case R.id.imbReportes:
-                    intent = new Intent(v.getContext(), reportesMain.class);//prueba
+                    intent = new Intent(v.getContext(), reportesMain.class);
                     break;
                 case R.id.imbVoluntarios:
-                    intent = new Intent(v.getContext(), voluntariosAutoMach.class);//prueba
+                    intent = new Intent(v.getContext(), voluntariosAutoMach.class);
                     break;
                 default:
-                    intent = new Intent(v.getContext(), registroGeneral.class);//prueba
+                    intent = new Intent(v.getContext(), registroGeneral.class);
                     break;
             }
         }
