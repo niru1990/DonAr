@@ -62,7 +62,7 @@
 
     <!-- Validaciones formulario -->
     <string name="nombre_invalido">Por favor, inserte un nombre válido.</string>
-    <string name="telefono_invalido">Por favor, inserte un número de teléfono válido.</string>
+    <string name="telefono_invalido">Por favor, inserte su número de teléfono.</string>
     <string name="TyC_invalido">Debe aceptar los términos y condiciones.</string>
     <string name="apellido_invalido">Por favor, inserte su apellido.</string>
     <string name="edad_invalida">Por favor, ingrese su edad.</string>
@@ -70,6 +70,12 @@
     <string name="tipo_usuario_invalido">Por favor, seleccione un tipo de usuario.</string>
     <string name="txtNacionalidad">Nacionalidad</string>
     <string name="txtHistorialClinicoTitulo">Historial Clínico</string>
+    <string name="email_valido">Por favor, inserte su email.</string>
+    <string name="provincia_invalida">Por favor, especifique su provincia de residencia.</string>
+    <string name="pais_invalido">Por favor, especifique su país de residencia.</string>
+    <string name="genero_invalido">Por favor, especifique su género.</string>
+    <string name="tipo_de_usuario_invalido">Por favor, especifique su tipo de usuario.</string>
+    <string name="mail_invalido">Por favor, ingrese un correo electrónico válido.</string>
 
 
 </resources>

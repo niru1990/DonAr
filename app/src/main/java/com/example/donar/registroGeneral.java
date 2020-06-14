@@ -90,6 +90,18 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         botonRegistrarse.setOnClickListener(this);
         botonSiguiente.setOnClickListener(this);
 
+
+        cargarValidacionCamposNoVacios();
+
+        //Seteo valores a los spinners
+        cargarSpinnerTipoDeUsuario();
+        cargarSpinnerProvincia();
+        cargarSpinnerPais();
+
+    }
+
+    private void cargarValidacionCamposNoVacios() {
+
         //Inicializar validación
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
@@ -102,13 +114,52 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         //Valido DNI
         awesomeValidation.addValidation(this,R.id.edtDNI,RegexTemplate.NOT_EMPTY,R.string.DNI_invalido);
         //Valido teléfono
-        awesomeValidation.addValidation(this,R.id.edtTelefono,"[10-13]{1}[0-9]{9}$",R.string.telefono_invalido);
+        awesomeValidation.addValidation(this,R.id.edtTelefono,RegexTemplate.NOT_EMPTY,R.string.telefono_invalido);
+        //Valido email
+        awesomeValidation.addValidation(this,R.id.edtEmail,RegexTemplate.NOT_EMPTY,R.string.email_valido);
 
-        //Seteo valores a los spinners
-        cargarSpinnerTipoDeUsuario();
-        cargarSpinnerProvincia();
-        cargarSpinnerPais();
+    }
 
+    private boolean cargarValidacionCamposDetalles(){
+        radioGroupGenero = findViewById(R.id.generoGroup);
+        campoMail = findViewById(R.id.edtEmail);
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        if(idTDU.equals("0")){
+            Toast.makeText(getApplicationContext(), R.string.tipo_de_usuario_invalido,
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(radioGroupGenero.getCheckedRadioButtonId() == -1){
+            Toast.makeText(getApplicationContext(), R.string.genero_invalido,
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(campoMail.getText().toString().trim().matches(emailPattern)){
+            Toast.makeText(getApplicationContext(), R.string.mail_invalido,
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(idPais.equals("0")){
+            Toast.makeText(getApplicationContext(), R.string.pais_invalido,
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(idPais.equals("4") && idProvincia.equals("0")){
+            Toast.makeText(getApplicationContext(), R.string.provincia_invalida,
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(campoTyC.isChecked()==false){
+            Toast.makeText(getApplicationContext(), R.string.TyC_invalido, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private void cargarSpinnerTipoDeUsuario() {
@@ -390,10 +441,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
     public void onClick(@NotNull View v) {
 
         //Chequeo validez de campos
-        if(awesomeValidation.validate()) {
-
-            //Chequeo validez Terminos y Condiciones
-           if(campoTyC.isChecked()) {
+        if(awesomeValidation.validate() && cargarValidacionCamposDetalles()) {
 
                //Validacion EXITOSA ;)
                switch (v.getId()) {
@@ -505,12 +553,10 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                        break;
                }
 
-           }
-           else//No se checkeo el checkbox de terminos y condiciones
-               Toast.makeText(getApplicationContext(), R.string.TyC_invalido, Toast.LENGTH_SHORT).show();
+
+
         }
-        else//Validacion NO exitosa :(
-            Toast.makeText(getApplicationContext(), "Uno o más campos incorrectos.", Toast.LENGTH_SHORT).show();
+
     }
 
     @NotNull
