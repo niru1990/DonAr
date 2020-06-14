@@ -30,7 +30,7 @@
     <string name="txtProvincia">Provincia</string>
     <string name="txtLocalidad">Localidad</string>
     <string name="loginWarningDescr">Para poder utilizar esta aplicación debe estar registrado.</string>
-
+    <string name="txtTituloReportes">Reportes</string>
 
     <!--Switch-->
     <string name="seguimiento">Seguimiento </string>
@@ -45,6 +45,13 @@
     <string name="btnLogin">Login</string>
     <string name="btnSolicitar">Solicitar</string>
     <string name="btnSAsignar">Asignar</string>
+    <string name="btnGenerar">Generar</string>
+
+    <!-- Radio buttons-->
+    <string name="reporteComposiciónVoluntarios">Composición de voluntarios</string>
+    <string name="reporteIdentidadDeGenero">Identidad de genero</string>
+    <string name="reporteRangoEtarioPacientes">Rango etario de pacientes</string>
+    <string name="reporteTrazabilidad">Trazabilidad de donaciones</string>
 
     <!-- Descripciones -->
     <string name="voluntarios">Voluntarios</string>
@@ -70,6 +77,5 @@
     <string name="tipo_usuario_invalido">Por favor, seleccione un tipo de usuario.</string>
     <string name="txtNacionalidad">Nacionalidad</string>
     <string name="txtHistorialClinicoTitulo">Historial Clínico</string>
-
 
 </resources>
