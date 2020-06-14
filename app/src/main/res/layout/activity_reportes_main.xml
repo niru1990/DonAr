@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".reportesMain">
+
+    <include
+        android:id="@+id/include6"
+        layout="@layout/activity_don_ar_tool_bar"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="136dp"></include>
+
+    <TextView
+        android:id="@+id/txtTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:text="@string/txtTituloReportes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.096"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/include6" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.169"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitulo">
+
+        <RadioButton
+            android:id="@+id/rbtComposicionVoluntarios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reporteComposiciónVoluntarios"
+            tools:layout_editor_absoluteX="116dp"
+            tools:layout_editor_absoluteY="221dp" />
+
+        <RadioButton
+            android:id="@+id/rbtIdentidadGenero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reporteIdentidadDeGenero"
+            tools:layout_editor_absoluteX="116dp"
+            tools:layout_editor_absoluteY="221dp" />
+
+        <RadioButton
+            android:id="@+id/rbtRangoEtario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reporteRangoEtarioPacientes"
+            tools:layout_editor_absoluteX="116dp"
+            tools:layout_editor_absoluteY="221dp" />
+
+        <RadioButton
+            android:id="@+id/rbtTrazabilidadDonaciones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reporteTrazabilidad"
+            tools:layout_editor_absoluteX="116dp"
+            tools:layout_editor_absoluteY="221dp" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnGenerar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnGenerar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
