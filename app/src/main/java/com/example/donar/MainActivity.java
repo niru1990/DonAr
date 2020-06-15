@@ -175,7 +175,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     intent = new Intent(v.getContext(), reportesMain.class);
                     break;
                 case R.id.imbVoluntarios:
-                    intent = new Intent(v.getContext(), voluntariosAutoMach.class);
+                    if(tipoUsuario.equals("2") || tipoUsuario.equals("3"))
+                        intent = new Intent(v.getContext(), voluntariosAutoMach.class);
+                    else {
+                        Toast.makeText(getApplicationContext(), R.string.NoTieneAcceso,
+                                Toast.LENGTH_SHORT).show();
+                        intent = new Intent(v.getContext(), MainActivity.class);
+                    }
                     break;
                 default:
                     intent = new Intent(v.getContext(), registroGeneral.class);
