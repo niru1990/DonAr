@@ -96,7 +96,7 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
         telefono = (TextView) findViewById(R.id.txtTelefono);
         email = (TextView) findViewById(R.id.txtEmail);
         documento = (TextView) findViewById(R.id.txtDocumento);
-        //genero = (TextView) findViewById(R.id.txtGenero);
+        genero = (TextView) findViewById(R.id.txtGenero);
         sintomas = (EditText) findViewById(R.id.edtSintomas);
 
         diagnosticoPresuntivo = (Switch) findViewById(R.id.stcDiagnosticoPresuntivo);
@@ -119,7 +119,6 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 EventoServices eventoServices = retrofit.create(EventoServices.class);
-//                String id = getIntent().getStringExtra("idEvento");
 
                 SharedPreferences preferencias = getSharedPreferences
                         ("ID usuario", Context.MODE_PRIVATE);
@@ -224,7 +223,19 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                                             email.setText(email.getText() + " \n" +  p.getEmail());
                                             telefono.setText(telefono.getText() + " \n" + p.getTelefonoPaciente());
 
-                                            //genero.setText(p.getGenero());
+                                            String generoText = "";
+                                            switch (p.getGenero()){
+                                                case 0:
+                                                    generoText = "Masculino";
+                                                    break;
+                                                case 1:
+                                                    generoText = "Femenino";
+                                                    break;
+                                                default:
+                                                    generoText = "Transgenero";
+                                            }
+
+                                            genero.setText(generoText);
                                             sintomas.setText(sintomasSave);
                                             sintomas.setEnabled(false);
                                         }
