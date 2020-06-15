@@ -13,7 +13,7 @@
     <string name="txtAplicacionYModulo">DonAr</string>
     <string name="txtUsuario">Aca va el nombre de usuario</string>
     <string name="txtPacientes">Pacientes: </string>
-    <string name="txtSintomasYMedicamentos">Síntomas y prescripción: </string>
+    <string name="txtSintomasYMedicamentos">Síntomas: </string>
     <string name="txtDetalle">Detalle: </string>
     <string name="txtHorarios">Horarios </string>
     <string name="txtHorarioIngreso">Horario de ingreso </string>
