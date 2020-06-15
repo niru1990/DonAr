@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 voluntarios.setOnClickListener(this);
                 pacientes.setOnClickListener(this);
                 reportes.setOnClickListener(this);
-                //active = (id.getText().toString().compareTo(" ") != 0);
+                //active = true;
                 active = isSignedIn();
 
                 if (active) {
@@ -154,6 +155,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(@NotNull View v) {
         Intent intent;
 
+        SharedPreferences preferencias = getSharedPreferences
+                ("ID usuario", Context.MODE_PRIVATE);
+        String tipoUsuario = preferencias.getString("tipo", "0");
+
         if(active){
             switch(v.getId())
             {
@@ -161,7 +166,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     intent = new Intent(v.getContext(), pacienteSolicitarConsulta.class); //prueba
                     break;
                 case R.id.imbPacientes:
-                    intent = new Intent(v.getContext(), pacientesMain.class);
+                    if(tipoUsuario.equals("1"))
+                        intent = new Intent(v.getContext(), pacienteSolicitarConsulta.class);
+                    else
+                        intent = new Intent(v.getContext(), historial_de_consultas.class);
                     break;
                 case R.id.imbReportes:
                     intent = new Intent(v.getContext(), reportesMain.class);
