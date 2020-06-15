@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(@NotNull View v) {
         Intent intent;
+
         if(active){
             switch(v.getId())
             {
