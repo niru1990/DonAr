@@ -135,7 +135,6 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                             switch (response.code()) {
                                 case 200:
                                     if (response.body() != null) {
-
                                         EventoDTO event = (EventoDTO) response.body();
                                         eventId.setText(event.getId().toString());
                                         sintomasSave = event.getSintomas();
@@ -145,7 +144,6 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                                         diagnosticoPresuntivo.setChecked(event.getDiagnosticoPresuntivo());
                                         tratamientoFarmacologico.setChecked(event.getTratamientoFarmacologico());
                                         getPaciente(event.getPacienteId());
-
                                     }
                                     break;
                                 case 404:
@@ -384,30 +382,23 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
 
     @NotNull
     private EventoDTO formToObject(){
-
         EventoDTO event = new EventoDTO();
-
         event.setId(BigInteger.valueOf(Long.parseLong(eventId.getText().toString())));
         event.setPacienteId(pacienteId);
         event.setSintomas(sintomasSave);
         event.setDetalle(detalle.getText().toString());
-
         event.setDiagnosticoPresuntivo(diagnosticoPresuntivo.isChecked());
         event.setTratamientoFarmacologico(tratamientoFarmacologico.isChecked());
         event.setEspecialidadId(idEspecialidad);
-
         Date d = new Date();
         CharSequence Fecha  = DateFormat.format("dd-MM-yyyy", d.getTime());
-
         event.setFecha(Fecha.toString());
         event.setidVoluntarioMedico(voluntarioMedicoId);
         event.setidVoluntario(voluntarioBasicoId);
-
         if(seguimiento.isChecked())
             event.setEstado(1);
         else
             event.setEstado(4);
-
         return event;
     }
 
