@@ -78,4 +78,7 @@
     <string name="txtNacionalidad">Nacionalidad</string>
     <string name="txtHistorialClinicoTitulo">Historial Clínico</string>
 
+    <!-- Mensajes-->
+    <string name="NoTieneAcceso">Usted no cuenta con permisos para realizar esta acción.</string>
+
 </resources>
