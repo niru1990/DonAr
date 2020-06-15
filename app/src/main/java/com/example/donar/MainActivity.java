@@ -115,19 +115,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 return true;
-
             case R.id.action_registro_oculto:
                 intent = new Intent(getApplicationContext(), registroGeneral.class);
                 startActivity(intent);
                 return true;
             case R.id.action_cerrarSesion:
-                Toast.makeText(this, "Haglo click en el boton cerrar sesión", Toast.LENGTH_LONG).show();
                 signOut();
                 return true;
-
             default:
-                //Aqui la accion del usuario no fue reconocida
-                return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);//Aqui la accion del usuario no fue reconocida
         }
     }
 
@@ -157,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(@NotNull View v) {
         Intent intent;
-
         if(active){
             switch(v.getId())
             {

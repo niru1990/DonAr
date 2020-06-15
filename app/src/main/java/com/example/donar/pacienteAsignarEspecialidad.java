@@ -129,10 +129,8 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                 cargarSpinner(especialidad);
                 //Obtener evento y cargarlo. Esto obliga a obtener el paciente.
                 getEvento();
-                //getPacienteData(idPaciente.getText().toString());
             }
-            else
-            {
+            else {
                 Intent intent = new Intent(this.getApplicationContext(), sinConexionInternet.class );
                 startActivity(intent);
             }
