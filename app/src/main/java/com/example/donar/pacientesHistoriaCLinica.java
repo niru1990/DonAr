@@ -49,8 +49,6 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
 
     private Toolbar toolbar;
 
-
-
     private TextView nombre;
     private TextView edad;
     private TextView documento;
@@ -295,17 +293,20 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
         switch (v.getId())
         {
             case R.id.imbAgregar:
-                EventoDTO e = formToObject();
-                if(new Evento().validar(e, true, true))
-                {
-                    updateFullData(e);
+                if(idEspecialidad != null ) {
+                    EventoDTO e = formToObject();
+                    if (new Evento().validar(e, true, true)) {
+                        updateFullData(e);
+                    } else {
+                        Toast.makeText(this,
+                                "Es necesario completar el detalle.",
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
                 else
-                {
-                    Toast.makeText(this,
-                            "Es necesario completar el detalle.",
-                            Toast.LENGTH_LONG).show();
-                }
+                    Toast.makeText(getApplicationContext(),
+                            "No se puede modificar una consulta que no fue previamente analizada.",
+                            Toast.LENGTH_SHORT).show();
                 break;
             case R.id.ibmCancelar:
                 limpiar();
