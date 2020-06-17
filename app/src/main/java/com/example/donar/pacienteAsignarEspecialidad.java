@@ -129,10 +129,8 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                 cargarSpinner(especialidad);
                 //Obtener evento y cargarlo. Esto obliga a obtener el paciente.
                 getEvento();
-                //getPacienteData(idPaciente.getText().toString());
             }
-            else
-            {
+            else {
                 Intent intent = new Intent(this.getApplicationContext(), sinConexionInternet.class );
                 startActivity(intent);
             }
@@ -230,7 +228,10 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                             .build();
                     EventoServices eventos = retrofit.create(EventoServices.class);
 
-                    Call<EventoDTO> http_call = eventos.updateEvento(new AsignarEspecialidadDTO(event.getId(), event.getEspecialidadId()));
+                    Call<EventoDTO> http_call = eventos.updateEvento(new AsignarEspecialidadDTO(
+                            event.getId(),
+                            event.getEspecialidadId()));
+
                     http_call.enqueue(new Callback<EventoDTO>() {
                         @Override
                         public void onResponse(Call<EventoDTO> call, Response<EventoDTO> response) {
@@ -368,21 +369,22 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
-
-                //String idEvento = getIntent().getStringExtra("idEvento");
-
-
-
                 SharedPreferences preferencias = getSharedPreferences
                         ("ID usuario", Context.MODE_PRIVATE);
-
 
                 String idEvento = preferencias.getString("idEvento", "0");
                 id.setText(idEvento);
 
-
-
                 EventoServices eventoServices = retrofit.create(EventoServices.class);
+
+                if(idEvento.equals("0"))
+                {
+                    Toast.makeText(getApplicationContext(),
+                            "No se encontro el evento que desea obtener",
+                            Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
                 Call<EventoDTO> http_call = eventoServices.getEventoById(idEvento);
 
                 http_call.enqueue(new Callback<EventoDTO>() {

@@ -76,15 +76,13 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
             solicitar.setOnClickListener(this);
             toolbar = (Toolbar) findViewById(R.id.donArToolBar);
             setSupportActionBar(toolbar);
-
             if (verificarConexion()) {
                 loadData();
             } else {
                 throw new Exception("El dispositivo no cuenta con conexion a internet");
             }
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this.getApplicationContext(), sinConexionInternet.class );
             startActivity(intent);
@@ -164,19 +162,12 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
 
                 SharedPreferences preferencias = getSharedPreferences
                         ("ID usuario", Context.MODE_PRIVATE);
-
-
                 idPacient = preferencias.getString("ID", "0");
-
                 if (idPacient.equals("0")) {
                     throw new Exception("Es necesario volver a loguearse.");
                 }
-
                 PacientesService pacientesService = retrofit.create(PacientesService.class);
-
                 Call<PacienteConsultaDTO> http_call = pacientesService.getPacienteEspecifico2(idPacient);
-
-                //Call<PacienteDTO> http_call = pacientesService.getPacienteEspecifico("1");
                 http_call.enqueue(new Callback<PacienteConsultaDTO>() {
                     @SuppressLint("SetTextI18n")
                     @Override

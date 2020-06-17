@@ -49,8 +49,6 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
 
     private Toolbar toolbar;
 
-
-
     private TextView nombre;
     private TextView edad;
     private TextView documento;
@@ -96,7 +94,7 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
         telefono = (TextView) findViewById(R.id.txtTelefono);
         email = (TextView) findViewById(R.id.txtEmail);
         documento = (TextView) findViewById(R.id.txtDocumento);
-        //genero = (TextView) findViewById(R.id.txtGenero);
+        genero = (TextView) findViewById(R.id.txtGenero);
         sintomas = (EditText) findViewById(R.id.edtSintomas);
 
         diagnosticoPresuntivo = (Switch) findViewById(R.id.stcDiagnosticoPresuntivo);
@@ -119,7 +117,6 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 EventoServices eventoServices = retrofit.create(EventoServices.class);
-//                String id = getIntent().getStringExtra("idEvento");
 
                 SharedPreferences preferencias = getSharedPreferences
                         ("ID usuario", Context.MODE_PRIVATE);
@@ -136,7 +133,6 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                             switch (response.code()) {
                                 case 200:
                                     if (response.body() != null) {
-
                                         EventoDTO event = (EventoDTO) response.body();
                                         eventId.setText(event.getId().toString());
                                         sintomasSave = event.getSintomas();
@@ -146,7 +142,6 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                                         diagnosticoPresuntivo.setChecked(event.getDiagnosticoPresuntivo());
                                         tratamientoFarmacologico.setChecked(event.getTratamientoFarmacologico());
                                         getPaciente(event.getPacienteId());
-
                                     }
                                     break;
                                 case 404:
@@ -224,7 +219,19 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                                             email.setText(email.getText() + " \n" +  p.getEmail());
                                             telefono.setText(telefono.getText() + " \n" + p.getTelefonoPaciente());
 
-                                            //genero.setText(p.getGenero());
+                                            String generoText = "";
+                                            switch (p.getGenero()){
+                                                case 0:
+                                                    generoText = "Masculino";
+                                                    break;
+                                                case 1:
+                                                    generoText = "Femenino";
+                                                    break;
+                                                default:
+                                                    generoText = "Transgenero";
+                                            }
+
+                                            genero.setText(generoText);
                                             sintomas.setText(sintomasSave);
                                             sintomas.setEnabled(false);
                                         }
@@ -286,17 +293,20 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
         switch (v.getId())
         {
             case R.id.imbAgregar:
-                EventoDTO e = formToObject();
-                if(new Evento().validar(e, true, true))
-                {
-                    updateFullData(e);
+                if(idEspecialidad != null ) {
+                    EventoDTO e = formToObject();
+                    if (new Evento().validar(e, true, true)) {
+                        updateFullData(e);
+                    } else {
+                        Toast.makeText(this,
+                                "Es necesario completar el detalle.",
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
                 else
-                {
-                    Toast.makeText(this,
-                            "Es necesario completar el detalle.",
-                            Toast.LENGTH_LONG).show();
-                }
+                    Toast.makeText(getApplicationContext(),
+                            "No se puede modificar una consulta que no fue previamente analizada.",
+                            Toast.LENGTH_SHORT).show();
                 break;
             case R.id.ibmCancelar:
                 limpiar();
@@ -373,30 +383,23 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
 
     @NotNull
     private EventoDTO formToObject(){
-
         EventoDTO event = new EventoDTO();
-
         event.setId(BigInteger.valueOf(Long.parseLong(eventId.getText().toString())));
         event.setPacienteId(pacienteId);
         event.setSintomas(sintomasSave);
         event.setDetalle(detalle.getText().toString());
-
         event.setDiagnosticoPresuntivo(diagnosticoPresuntivo.isChecked());
         event.setTratamientoFarmacologico(tratamientoFarmacologico.isChecked());
         event.setEspecialidadId(idEspecialidad);
-
         Date d = new Date();
         CharSequence Fecha  = DateFormat.format("dd-MM-yyyy", d.getTime());
-
         event.setFecha(Fecha.toString());
         event.setidVoluntarioMedico(voluntarioMedicoId);
         event.setidVoluntario(voluntarioBasicoId);
-
         if(seguimiento.isChecked())
             event.setEstado(1);
         else
             event.setEstado(4);
-
         return event;
     }
 

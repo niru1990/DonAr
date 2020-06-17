@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 voluntarios.setOnClickListener(this);
                 pacientes.setOnClickListener(this);
                 reportes.setOnClickListener(this);
-                //active = (id.getText().toString().compareTo(" ") != 0);
+                //active = true;
                 active = isSignedIn();
 
                 if (active) {
@@ -115,19 +116,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 return true;
-
             case R.id.action_registro_oculto:
                 intent = new Intent(getApplicationContext(), registroGeneral.class);
                 startActivity(intent);
                 return true;
             case R.id.action_cerrarSesion:
-                Toast.makeText(this, "Haglo click en el boton cerrar sesión", Toast.LENGTH_LONG).show();
                 signOut();
                 return true;
-
             default:
-                //Aqui la accion del usuario no fue reconocida
-                return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);//Aqui la accion del usuario no fue reconocida
         }
     }
 
@@ -158,6 +155,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(@NotNull View v) {
         Intent intent;
 
+        SharedPreferences preferencias = getSharedPreferences
+                ("ID usuario", Context.MODE_PRIVATE);
+        String tipoUsuario = preferencias.getString("tipo", "0");
+
         if(active){
             switch(v.getId())
             {
@@ -165,16 +166,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     intent = new Intent(v.getContext(), pacienteSolicitarConsulta.class); //prueba
                     break;
                 case R.id.imbPacientes:
-                    intent = new Intent(v.getContext(), pacientesMain.class);//prueba
+                    if(tipoUsuario.equals("1"))
+                        intent = new Intent(v.getContext(), pacienteSolicitarConsulta.class);
+                    else
+                        intent = new Intent(v.getContext(), historial_de_consultas.class);
                     break;
                 case R.id.imbReportes:
-                    intent = new Intent(v.getContext(), pacienteSolicitarConsulta.class);//prueba
+                    intent = new Intent(v.getContext(), reportesMain.class);
                     break;
                 case R.id.imbVoluntarios:
-                    intent = new Intent(v.getContext(), voluntariosAutoMach.class);//prueba
+                    if(tipoUsuario.equals("2") || tipoUsuario.equals("3"))
+                        intent = new Intent(v.getContext(), voluntariosAutoMach.class);
+                    else {
+                        Toast.makeText(getApplicationContext(), R.string.NoTieneAcceso,
+                                Toast.LENGTH_SHORT).show();
+                        intent = new Intent(v.getContext(), MainActivity.class);
+                    }
                     break;
                 default:
-                    intent = new Intent(v.getContext(), registroGeneral.class);//prueba
+                    intent = new Intent(v.getContext(), registroGeneral.class);
                     break;
             }
         }
