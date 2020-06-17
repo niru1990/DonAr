@@ -98,7 +98,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                     //NADA, ABSOLUTAMENTE NADA
                 }
             });
-//
+////
             try {
                 //Creo llamada
                 Retrofit retrofit = new Retrofit.Builder()
