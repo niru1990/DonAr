@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.SpinnerAdaptor;
+import DonArDato.AsociacionDTO;
 import DonArDato.PacienteDTO;
 import DonArDato.PaisDTO;
 import DonArDato.ProvinciaDTO;
@@ -68,8 +69,6 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         configView();
 
     }
-
-
 
     private void configView() {
 
@@ -162,7 +161,8 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         return true;
     }
 
-    private void cargarSpinnerTipoDeUsuario() {
+    private void cargarSpinnerTipoDeUsuario()
+    {
         spinnerTipoUsuario = (Spinner) findViewById(R.id.spnTipoVoluntario);
         adaptadorTDU = new SpinnerAdaptor(registroGeneral.this, misTiposDeUsuario);
         spinnerTipoUsuario.setAdapter(adaptadorTDU);
@@ -190,7 +190,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                //NADA, ABSOLUTAMENTE NADA
+
             }
         });
 
@@ -283,7 +283,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                //NADA, ABSOLUTAMENTE NADA
+
             }
         });
 
@@ -443,7 +443,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         //Chequeo validez de campos
         if(awesomeValidation.validate() && cargarValidacionCamposDetalles()) {
 
-               //Validacion EXITOSA ;)
+
                switch (v.getId()) {
                    case R.id.btnRegistrarPacienteOVoluntarioBasico:
 
@@ -541,6 +541,39 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                                    }
                                });
                                break;
+
+                           //Asociacion
+                           case 4:
+
+                               AsociacionDTO asociacionDTO = new AsociacionDTO(null,
+                                       campoNombre.getText().toString(),
+                                       campoApellido.getText().toString(), 4,
+                                       calcularGenero(),
+                                       Integer.valueOf(campoDNI.getText().toString()),
+                                       campoMail.getText().toString(),
+                                       campoTelefono.getText().toString(),
+                                       Integer.valueOf(campoEdad.getText().toString()), Integer.valueOf(idPais),
+                                       Integer.valueOf(idProvincia));
+
+
+                               AsociacionService asociacionService = retrofit.create(AsociacionService.class);
+
+                               Call<Integer> http_call_asociacion = asociacionService.addAsociacion(asociacionDTO);
+
+                               http_call_asociacion.enqueue(new Callback<Integer>() {
+                                   @Override
+                                   public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                       Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                       startActivity(intent);
+                                   }
+
+                                   @Override
+                                   public void onFailure(Call<Integer> call, Throwable t) {
+                                       Log.i("HTTP ERROR", t.getMessage());
+                                   }
+                               });
+                               break;
+
                            default:
                                break;
                        }
@@ -561,9 +594,8 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
 
     @NotNull
     private Integer calcularGenero() {
-     Integer hola = radioGroupGenero.indexOfChild(findViewById(radioGroupGenero.getCheckedRadioButtonId()));
-        Log.i("hola","Resultado:"+hola);
-        Integer generoInteger =  radioGroupGenero.indexOfChild(findViewById(radioGroupGenero.getCheckedRadioButtonId()));
+        Integer generoInteger =  radioGroupGenero.indexOfChild(findViewById(
+                radioGroupGenero.getCheckedRadioButtonId()));
         return generoInteger;
     }
 

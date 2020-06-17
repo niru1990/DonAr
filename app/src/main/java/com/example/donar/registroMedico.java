@@ -54,7 +54,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
     private EditText campoMatricula, campoSeguro;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_voluntario_medico);
 
@@ -64,7 +64,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
 
     private void configView() {
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-        //awesomeValidation.addValidation(this,R.id.edtMatricula, RegexTemplate.NOT_EMPTY,R.string.matricula_invalida);
+       // awesomeValidation.addValidation(this,R.id.edtMatricula, RegexTemplate.NOT_EMPTY,R.string.matricula_invalida);
         //awesomeValidation.addValidation(this,R.id.edtSeguro, RegexTemplate.NOT_EMPTY,R.string.seguro_invalido);
 
         campoMatricula = findViewById(R.id.edtMatricula);
