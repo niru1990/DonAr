@@ -51,7 +51,7 @@ public class historial_de_consultas extends AppCompatActivity implements  View.O
 
     private List<EventoAutoMach> myList = new ArrayList<>();
     ListAdapter myAdapter;
-    private String idEvento;
+    //private String idEvento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,15 +70,17 @@ public class historial_de_consultas extends AppCompatActivity implements  View.O
         //Seteo onclick en boton
         buscar.setOnClickListener(this);
 
-
         myAdapter = new ListAdapter(getApplicationContext(), R.layout.list_item_row,myList);
         lstConsultas.setAdapter(myAdapter);
         lstConsultas.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent;
                 SaveEventId(myList.get(position).getIdEvento());
-                Intent intent = new Intent(getApplicationContext(), pacientesHistoriaCLinica.class);
+                if(getTipoUsuario().equals("3") || getTipoUsuario().equals("4"))
+                    intent = new Intent(getApplicationContext(), pacientesHistoriaCLinica.class);
+                else
+                    intent = new Intent(getApplicationContext(), pacienteAsignarEspecialidad.class);
                 startActivity(intent);
             }
         } );
@@ -105,20 +107,15 @@ public class historial_de_consultas extends AppCompatActivity implements  View.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-
-
             case R.id.action_login_oculto:
                 Toast.makeText(this, "Hago click en boton login oculto", Toast.LENGTH_LONG).show();
                 return true;
-
             case R.id.action_registro_oculto:
                 Toast.makeText(this, "Haglo click en el boton registro oculto", Toast.LENGTH_LONG).show();
                 return true;
-
             case R.id.action_cerrarSesion:
                 signOut();
                 return true;
-
             default:
                 //Aqui la accion del usuario no fue reconocida
                 return super.onOptionsItemSelected(item);
@@ -188,15 +185,12 @@ public class historial_de_consultas extends AppCompatActivity implements  View.O
                         switch (response.code())
                         {
                             case 200:
-
-                                if(response.body() != null)
-                                {
+                                if(response.body() != null) {
                                     for(EventoDTO event : response.body()){
                                         getEventoReducido(event.getId());
                                     }
                                 }
-                                else
-                                {
+                                else {
                                     Toast.makeText(getApplicationContext(),
                                             "Ocurrio un error, comuniquese con su administrador de sistemas.",
                                             Toast.LENGTH_LONG).show();
@@ -205,7 +199,8 @@ public class historial_de_consultas extends AppCompatActivity implements  View.O
                             case 404:
                                 try {
                                     throw new Exception(response.code() +  "No se encontro el recurso.");
-                                } catch (Exception e) {
+                                }
+                                catch (Exception e) {
                                     e.printStackTrace();
                                 }
                                 break;
@@ -225,8 +220,7 @@ public class historial_de_consultas extends AppCompatActivity implements  View.O
                     }
                 });
             }
-            else
-            {
+            else {
                 Toast.makeText(this,
                         "En este momento el dispositivo no cuneta con conexion a internet, " +
                                 "por favor intente mas tarde.",
@@ -234,9 +228,8 @@ public class historial_de_consultas extends AppCompatActivity implements  View.O
                 Intent intent = new Intent(getApplicationContext(), sinConexionInternet.class);
                 startActivity(intent);
             }
-
-        }catch (Exception ex)
-        {
+        }
+        catch (Exception ex) {
             Log.e("searchEventByMail", ex.getMessage());
             Toast.makeText(this,
                     "Ocurrio un error inesperado.",
@@ -282,10 +275,12 @@ public class historial_de_consultas extends AppCompatActivity implements  View.O
                                         break;
                                 }
                             }
-                        } catch (Exception ex) {
+                        }
+                        catch (Exception ex) {
                             try {
                                 throw new Exception("error obteniendo evento reducido. " + ex.getMessage());
-                            } catch (Exception e) {
+                            }
+                            catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
@@ -299,8 +294,7 @@ public class historial_de_consultas extends AppCompatActivity implements  View.O
                     }
                 });
             }
-            else
-            {
+            else {
                 Intent intent = new Intent(getApplicationContext(), sinConexionInternet.class);
                 startActivity(intent);
             }
@@ -308,5 +302,13 @@ public class historial_de_consultas extends AppCompatActivity implements  View.O
         catch (Exception ex){
             Log.e("EventoReducido", ex.getMessage());
         }
+    }
+
+    private String getTipoUsuario() {
+        SharedPreferences preferencias = getSharedPreferences
+                ("ID usuario", Context.MODE_PRIVATE);
+        String tipoUsuario = preferencias.getString("tipo", "0");
+
+        return tipoUsuario;
     }
 }
