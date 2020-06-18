@@ -38,11 +38,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar toolbar;
     private boolean active;
 
+    private String tipoUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        obtenerPreferencias();
         configView();
     }
 
@@ -62,11 +64,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 active = isSignedIn();
 
                 if (active) {
-                    donaciones.setImageResource(R.mipmap.boton_donaciones);
-                    voluntarios.setImageResource(R.mipmap.boton_voluntarios);
+                    if(tipoUsuario.equals("2") || tipoUsuario.equals("3"))
+                        donaciones.setImageResource(R.mipmap.boton_donaciones);
+                    if(tipoUsuario.equals("2") || tipoUsuario.equals("3"))
+                        voluntarios.setImageResource(R.mipmap.boton_voluntarios);
+                    if(tipoUsuario.equals("4"))
+                        reportes.setImageResource(R.mipmap.boton_reportes);
                     pacientes.setImageResource(R.mipmap.boton_pacientes);
-                    reportes.setImageResource(R.mipmap.boton_reportes);
-
                 } else {
                     donaciones.setImageResource(R.mipmap.boton_donaciones_gris);
                     voluntarios.setImageResource(R.mipmap.boton_voluntarios_gris);
@@ -155,10 +159,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(@NotNull View v) {
         Intent intent;
 
-        SharedPreferences preferencias = getSharedPreferences
-                ("ID usuario", Context.MODE_PRIVATE);
-        String tipoUsuario = preferencias.getString("tipo", "0");
-
         if(active){
             switch(v.getId())
             {
@@ -193,4 +193,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    private void obtenerPreferencias(){
+        SharedPreferences preferencias = getSharedPreferences
+                ("ID usuario", Context.MODE_PRIVATE);
+        tipoUsuario = preferencias.getString("tipo", "0");
+    }
 }
