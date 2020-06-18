@@ -53,7 +53,6 @@ private String idDonacion;
         info_fecha_vencimiento=(TextView) findViewById(R.id.info_fecha_vencimiento);
         SharedPreferences sharedPreferences=getSharedPreferences("ID usuario", Context.MODE_PRIVATE);
         idDonacion=sharedPreferences.getString("idDonacion", "0");
-        Toast.makeText(donacionDetalle.this,idDonacion, Toast.LENGTH_LONG).show();
         if (idDonacion!=null){
 
             Retrofit retrofit = new Retrofit.Builder()
@@ -74,8 +73,8 @@ private String idDonacion;
                             info_detalle.setText(donacionDTO.getDetalle());
                             info_cantidad.setText(String.valueOf(donacionDTO.getCantidad()));
                             info_destino.setText(donacionDTO.getDestino());
-                            if (donacionDTO.getFechaVencimiento().equals("")){
-                                info_fecha_vencimiento.setVisibility(View.INVISIBLE);
+                            if (donacionDTO.getFechaVencimiento()==null){
+                                info_fecha_vencimiento.setText("No tiene");
                             }else{
                                 info_fecha_vencimiento.setText(donacionDTO.getFechaVencimiento());
                             }
@@ -114,14 +113,13 @@ private String idDonacion;
 
  */
     /*
-     * This Function converts the String back to Bitmap
-     * */
+
     private Bitmap getBitmapFromString(String stringPicture) {
         byte[] decodedString = Base64.decode(stringPicture, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
     }
-
+ */
     @Override
     public void onClick(View view) {
         switch (view.getId()){

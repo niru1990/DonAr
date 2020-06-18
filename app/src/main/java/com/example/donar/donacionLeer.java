@@ -103,7 +103,7 @@ public class donacionLeer extends AppCompatActivity {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
+                cameraSource.stop();
             }
         });
         barcodeDetector.setProcessor(new Detector.Processor<com.google.android.gms.vision.barcode.Barcode>() {

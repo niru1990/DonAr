@@ -19,6 +19,11 @@ public class DonacionDTO {
     @Nullable
     private ArrayList<DonacionDTO> items;
 
+    public DonacionDTO(BigInteger id, String detalle) {
+        this.id = id;
+        this.detalle = detalle;
+    }
+
     public String getFechaVencimiento() {
         return fechaVencimiento;
     }

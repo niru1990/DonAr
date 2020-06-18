@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 voluntarios.setOnClickListener(this);
                 pacientes.setOnClickListener(this);
                 reportes.setOnClickListener(this);
-                //active = true;
-                active = isSignedIn();
+                active = true;
+                //active = isSignedIn();
 
                 if (active) {
                     donaciones.setImageResource(R.mipmap.boton_donaciones);
