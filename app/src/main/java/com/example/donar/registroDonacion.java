@@ -85,7 +85,7 @@ public class registroDonacion extends AppCompatActivity implements View.OnClickL
                     }else{
                         donacionDTO.setFechaVencimiento("");
                     }
-                    Toast.makeText(this,"verificado",Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"Verificado",Toast.LENGTH_LONG).show();
 
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl("https://donar.azurewebsites.net/")

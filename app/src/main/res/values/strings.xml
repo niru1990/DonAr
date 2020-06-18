@@ -46,6 +46,7 @@
     <string name="btnSolicitar">Solicitar</string>
     <string name="btnSAsignar">Asignar</string>
     <string name="btnGenerar">Generar</string>
+    <string name="btnRegistrarDonacion">Registrar</string>
 
     <!-- Radio buttons-->
     <string name="reporteComposiciónVoluntarios">Composición de voluntarios</string>

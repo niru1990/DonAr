@@ -49,7 +49,6 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
     private Button botonRegistrarse, botonSiguiente;
     private CheckBox campoTyC;
     private RadioGroup radioGroupGenero;
-    private RadioButton radioButtonGenero;
     private SpinnerAdaptor adaptadorTDU,adaptadorPais,adaptadorProvincia;
     private ArrayList<SpinnerItem> misTiposDeUsuario = new ArrayList<>();
     private ArrayList<SpinnerItem> misPaises = new ArrayList<>();
@@ -172,10 +171,10 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
             public void onItemSelected(AdapterView<?> parentTDU, View view, int position, long id) {
                 SpinnerItem clickItemTDU = (SpinnerItem) parentTDU.getItemAtPosition(position);
                 idTDU = clickItemTDU.getIdData();
-                String eds = clickItemTDU.getDescriptionData();
+              //  String eds = clickItemTDU.getDescriptionData();
 
 
-                if(eds.equals("Voluntario Medico"))
+                if(idTDU.equals("3"))
                 {
                     botonSiguiente.setVisibility(View.VISIBLE);
                     botonRegistrarse.setVisibility(View.INVISIBLE);
