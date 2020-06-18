@@ -58,6 +58,17 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_donacion_main">donacionMain</string>
+    <string name="leer_qr">Leer QR</string>
+    <string name="lugar_entrega">¿Donde Quiere Entregarlo?</string>
+    <string name="agregar_donacion">Agregar donación</string>
+    <string name="enfoque_el_codigo">ENFOQUE EL CODIGO</string>
+    <string name="recibir_donacion">Recibir Donacion</string>
+    <string name="detalle">Detalle</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="destino_actual">Destino Actual</string>
+    <string name="cargando_informacion">cargando informacion</string>
+    <string name="ingrese_la_fecha_de_vencimiento">Ingrese la fecha de vencimiento</string>
 
 
 </resources>

@@ -9,13 +9,8 @@
         tools:context=".registroDonacion">
 
     <include
-        android:id="@+id/include5"
-        layout="@layout/activity_don_ar_tool_bar"
-        android:layout_marginTop="96dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></include>
+        android:id="@+id/include"
+        layout="@layout/activity_don_ar_tool_bar"></include>
 
     <EditText
         android:id="@+id/donacionDescripcion"
@@ -24,79 +19,79 @@
         android:ems="10"
         android:hint="@string/donacionDescripcion"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/include5"
+        app:layout_constraintBottom_toTopOf="@+id/donacionCantidad"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.645"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.208" />
+        app:layout_constraintVertical_bias="0.728" />
 
     <EditText
         android:id="@+id/donacionCantidad"
         android:layout_width="332dp"
         android:layout_height="65dp"
+        android:layout_marginTop="253dp"
         android:ems="10"
         android:hint="@string/donacionCantidad"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/donacionVencimiento"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.645"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/donacionDescripcion"
-        app:layout_constraintVertical_bias="0.404" />
+        app:layout_constraintTop_toTopOf="@+id/include"
+        app:layout_constraintVertical_bias="0.0" />
 
     <CheckBox
         android:id="@+id/donacionVencimiento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="349dp"
         android:text="@string/donacionVencimiento"
         app:layout_constraintBottom_toTopOf="@+id/donacionVencimientoFecha"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/include5"
-        app:layout_constraintTop_toBottomOf="@+id/donacionDescripcion"
-        app:layout_constraintVertical_bias="0.732" />
+        app:layout_constraintEnd_toEndOf="@+id/include"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/include"
+        app:layout_constraintTop_toTopOf="@+id/include" />
 
     <EditText
         android:id="@+id/donacionVencimientoFecha"
         android:layout_width="276dp"
         android:layout_height="39dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginTop="424dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginRight="64dp"
-        android:hint="Ingrese la fecha de vencimiento"
+        android:layout_marginTop="431dp"
+        android:hint="@string/ingrese_la_fecha_de_vencimiento"
         android:inputType="date"
         android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@+id/donacionDestino"
-        app:layout_constraintEnd_toStartOf="@+id/include5"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include5"
-        app:layout_constraintVertical_bias="0.349" />
+        app:layout_constraintTop_toTopOf="@+id/include"
+        app:layout_constraintVertical_bias="0.239" />
 
     <EditText
         android:id="@+id/donacionDestino"
         android:layout_width="332dp"
         android:layout_height="65dp"
+        android:layout_marginTop="545dp"
         android:ems="10"
-        android:hint="¿Donde Quiere Entregarlo?"
+        android:hint="@string/lugar_entrega"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/include5"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegistrarDonacion"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.819" />
+        app:layout_constraintTop_toTopOf="@+id/include"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnRegistrarDonacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btnRegistrar"
-        app:layout_constraintBottom_toBottomOf="@+id/include5"
+        app:layout_constraintBottom_toBottomOf="@+id/include"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/donacionDestino" />
+        app:layout_constraintTop_toTopOf="@+id/include"
+        app:layout_constraintVertical_bias="0.947" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
