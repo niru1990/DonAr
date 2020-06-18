@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -18,6 +19,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutionException;
@@ -29,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton pacientes;
     private ImageButton reportes;
     private Toolbar toolbar;
-
     private boolean active;
 
 
@@ -54,21 +60,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 voluntarios.setOnClickListener(this);
                 pacientes.setOnClickListener(this);
                 reportes.setOnClickListener(this);
-                //active = (id.getText().toString().compareTo(" ") != 0);
-                active = true; //SOLO PRUEBA
+                //active = true;
+                active = isSignedIn();
 
                 if (active) {
                     donaciones.setImageResource(R.mipmap.boton_donaciones);
                     voluntarios.setImageResource(R.mipmap.boton_voluntarios);
                     pacientes.setImageResource(R.mipmap.boton_pacientes);
                     reportes.setImageResource(R.mipmap.boton_reportes);
+
                 } else {
                     donaciones.setImageResource(R.mipmap.boton_donaciones_gris);
                     voluntarios.setImageResource(R.mipmap.boton_voluntarios_gris);
                     pacientes.setImageResource(R.mipmap.boton_pacientes_gris);
                     reportes.setImageResource(R.mipmap.boton_reportes_gris);
-                }
 
+                }
                 toolbar = (Toolbar) findViewById(R.id.donArToolBar);
                 setSupportActionBar(toolbar);
             } else {
@@ -90,7 +97,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        if(isSignedIn()) {
+            getMenuInflater().inflate(R.menu.toolbar_menu2, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        }
         return true;
     }
 
@@ -103,27 +114,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(@NotNull MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
-            case R.id.action_login:
-                Toast.makeText(this, "Hago click en boton login", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.action_registro:
-                Toast.makeText(this, "Haglo click en el boton registro", Toast.LENGTH_SHORT).show();
-                return true;
-
             case R.id.action_login_oculto:
                 intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 return true;
-
             case R.id.action_registro_oculto:
                 intent = new Intent(getApplicationContext(), registroGeneral.class);
                 startActivity(intent);
                 return true;
-
+            case R.id.action_cerrarSesion:
+                signOut();
+                return true;
             default:
-                //Aqui la accion del usuario no fue reconocida
-                return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);//Aqui la accion del usuario no fue reconocida
         }
     }
 
@@ -135,9 +138,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return (networkInfo != null && networkInfo.isConnected());
     }
 
+    private boolean isSignedIn() {
+        return GoogleSignIn.getLastSignedInAccount(this) != null;
+    }
+
+    private void signOut() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.
+                Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                build();
+
+        GoogleSignInClient googleSignInClient=GoogleSignIn.getClient(this,gso);
+        googleSignInClient.signOut();
+        finish();
+        startActivity(getIntent());
+    }
+
     @Override
     public void onClick(@NotNull View v) {
         Intent intent;
+
+        SharedPreferences preferencias = getSharedPreferences
+                ("ID usuario", Context.MODE_PRIVATE);
+        String tipoUsuario = preferencias.getString("tipo", "0");
 
         if(active){
             switch(v.getId())
@@ -146,16 +168,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     intent = new Intent(v.getContext(), donacionMain.class); //prueba
                     break;
                 case R.id.imbPacientes:
-                    intent = new Intent(v.getContext(), pacientesMain.class);//prueba
+                    if(tipoUsuario.equals("1"))
+                        intent = new Intent(v.getContext(), pacienteSolicitarConsulta.class);
+                    else
+                        intent = new Intent(v.getContext(), historial_de_consultas.class);
                     break;
                 case R.id.imbReportes:
-                    intent = new Intent(v.getContext(), pacienteSolicitarConsulta.class);//prueba
+                    intent = new Intent(v.getContext(), reportesMain.class);
                     break;
                 case R.id.imbVoluntarios:
-                    intent = new Intent(v.getContext(), voluntariosAutoMach.class);//prueba
+                    if(tipoUsuario.equals("2") || tipoUsuario.equals("3"))
+                        intent = new Intent(v.getContext(), voluntariosAutoMach.class);
+                    else {
+                        Toast.makeText(getApplicationContext(), R.string.NoTieneAcceso,
+                                Toast.LENGTH_SHORT).show();
+                        intent = new Intent(v.getContext(), MainActivity.class);
+                    }
                     break;
                 default:
-                    intent = new Intent(v.getContext(), registroGeneral.class);//prueba
+                    intent = new Intent(v.getContext(), registroGeneral.class);
                     break;
             }
         }

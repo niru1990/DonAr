@@ -6,32 +6,52 @@
     <string name="txtApellido">Apellido: </string>
     <string name="txtDNI">DNI: </string>
     <string name="txtMail">Mail: </string>
-    <string name="txtTelefono">Telefono: </string>
+    <string name="txtTelefono">Teléfono: </string>
     <string name="txtMatricula">Matricula: </string>
     <string name="txtEspecialidad">Especialidad: </string>
     <string name="txtSeguro">Seguro: </string>
     <string name="txtAplicacionYModulo">DonAr</string>
     <string name="txtUsuario">Aca va el nombre de usuario</string>
     <string name="txtPacientes">Pacientes: </string>
-    <string name="txtSintomasYMedicamentos">Sintomas y medicamentos: </string>
+    <string name="txtSintomasYMedicamentos">Síntomas: </string>
     <string name="txtDetalle">Detalle: </string>
     <string name="txtHorarios">Horarios </string>
     <string name="txtHorarioIngreso">Horario de ingreso </string>
     <string name="txtHorarioSalida">Horarios de salida</string>
-
     <string name="txtEdad">Edad: </string>
     <string name="txtSinInternet1">Por el momento no cuenta con internet</string>
     <string name="txtSinInternet2">para realizar esta acción.</string>
-    <string name="txtSinInternet3">Por favor intente mas tarde</string>
+    <string name="txtSinInternet3">Por favor, intente mas tarde.</string>
+    <string name="historiaClinicaTitle">Historia clinica</string>
+    <string name="txtGenero">Género: </string>
+    <string name="txtNombreCompleto">Nombre completo: </string>
+    <string name="txtContacto">Contacto: </string>
+    <string name="txtTituloHC">Historia Clinica</string>
+    <string name="txtProvincia">Provincia</string>
+    <string name="txtLocalidad">Localidad</string>
+    <string name="loginWarningDescr">Para poder utilizar esta aplicación debe estar registrado.</string>
+    <string name="txtTituloReportes">Reportes</string>
+
+    <!--Switch-->
+    <string name="seguimiento">Seguimiento </string>
+    <string name="diagnosticoPresuntivo">Diagnóstico presuntivo</string>
+    <string name="tratamientoFarmacologico">Tratamiento farmacológico</string>
 
     <!-- Botones -->
-    <string name="btnRegistrar">Registrar</string>
+    <string name="btnRegistrar">Registrarse</string>
     <string name="btnSiguiente">Siguiente</string>
     <string name="btnRegistro">Registrate</string>
-
+    <string name="btnBuscar">Buscar</string>
     <string name="btnLogin">Login</string>
     <string name="btnSolicitar">Solicitar</string>
     <string name="btnSAsignar">Asignar</string>
+    <string name="btnGenerar">Generar</string>
+
+    <!-- Radio buttons-->
+    <string name="reporteComposiciónVoluntarios">Composición de voluntarios</string>
+    <string name="reporteIdentidadDeGenero">Identidad de genero</string>
+    <string name="reporteRangoEtarioPacientes">Rango etario de pacientes</string>
+    <string name="reporteTrazabilidad">Trazabilidad de donaciones</string>
 
     <!-- Descripciones -->
     <string name="voluntarios">Voluntarios</string>
@@ -70,5 +90,24 @@
     <string name="cargando_informacion">cargando informacion</string>
     <string name="ingrese_la_fecha_de_vencimiento">Ingrese la fecha de vencimiento</string>
 
+    <!-- Validaciones formulario -->
+    <string name="nombre_invalido">Por favor, inserte un nombre válido.</string>
+    <string name="telefono_invalido">Por favor, inserte su número de teléfono.</string>
+    <string name="TyC_invalido">Debe aceptar los términos y condiciones.</string>
+    <string name="apellido_invalido">Por favor, inserte su apellido.</string>
+    <string name="edad_invalida">Por favor, ingrese su edad.</string>
+    <string name="DNI_invalido">Por favor, inserte su DNI.</string>
+    <string name="tipo_usuario_invalido">Por favor, seleccione un tipo de usuario.</string>
+    <string name="txtNacionalidad">Nacionalidad</string>
+    <string name="txtHistorialClinicoTitulo">Historial Clínico</string>
+    <string name="email_valido">Por favor, inserte su email.</string>
+    <string name="provincia_invalida">Por favor, especifique su provincia de residencia.</string>
+    <string name="pais_invalido">Por favor, especifique su país de residencia.</string>
+    <string name="genero_invalido">Por favor, especifique su género.</string>
+    <string name="tipo_de_usuario_invalido">Por favor, especifique su tipo de usuario.</string>
+    <string name="mail_invalido">Por favor, ingrese un correo electrónico válido.</string>
+
+    <!-- Mensajes-->
+    <string name="NoTieneAcceso">Usted no cuenta con permisos para realizar esta acción.</string>
 
 </resources>

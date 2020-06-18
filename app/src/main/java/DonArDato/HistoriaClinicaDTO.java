@@ -1,5 +1,7 @@
 package DonArDato;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 
@@ -26,6 +28,12 @@ public class HistoriaClinicaDTO {
             this.setConsultas(new ArrayList<EventoDTO>());
         return this._consultas;
     }
-    public void setConsultas(ArrayList al){ this._consultas = al;}
+    private void setConsultas(@NotNull ArrayList<EventoDTO> al){
+
+        if(al.size() > 0)
+            this._consultas = al;
+        else
+            this._consultas = new ArrayList<>();
+    }
 
 }

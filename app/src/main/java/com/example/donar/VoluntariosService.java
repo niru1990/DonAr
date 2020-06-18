@@ -3,7 +3,6 @@ package com.example.donar;
 import DonArDato.PacienteDTO;
 import DonArDato.VoluntarioDTO;
 import DonArDato.VoluntarioMedicoDTO;
-import Negocio.Paciente;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -19,9 +18,9 @@ public interface VoluntariosService {
 
 
     //Registrar voluntario basico
-    String API_ROUTE_ADD_ITEM_BASICO = "api/paciente/voluntariobasico";
+    String API_ROUTE_ADD_ITEM_BASICO = "api/voluntariobasico";
     @POST(API_ROUTE_ADD_ITEM_BASICO)
-    Call<Void> addVoluntarioBasico(@Body VoluntarioDTO voluntarioBasico);
+    Call<Integer> addVoluntarioBasico(@Body VoluntarioDTO voluntarioBasico);
 
     //Get voluntario medico
     String API_ROUTE_MEDICO= "api/voluntariomedico/{id}";
@@ -32,6 +31,6 @@ public interface VoluntariosService {
     //Registrar voluntario medico
     String API_ROUTE_ADD_ITEM_MEDICO = "api/voluntariomedico";
     @POST(API_ROUTE_ADD_ITEM_MEDICO)
-    Call<Void> addVoluntarioMedico(@Body VoluntarioMedicoDTO voluntarioMedico);
+    Call<Integer> addVoluntarioMedico(@Body VoluntarioMedicoDTO voluntarioMedico);
 
 }
