@@ -48,7 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void configView() {
         try {
-            if (verificarConexion()) {
+            //prueba
+            if (//verificarConexion()
+            true ) {
                 donaciones = (ImageButton) findViewById(R.id.imbDonaciones);
                 voluntarios = (ImageButton) findViewById(R.id.imbVoluntarios);
                 pacientes = (ImageButton) findViewById(R.id.imbPacientes);
@@ -58,8 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 voluntarios.setOnClickListener(this);
                 pacientes.setOnClickListener(this);
                 reportes.setOnClickListener(this);
-                //active = true;
-                active = isSignedIn();
+                active = true;
+                //active = isSignedIn();
 
                 if (active) {
                     donaciones.setImageResource(R.mipmap.boton_donaciones);
@@ -163,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch(v.getId())
             {
                 case R.id.imbDonaciones:
-                    intent = new Intent(v.getContext(), pacienteSolicitarConsulta.class); //prueba
+                    intent = new Intent(v.getContext(), donacionMain.class); //prueba
                     break;
                 case R.id.imbPacientes:
                     if(tipoUsuario.equals("1"))
