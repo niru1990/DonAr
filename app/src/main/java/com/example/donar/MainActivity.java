@@ -48,9 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void configView() {
         try {
-            //prueba
-            if (//verificarConexion()
-            true ) {
+            if (verificarConexion()) {
                 donaciones = (ImageButton) findViewById(R.id.imbDonaciones);
                 voluntarios = (ImageButton) findViewById(R.id.imbVoluntarios);
                 pacientes = (ImageButton) findViewById(R.id.imbPacientes);
