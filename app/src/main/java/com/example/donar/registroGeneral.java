@@ -175,7 +175,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                 String eds = clickItemTDU.getDescriptionData();
 
 
-                if(eds.equals("Voluntario Medico"))
+                if(eds.equals("Medico"))
                 {
                     botonSiguiente.setVisibility(View.VISIBLE);
                     botonRegistrarse.setVisibility(View.INVISIBLE);

@@ -212,12 +212,12 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                                         if(response.body() != null)
                                         {
                                             PacienteConsultaDTO p = (PacienteConsultaDTO) response.body();
-                                            nombre.setText( nombre.getText() + " \n" +  p.getNombrePaciente() + " " + p.getApellidoPaciente());
-                                            edad.setText(edad.getText() + " \n" + p.getEdad().toString());
-                                            documento.setText(documento.getText() + " \n" + p.getDni());
+                                            nombre.setText( nombre.getText() + " " +  p.getNombrePaciente() + " " + p.getApellidoPaciente());
+                                            edad.setText(edad.getText() + " " + p.getEdad().toString());
+                                            documento.setText(documento.getText() + " " + p.getDni());
 
-                                            email.setText(email.getText() + " \n" +  p.getEmail());
-                                            telefono.setText(telefono.getText() + " \n" + p.getTelefonoPaciente());
+                                            email.setText(email.getText() + " " +  p.getEmail());
+                                            telefono.setText(telefono.getText() + " " + p.getTelefonoPaciente());
 
                                             String generoText = "";
                                             switch (p.getGenero()){

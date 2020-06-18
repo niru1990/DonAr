@@ -451,11 +451,11 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
                                     case 200:
                                         if (response.body() != null) {
                                             PacienteConsultaDTO paciente = (PacienteConsultaDTO) response.body();
-                                            nombre.setText(nombre.getText() + "\n" + paciente.getNombrePaciente());
-                                            apellido.setText(apellido.getText() + "\n" + paciente.getApellidoPaciente());
-                                            telefono.setText(telefono.getText() + "\n" + paciente.getTelefonoPaciente());
-                                            edad.setText(edad.getText() + "\n" + Integer.valueOf(paciente.getEdad()).toString());
-                                            email.setText(email.getText() + "\n" + paciente.getEmail());
+                                            nombre.setText(nombre.getText() + " " + paciente.getNombrePaciente());
+                                            apellido.setText(apellido.getText() + " " + paciente.getApellidoPaciente());
+                                            telefono.setText(telefono.getText() + " " + paciente.getTelefonoPaciente());
+                                            edad.setText(edad.getText() + " " + Integer.valueOf(paciente.getEdad()).toString());
+                                            email.setText(email.getText() + " " + paciente.getEmail());
                                             sintomas.setText(sintomasSave);
                                             sintomas.setEnabled(false);
                                         } else {
