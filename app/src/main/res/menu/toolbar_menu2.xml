@@ -14,4 +14,10 @@
         android:title="Cerrar Sesión"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/action_cerrarSesion_OUT"
+        android:title="Cerrar Sesión y Salir"
+        app:showAsAction="never"
+        android:visible="true"
+        />
+
 </menu>
