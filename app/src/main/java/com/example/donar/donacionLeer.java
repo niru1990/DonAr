@@ -133,6 +133,9 @@ public class donacionLeer extends AppCompatActivity {
     public void validarCamara(){
         if (ContextCompat.checkSelfPermission(donacionLeer.this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},PERMISSION_CAMERA);
+            Intent intent= new Intent(getApplicationContext(),donacionDetalle.class);
+            startActivity(intent);
+            finish();
         }
     }
 }

@@ -152,8 +152,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         GoogleSignInClient googleSignInClient=GoogleSignIn.getClient(this,gso);
         googleSignInClient.signOut();
-        finish();
         startActivity(getIntent());
+        finish();
     }
 
     @Override
@@ -200,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else
             intent = new Intent(v.getContext(), registroGeneral.class);
         startActivity(intent);
+
     }
 
     private void obtenerPreferencias(){

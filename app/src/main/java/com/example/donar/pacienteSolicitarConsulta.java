@@ -42,7 +42,7 @@ import Negocio.Evento;
 
 public class pacienteSolicitarConsulta extends AppCompatActivity implements View.OnClickListener{
 
-    private TextView nombre,  apellido,  telefono,  detalle,  sintomas, id,  edad, email;
+    private TextView nombre,  apellido,  telefono,  detalle,  sintomas, id,  edad, email, genero;
     private Button solicitar;
     private Toolbar toolbar;
     private String idPacient;
@@ -72,6 +72,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
             id = (TextView) findViewById(R.id.txtIdSolicitud);
             edad = (TextView) findViewById(R.id.txtEdad);
             sintomas = (TextView) findViewById(R.id.txtSintomasYMedicamentos);
+            genero = (TextView) findViewById(R.id.txtGenero);
             solicitar = (Button) findViewById(R.id.btnSolciitar);
             solicitar.setOnClickListener(this);
             toolbar = (Toolbar) findViewById(R.id.donArToolBar);
@@ -86,6 +87,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this.getApplicationContext(), sinConexionInternet.class );
             startActivity(intent);
+            finish();
         }
     }
 
@@ -139,6 +141,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
         finish();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void loadData(){
@@ -180,6 +183,19 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
                                 telefono.setText(telefono.getText() + " " + paciente.getTelefonoPaciente());
                                 edad.setText(edad.getText() + " " + Integer.valueOf(paciente.getEdad()).toString());
                                 email.setText(email.getText() + " " + paciente.getEmail());
+                                String pGenero = "";
+                                switch (paciente.getGenero())
+                                {
+                                    case 0:
+                                        pGenero = "Masculino";
+                                        break;
+                                    case 1:
+                                        pGenero = "Femenino";
+                                        break;
+                                    default:
+                                        pGenero = "Transgenero";
+                                }
+                                genero.setText(genero.getText() + " " + pGenero);
                             } else {
                                 Log.e("NotUser", "No se encuentra un usuario logueado para poder avanzar," +
                                         " por favor vuelva a loguearse.");
@@ -205,6 +221,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
             {
                 Intent intent = new Intent(getApplicationContext(), sinConexionInternet.class);
                 startActivity(intent);
+                finish();
             }
         }
         catch (Exception ex)
@@ -214,6 +231,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
                     , Toast.LENGTH_LONG).show();
             Intent i = new Intent(this.getApplicationContext(), LoginActivity.class);
             startActivity(i);
+            finish();
         }
     }
 
@@ -331,6 +349,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
             {
                 Intent intent = new Intent(getApplicationContext(), sinConexionInternet.class);
                 startActivity(intent);
+                finish();
             }
         }
         catch (Exception ex){
@@ -350,5 +369,6 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
     private void goHome(){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
+        finish();
     }
 }
