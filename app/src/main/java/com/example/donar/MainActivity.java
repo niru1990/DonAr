@@ -128,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_cerrarSesion:
                 signOut();
                 return true;
+            case R.id.action_cerrarSesion_OUT:
+                signOutAndOut();
             default:
                 return super.onOptionsItemSelected(item);//Aqui la accion del usuario no fue reconocida
         }
@@ -154,6 +156,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         googleSignInClient.signOut();
         finish();
         startActivity(getIntent());
+    }
+
+    private void signOutAndOut() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.
+                Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                build();
+
+        GoogleSignInClient googleSignInClient=GoogleSignIn.getClient(this,gso);
+        googleSignInClient.signOut();
+        //startActivity(getIntent());
+        Salida();
+    }
+
+    @SuppressLint("NewApi")
+    public void Salida() {
+        finishAffinity();
+        finish();
     }
 
     @Override
