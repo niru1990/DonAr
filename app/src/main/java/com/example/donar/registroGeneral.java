@@ -135,13 +135,13 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                     Toast.LENGTH_SHORT).show();
             return false;
         }
-
+        /*
         if(campoMail.getText().toString().trim().matches(emailPattern)){
             Toast.makeText(getApplicationContext(), R.string.mail_invalido,
                     Toast.LENGTH_SHORT).show();
             return false;
         }
-
+         */
         if(idPais.equals("0")){
             Toast.makeText(getApplicationContext(), R.string.pais_invalido,
                     Toast.LENGTH_SHORT).show();

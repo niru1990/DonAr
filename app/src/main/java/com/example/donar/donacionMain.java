@@ -39,18 +39,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class donacionMain extends AppCompatActivity implements View.OnClickListener {
 
     private ListView myListView;
-   //private List<String> myList = new ArrayList<>();
-     private List<EventoAutoMach> myList= new ArrayList<>();
+    private List<EventoAutoMach> myList= new ArrayList<>();
     private ListAdapter myAdapter;
-   private  Toolbar toolbar;
-   private Button botonAgregar;
-   private Button botonLeerQR;
-   private String idUsuario;
-   private BigInteger idDonacion;
-   private SharedPreferences preferencias;
+    private  Toolbar toolbar;
+    private Button botonAgregar;
+    private Button botonLeerQR;
+    private String idUsuario;
+    private BigInteger idDonacion;
+    private SharedPreferences preferencias;
     public static final int REQUEST_CODE_QR=100;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,45 +73,11 @@ public class donacionMain extends AppCompatActivity implements View.OnClickListe
                guardarDonacionId(myList.get(position).getIdEvento());//id de donacion
                 Intent intent= new Intent(getApplicationContext(),donacionDetalle.class);
                 startActivity(intent);
-               // Toast.makeText(donacionMain.this,"Selecciono: "+ myList.get(position),Toast.LENGTH_LONG).show();
             }
         });
-        //ArrayAdapter adapter = new ArrayAdapter<DonacionDTO>(this,
-          //      R.layout.list_donaciones, myLista);
-
-        //myListView.setAdapter(adapter);
-      /*  myAdapter = new ListAdapter(getApplicationContext(), R.layout.list_donaciones,myList);
-        myListView.setAdapter(myAdapter);
-        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent;
-                SaveDonacionId(myList.get(position).getIdEvento());
-                intent = new Intent(getApplicationContext(), donacionDetalle.class);
-                startActivity(intent);
-            }
-        } );
-
-
-       */
-      /*
-//uso String para testear
-        myList= new ArrayList<String>();
-        myList.add("Donacion1");
-        myList.add("Donacion2");
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, myList);
-        myListView.setAdapter(adapter);
-        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public  void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
-               Toast.makeText(donacionMain.this,"Selecciono: "+ myList.get(position),Toast.LENGTH_LONG).show();
-            }
-        });
-
-       */
-
     }
-@Override
+
+    @Override
     public void onClick(View v) {
         Intent intent;
         switch (v.getId()){
@@ -127,15 +90,14 @@ public class donacionMain extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
         }
-
-
-
     }
+
     private void guardarDonacionId(String id) {
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putString("idDonacion", id);
         editor.commit();
     }
+
     private void cargarDonaciones(){
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("https://donar.azurewebsites.net/")
@@ -153,7 +115,7 @@ public class donacionMain extends AppCompatActivity implements View.OnClickListe
                                     for(DonacionDTO e : response.body()){
 
                                         myList.add(new EventoAutoMach(e.getId().toString(),
-                                                e.getDetalle(),
+                                                e.getDetalle().toUpperCase(),
                                                 "",
                                                 "",
                                                 "",
@@ -174,167 +136,6 @@ public class donacionMain extends AppCompatActivity implements View.OnClickListe
                                 Toast.LENGTH_LONG).show();
                     }
                 });
-
     }
 
 }
-/*
-
-
-
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId())
-        {
-            case R.id.btnBuscar:
-                if(!mail.getText().equals(""))
-                    searchEventByMail();
-                else
-                    Toast.makeText(this,
-                            "Debe ingresar un mail para poder realizar la busqeuda.",
-                            Toast.LENGTH_LONG).show();
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void searchEventByMail(){
-        try {
-            if(verificarConexion())
-            {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://donar.azurewebsites.net/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-
-                EventoServices  es = retrofit.create(EventoServices.class);
-                Call<List<EventoDTO>> http_call = es.getEventByPatientMail(mail.getText().toString());
-                http_call.enqueue(new Callback<List<EventoDTO>>() {
-                    @Override
-                    public void onResponse(Call<List<EventoDTO>> call, Response<List<EventoDTO>> response) {
-                        switch (response.code())
-                        {
-                            case 200:
-                                if(response.body() != null) {
-                                    for(EventoDTO event : response.body()){
-                                        getEventoReducido(event.getId());
-                                    }
-                                }
-                                else {
-                                    Toast.makeText(getApplicationContext(),
-                                            "Ocurrio un error, comuniquese con su administrador de sistemas.",
-                                            Toast.LENGTH_LONG).show();
-                                }
-                                break;
-                            case 404:
-                                try {
-                                    throw new Exception(response.code() +  "No se encontro el recurso.");
-                                }
-                                catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            case 500:
-                                Toast.makeText(getApplicationContext(),
-                                        "No se encontro ningun usuario que tenga ese mail asociado.",
-                                        Toast.LENGTH_LONG).show();
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<EventoDTO>> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(),
-                                t.getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-            else {
-                Toast.makeText(this,
-                        "En este momento el dispositivo no cuneta con conexion a internet, " +
-                                "por favor intente mas tarde.",
-                        Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), sinConexionInternet.class);
-                startActivity(intent);
-            }
-        }
-        catch (Exception ex) {
-            Log.e("searchEventByMail", ex.getMessage());
-            Toast.makeText(this,
-                    "Ocurrio un error inesperado.",
-                    Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void getEventoReducido(BigInteger id) {
-        try
-        {
-            if(verificarConexion()) {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://donar.azurewebsites.net/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                EventoServices eventoServices = retrofit.create(EventoServices.class);
-                Call<EventoReducidoDTO> http_call = eventoServices.getEventoReducidoById(id.toString());
-                http_call.enqueue(new Callback<EventoReducidoDTO>() {
-                    @Override
-                    public void onResponse(Call<EventoReducidoDTO> call, Response<EventoReducidoDTO> response) {
-                        try {
-                            if (response.isSuccessful()) {
-                                switch (response.code()) {
-                                    case 200:
-                                        if (response.body() != null) {
-                                            EventoReducidoDTO e = (EventoReducidoDTO) response.body();
-
-                                            myList.add(new EventoAutoMach(e.getId().toString(),
-                                                    e.getNombrePaciente() + " " + e.getApellidoPaciente(),
-                                                    e.getFecha(),
-                                                    e.getNombreMedico(),
-                                                    "",
-                                                    false));
-                                            myAdapter.notifyDataSetChanged();
-                                        }
-                                        break;
-                                    case 404:
-                                        Toast.makeText(getApplicationContext(),
-                                                "Error " + response.code() + " Recurso no encontrado",
-                                                Toast.LENGTH_LONG).show();
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-                        catch (Exception ex) {
-                            try {
-                                throw new Exception("error obteniendo evento reducido. " + ex.getMessage());
-                            }
-                            catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<EventoReducidoDTO> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(),
-                                "ocurrio un error en la llamada a la API",
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-            else {
-                Intent intent = new Intent(getApplicationContext(), sinConexionInternet.class);
-                startActivity(intent);
-            }
-        }
-        catch (Exception ex){
-            Log.e("EventoReducido", ex.getMessage());
-        }
-    }
-
-
- */

@@ -19,6 +19,8 @@ public class DonacionDTO {
     @Nullable
     private ArrayList<DonacionDTO> items;
 
+    private Integer idUsuario;
+
     public DonacionDTO(BigInteger id, String detalle) {
         this.id = id;
         this.detalle = detalle;
@@ -40,14 +42,14 @@ public class DonacionDTO {
         this.destino = destino;
     }
 
-
-
-    public DonacionDTO(String destino, int cantidad, String detalle) {
+    public DonacionDTO(String destino, int cantidad, String detalle, Integer idUsuario) {
         this.destino = destino;
         this.cantidad = cantidad;
         this.detalle = detalle;
+        this.idUsuario = idUsuario;
     }
-@Nullable
+
+    @Nullable
     public Date getFechaIngreso() {
         return fechaIngreso;
     }

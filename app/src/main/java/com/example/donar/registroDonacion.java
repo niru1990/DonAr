@@ -1,7 +1,9 @@
 package com.example.donar;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -77,9 +79,16 @@ public class registroDonacion extends AppCompatActivity implements View.OnClickL
         switch (view.getId()){
             case R.id.btnRegistrarDonacion:
                 if (validarRegistro()){
+
+                    SharedPreferences preferencias = getSharedPreferences
+                            ("ID usuario", Context.MODE_PRIVATE);
+
+
+                    String idUsuario= preferencias.getString("ID", "0");
+
                     DonacionDTO donacionDTO = new DonacionDTO(donacionDestino.getText().toString(),
                             Integer.parseInt(donacionCantidad.getText().toString()),
-                            donacionDescripcion.getText().toString());
+                            donacionDescripcion.getText().toString(), Integer.valueOf(idUsuario));
                     if (checkBoxVencimiento.isChecked()){
                         donacionDTO.setFechaVencimiento(donacionVencimientoFecha.getText().toString());
                     }else{

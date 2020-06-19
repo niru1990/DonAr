@@ -64,13 +64,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 active = isSignedIn();
 
                 if (active) {
-                    if(tipoUsuario.equals("2") || tipoUsuario.equals("3"))
-                        donaciones.setImageResource(R.mipmap.boton_donaciones);
+                    donaciones.setImageResource(R.mipmap.boton_donaciones);
+                    pacientes.setImageResource(R.mipmap.boton_pacientes);
+
                     if(tipoUsuario.equals("2") || tipoUsuario.equals("3"))
                         voluntarios.setImageResource(R.mipmap.boton_voluntarios);
                     if(tipoUsuario.equals("4"))
                         reportes.setImageResource(R.mipmap.boton_reportes);
-                    pacientes.setImageResource(R.mipmap.boton_pacientes);
+
                 } else {
                     donaciones.setImageResource(R.mipmap.boton_donaciones_gris);
                     voluntarios.setImageResource(R.mipmap.boton_voluntarios_gris);
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch(v.getId())
             {
                 case R.id.imbDonaciones:
-                    intent = new Intent(v.getContext(), donacionMain.class); //prueba
+                        intent = new Intent(v.getContext(), donacionMain.class); //prueba
                     break;
                 case R.id.imbPacientes:
                     if(tipoUsuario.equals("1"))
@@ -172,13 +173,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         intent = new Intent(v.getContext(), historial_de_consultas.class);
                     break;
                 case R.id.imbReportes:
-                    intent = new Intent(v.getContext(), reportesMain.class);
+                    if(tipoUsuario.equals("4"))
+                        intent = new Intent(v.getContext(), reportesMain.class);
+                    else {
+                        Toast.makeText(getApplicationContext(),
+                                R.string.NoTieneAcceso,
+                                Toast.LENGTH_SHORT).show();
+                        intent = new Intent(v.getContext(), MainActivity.class);
+                    }
                     break;
                 case R.id.imbVoluntarios:
                     if(tipoUsuario.equals("2") || tipoUsuario.equals("3"))
                         intent = new Intent(v.getContext(), voluntariosAutoMach.class);
                     else {
-                        Toast.makeText(getApplicationContext(), R.string.NoTieneAcceso,
+                        Toast.makeText(getApplicationContext(),
+                                R.string.NoTieneAcceso,
                                 Toast.LENGTH_SHORT).show();
                         intent = new Intent(v.getContext(), MainActivity.class);
                     }
