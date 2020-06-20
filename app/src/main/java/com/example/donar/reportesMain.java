@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 
+import Negocio.ReportesPDF;
+import Negocio.fechas;
+
 public class reportesMain extends AppCompatActivity implements View.OnClickListener {
 
     private Button generar;
@@ -42,10 +45,41 @@ public class reportesMain extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         try {
+            Intent intent = null;
             switch (v.getId()) {
                 case R.id.btnGenerar:
-                    Intent intent = new Intent(getApplicationContext(), ReporteGraficoTorta.class);
-                    intent.putExtra("reporteSolicitado", "voluntariosPorTipo");
+                    switch(reportes.indexOfChild(findViewById(reportes.getCheckedRadioButtonId()))){
+
+                        //Composicion de voluntarios
+                        case 1:
+                            intent = new Intent(this.getApplicationContext(),
+                                    ReporteGraficoTorta.class);
+                            intent.putExtra("reporteSolicitado", "voluntariosPorTipo");
+                            break;
+
+                            //Identidad de genero
+                        case 2:
+                            break;
+
+                            //Rango etario de pacientes
+                        case 3:
+                            intent = new Intent(this.getApplicationContext(), ReporteGeneros.class);
+                            intent.putExtra("reporteSolicitado", "generosUsuarios");
+
+                            break;
+
+                            //Medicos por especialidad
+                        case 4:
+                            break;
+
+                            //Trazabilidad de donaciones
+                        case 5:
+                            break;
+                    }
+
+
+                    //generarPDF();
+
                     startActivity(intent);
                     break;
             }
@@ -56,5 +90,10 @@ public class reportesMain extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void generarPDF(){
+        ReportesPDF report = new ReportesPDF("TEST"+ new fechas().getDateTime(),
+                "Hola mamá" );
+        report.createDocumentExample();
+    }
 }

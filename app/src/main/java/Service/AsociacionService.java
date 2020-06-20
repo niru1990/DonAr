@@ -19,4 +19,5 @@ public interface AsociacionService {
     @GET(API_ROUTE_GET_ESPECIFIC)
     Call<PacienteDTO> getAsociacionEspecifico(@Path("id") String id);
 
+
 }

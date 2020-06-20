@@ -131,5 +131,8 @@
         aplicación es 100% on-line por lo cual es necesario que se cuente con conexión a internet para
         poder utilizar la misma sin percance en el funcionamiento.</string>
     <string name="acepto_los_t_rminos_y_condiciones">Acepto los términos y condiciones</string>
+    <string name="matricula_invalida">Por favor, introduzca su matrícula.</string>
+    <string name="seguro_invalido">Por favor, introduzca su seguro.</string>
+    <string name="reporteGenerosTitle">Composición de Usuarios por Género</string>
 
 </resources>

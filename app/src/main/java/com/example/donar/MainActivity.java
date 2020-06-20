@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     voluntarios.setImageResource(R.mipmap.boton_voluntarios_gris);
                     pacientes.setImageResource(R.mipmap.boton_pacientes_gris);
                     reportes.setImageResource(R.mipmap.boton_reportes_gris);
-
                 }
                 toolbar = (Toolbar) findViewById(R.id.donArToolBar);
                 setSupportActionBar(toolbar);

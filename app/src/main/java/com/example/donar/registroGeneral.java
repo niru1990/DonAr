@@ -52,9 +52,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
     private Spinner spinnerTipoUsuario,spinnerProvincia,spinnerPais;
     private EditText campoNombre,campoApellido,campoDNI,campoMail,campoTelefono,campoEdad;
     private Button botonRegistrarse, botonSiguiente;
-    //private CheckBox campoTyC;
     private RadioGroup radioGroupGenero;
-    private RadioButton radioButtonGenero;
     private SpinnerAdaptor adaptadorTDU,adaptadorPais,adaptadorProvincia;
     private ArrayList<SpinnerItem> misTiposDeUsuario = new ArrayList<>();
     private ArrayList<SpinnerItem> misPaises = new ArrayList<>();
@@ -84,7 +82,6 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         campoEdad = findViewById(R.id.edtEdad);
         campoDNI = findViewById(R.id.edtDNI);
         campoTelefono = findViewById(R.id.edtTelefono);
-       // campoTyC = findViewById(R.id.checkBoxTerminosYcondiciones);
         txtProvincia = findViewById(R.id.txtProvincia);
 
 
