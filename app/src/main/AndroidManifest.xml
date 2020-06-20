@@ -2,10 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.donar">
 
+    <!-- Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Verificación del estado de internet -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <!-- Acceso a la camara -->
     <uses-permission android:name="android.permission.CAMERA" />
+
+    <!--Escritura externa al SO -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+
     <meta-data android:name="com.google.android.gms.vision.barcode"></meta-data>
     <application
         android:allowBackup="true"

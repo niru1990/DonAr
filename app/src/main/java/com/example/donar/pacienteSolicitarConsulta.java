@@ -25,14 +25,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
 import java.math.BigInteger;
 import java.util.Date;
 
 import DonArDato.EventoDTO;
 import DonArDato.PacienteConsultaDTO;
-import DonArDato.PacienteDTO;
+import Endpoints.EventoServices;
+import Endpoints.PacientesService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

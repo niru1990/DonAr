@@ -1,4 +1,4 @@
-package com.example.donar;
+package Endpoints;
 
 import DonArDato.ResponseData;
 import DonArDato.actualizaIG;

@@ -21,21 +21,17 @@ import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.zip.DataFormatException;
 
 import Adapters.SpinnerAdaptor;
 import DonArDato.EspecialidadDTO;
-import DonArDato.PaisDTO;
 import DonArDato.SpinnerItem;
 import DonArDato.VoluntarioMedicoDTO;
+import Endpoints.EspecialidadServices;
+import Endpoints.VoluntariosService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
