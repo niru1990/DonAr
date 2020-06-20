@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 import Negocio.ReportesPDF;
+import Negocio.fechas;
 
 public class reportesMain extends AppCompatActivity implements View.OnClickListener {
 
@@ -57,7 +58,8 @@ public class reportesMain extends AppCompatActivity implements View.OnClickListe
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void generarPDF(){
-        ReportesPDF report = new ReportesPDF("TEZST", "Hola mamá" );
+        ReportesPDF report = new ReportesPDF("TEST"+ new fechas().getDateTime(),
+                "Hola mamá" );
         report.createDocumentExample();
     }
 }

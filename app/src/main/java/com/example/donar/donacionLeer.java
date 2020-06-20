@@ -51,10 +51,9 @@ public class donacionLeer extends AppCompatActivity {
         vistaCamara= (SurfaceView) findViewById(R.id.vista_camara);
         vistaCamara.setZOrderMediaOverlay(true);
         surfaceHolder=vistaCamara.getHolder();
-
         configurarCamara();
-
     }
+
     private void savePreferences(String key, String value){
         SharedPreferences preferencias = getSharedPreferences
                 ("ID usuario", Context.MODE_PRIVATE);
@@ -63,6 +62,7 @@ public class donacionLeer extends AppCompatActivity {
         editor.putString(key,value);
         editor.commit();
     }
+
     /* Initialize components again */
     @Override
     public void onResume() {
@@ -86,13 +86,15 @@ public class donacionLeer extends AppCompatActivity {
         vistaCamara.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
-                try {if (ContextCompat.checkSelfPermission(donacionLeer.this, Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED){
-                    cameraSource.start(vistaCamara.getHolder());
-                }else {
-                    Toast.makeText(getApplicationContext(),"FALLO",Toast.LENGTH_LONG).show();
+                try {
+                    if (ContextCompat.checkSelfPermission(donacionLeer.this, Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED){
+                        cameraSource.start(vistaCamara.getHolder());
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "FALLO", Toast.LENGTH_LONG).show();
+                    }
                 }
-
-                } catch (IOException e) {
+                catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -117,12 +119,6 @@ public class donacionLeer extends AppCompatActivity {
             public void receiveDetections(Detector.Detections<com.google.android.gms.vision.barcode.Barcode> detections) {
                 final  SparseArray<Barcode> barcodes= detections.getDetectedItems();
                 if (barcodes.size()> 0){
-                    /*
-                    //barcodeInfo.setText(barcodes.valueAt(0).displayValue);
-                    intent.putExtra("id",barcodes.valueAt(0).toString());
-                   // setResult(RESULT_OK,intent);
-                    //finish();
-                     */
                     savePreferences("idDonacion",barcodes.valueAt(0).displayValue);
                     Intent intent= new Intent(getApplicationContext(),donacionDetalle.class);
                     startActivity(intent);
