@@ -1,4 +1,4 @@
-package com.example.donar;
+package Service;
 
 import DonArDato.AsociacionDTO;
 import DonArDato.PacienteDTO;
@@ -18,5 +18,6 @@ public interface AsociacionService {
     String API_ROUTE_GET_ESPECIFIC= "api/Asociacion/{id}";
     @GET(API_ROUTE_GET_ESPECIFIC)
     Call<PacienteDTO> getAsociacionEspecifico(@Path("id") String id);
+
 
 }

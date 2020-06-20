@@ -1,24 +1,15 @@
 package com.example.donar;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -30,6 +21,7 @@ import Adapters.ListAdapter;
 
 import DonArDato.DonacionDTO;
 import DonArDato.EventoAutoMach;
+import Service.DonacionesService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -104,7 +96,7 @@ public class donacionMain extends AppCompatActivity implements View.OnClickListe
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
-                DonacionesService  donacionesService = retrofit.create(DonacionesService.class);
+                DonacionesService donacionesService = retrofit.create(DonacionesService.class);
                 Call<List<DonacionDTO>> http_call = donacionesService.getDonacionesUsuario(idUsuario);
                 http_call.enqueue(new Callback<List<DonacionDTO>>() {
                     @Override

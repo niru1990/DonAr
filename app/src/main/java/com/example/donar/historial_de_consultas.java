@@ -19,13 +19,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.ui.idp.AuthMethodPickerActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import java.math.BigInteger;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +31,7 @@ import Adapters.ListAdapter;
 import DonArDato.EventoAutoMach;
 import DonArDato.EventoDTO;
 import DonArDato.EventoReducidoDTO;
-import DonArDato.PacienteConsultaDTO;
+import Service.EventoServices;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -177,7 +175,7 @@ public class historial_de_consultas extends AppCompatActivity implements  View.O
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
-                EventoServices  es = retrofit.create(EventoServices.class);
+                EventoServices es = retrofit.create(EventoServices.class);
                 Call<List<EventoDTO>> http_call = es.getEventByPatientMail(mail.getText().toString());
                 http_call.enqueue(new Callback<List<EventoDTO>>() {
                     @Override

@@ -2,10 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.donar">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Internet -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Verificación del estado de internet -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Acceso a la camara -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- Escritura externa al SO -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.CAMERA" />
+
     <meta-data android:name="com.google.android.gms.vision.barcode"></meta-data>
     <application
         android:allowBackup="true"
@@ -14,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".donacionLeer"/>
+        <activity android:name=".ReporteGraficoTorta"></activity>
+        <activity android:name=".donacionLeer" />
         <activity android:name=".donacionDetalle" />
         <activity
             android:name=".donacionMain"
@@ -23,6 +27,7 @@
         <activity android:name=".sinConexionInternet" />
         <activity android:name=".registroDonacion" />
         <activity android:name=".reportesMain"></activity>
+        <activity android:name=".terminosYcondiciones"></activity>
         <activity android:name=".historial_de_consultas" />
         <activity android:name=".pacientesHistoriaCLinica" />
         <activity android:name=".pacienteAsignarEspecialidad" />

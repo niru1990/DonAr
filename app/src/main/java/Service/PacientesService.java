@@ -1,10 +1,7 @@
-package com.example.donar;
-
-import java.util.List;
+package Service;
 
 import DonArDato.PacienteConsultaDTO;
 import DonArDato.PacienteDTO;
-import DonArDato.PacienteConsultaDTO;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

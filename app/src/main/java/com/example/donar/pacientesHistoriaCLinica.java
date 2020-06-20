@@ -15,11 +15,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.OvershootInterpolator;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,15 +26,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
 import java.math.BigInteger;
 import java.util.Date;
 
 import DonArDato.EventoDTO;
-import DonArDato.EventoReducidoDTO;
 import DonArDato.PacienteConsultaDTO;
-import DonArDato.PacienteDTO;
+import Service.EventoServices;
+import Service.PacientesService;
 import Negocio.Evento;
 import retrofit2.Call;
 import retrofit2.Callback;

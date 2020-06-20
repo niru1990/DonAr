@@ -1,9 +1,8 @@
-package com.example.donar;
+package Service;
 
 import java.util.List;
 
 import DonArDato.DonacionDTO;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

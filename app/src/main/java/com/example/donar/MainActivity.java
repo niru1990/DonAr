@@ -14,9 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -27,7 +25,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -69,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     if(tipoUsuario.equals("2") || tipoUsuario.equals("3"))
                         voluntarios.setImageResource(R.mipmap.boton_voluntarios);
-                    if(tipoUsuario.equals("4"))
+                    //if(tipoUsuario.equals("4"))
                         reportes.setImageResource(R.mipmap.boton_reportes);
 
                 } else {
@@ -77,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     voluntarios.setImageResource(R.mipmap.boton_voluntarios_gris);
                     pacientes.setImageResource(R.mipmap.boton_pacientes_gris);
                     reportes.setImageResource(R.mipmap.boton_reportes_gris);
-
                 }
                 toolbar = (Toolbar) findViewById(R.id.donArToolBar);
                 setSupportActionBar(toolbar);
@@ -122,12 +118,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 return true;
             case R.id.action_registro_oculto:
-                intent = new Intent(getApplicationContext(), registroGeneral.class);
+                intent = new Intent(getApplicationContext(), terminosYcondiciones.class);
                 startActivity(intent);
                 return true;
             case R.id.action_cerrarSesion:
                 signOut();
                 return true;
+            case R.id.action_cerrarSesion_OUT:
+                signOutAndOut();
             default:
                 return super.onOptionsItemSelected(item);//Aqui la accion del usuario no fue reconocida
         }
@@ -156,6 +154,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(getIntent());
     }
 
+    private void signOutAndOut() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.
+                Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                build();
+
+        GoogleSignInClient googleSignInClient=GoogleSignIn.getClient(this,gso);
+        googleSignInClient.signOut();
+        //startActivity(getIntent());
+        Salida();
+    }
+
+    @SuppressLint("NewApi")
+    public void Salida() {
+        finishAffinity();
+        finish();
+    }
+
     @Override
     public void onClick(@NotNull View v) {
         Intent intent;
@@ -173,6 +188,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         intent = new Intent(v.getContext(), historial_de_consultas.class);
                     break;
                 case R.id.imbReportes:
+                    intent = new Intent(v.getContext(), reportesMain.class);
+                    /*
                     if(tipoUsuario.equals("4"))
                         intent = new Intent(v.getContext(), reportesMain.class);
                     else {
@@ -181,6 +198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 Toast.LENGTH_SHORT).show();
                         intent = new Intent(v.getContext(), MainActivity.class);
                     }
+                     */
                     break;
                 case R.id.imbVoluntarios:
                     if(tipoUsuario.equals("2") || tipoUsuario.equals("3"))

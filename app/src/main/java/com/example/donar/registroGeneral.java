@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -36,6 +35,12 @@ import DonArDato.ProvinciaDTO;
 import DonArDato.SpinnerItem;
 import DonArDato.TipoDeUsuarioDTO;
 import DonArDato.VoluntarioDTO;
+import Service.AsociacionService;
+import Service.PacientesService;
+import Service.PaisService;
+import Service.ProvinciaService;
+import Service.UsuarioService;
+import Service.VoluntariosService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,9 +52,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
     private Spinner spinnerTipoUsuario,spinnerProvincia,spinnerPais;
     private EditText campoNombre,campoApellido,campoDNI,campoMail,campoTelefono,campoEdad;
     private Button botonRegistrarse, botonSiguiente;
-    private CheckBox campoTyC;
     private RadioGroup radioGroupGenero;
-    private RadioButton radioButtonGenero;
     private SpinnerAdaptor adaptadorTDU,adaptadorPais,adaptadorProvincia;
     private ArrayList<SpinnerItem> misTiposDeUsuario = new ArrayList<>();
     private ArrayList<SpinnerItem> misPaises = new ArrayList<>();
@@ -79,7 +82,6 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         campoEdad = findViewById(R.id.edtEdad);
         campoDNI = findViewById(R.id.edtDNI);
         campoTelefono = findViewById(R.id.edtTelefono);
-        campoTyC = findViewById(R.id.checkBoxTerminosYcondiciones);
         txtProvincia = findViewById(R.id.txtProvincia);
 
 
@@ -154,10 +156,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
             return false;
         }
 
-        if(campoTyC.isChecked()==false){
-            Toast.makeText(getApplicationContext(), R.string.TyC_invalido, Toast.LENGTH_SHORT).show();
-            return false;
-        }
+
         return true;
     }
 
