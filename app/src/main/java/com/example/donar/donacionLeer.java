@@ -45,12 +45,13 @@ public class donacionLeer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        validarCamara();
         setContentView(R.layout.activity_donacion_leer);
         barcodeInfo= (TextView) findViewById(R.id.code_info);
         vistaCamara= (SurfaceView) findViewById(R.id.vista_camara);
         vistaCamara.setZOrderMediaOverlay(true);
         surfaceHolder=vistaCamara.getHolder();
-        validarCamara();
+
         configurarCamara();
 
     }
@@ -133,9 +134,6 @@ public class donacionLeer extends AppCompatActivity {
     public void validarCamara(){
         if (ContextCompat.checkSelfPermission(donacionLeer.this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},PERMISSION_CAMERA);
-            Intent intent= new Intent(getApplicationContext(),donacionDetalle.class);
-            startActivity(intent);
-            finish();
         }
     }
 }
