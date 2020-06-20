@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,7 +47,9 @@ public class reportesMain extends AppCompatActivity implements View.OnClickListe
         try {
             switch (v.getId()) {
                 case R.id.btnGenerar:
-                    generarPDF();
+                    //generarPDF();
+                    Intent intent = new Intent(this.getApplicationContext(), ReporteGraficoTorta.class);
+                    startActivity(intent);
                     break;
             }
         }

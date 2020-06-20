@@ -163,13 +163,7 @@ public class ReportesPDF<T> {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void paintOnACanvas(@NotNull PdfDocument.Page page, int X, int Y){
         Canvas canvas = page.getCanvas();
-        switch (this.data.getClass().getName()){
-            case "java.lang.String":
-                canvas.drawText(this.data.toString(), X, Y, this.paint);
-                break;
-            default:
-        }
-
+        canvas.drawText(this.data.toString(), X, Y, this.paint);
         pdf.finishPage(page);
     }
 
