@@ -110,5 +110,26 @@
 
     <!-- Mensajes-->
     <string name="NoTieneAcceso">Usted no cuenta con permisos para realizar esta acción.</string>
+    <string name="TyCtitulo">Términos y Condiciones</string>
+    <string name="TyCtext"> \u0020El sistema DonAr mediante el presente informa y solicita el uso de datos
+        de los usuarios con fines estadísticos, como también para el uso de personal médico
+        vinculado a la fundación \"¿Me regalás una hora?\" y personal administrativo competente para el
+        manejo a nivel estadístico.  Cualquier dato que se enucentre mal cargado por parte del
+        usuario será responsabilidad del mismo, al igual que la actualización y modificación de sus
+        datos.  En caso de no poder realizar una actualización de los datos correspondientes el
+        usuario debera contactarse con la fundación para solicitar la actualización de los mismos.
+        Queda por el presente la aceptación del completo desistimiento de cualquier tipo de denuncia
+        por parte del usuario para el uso de la aplicaicón.  \n\n  Al aceptar estos términos y condiciones
+        usted deja asentado que autoriza a recibir orientación médica/psicológica profesional de
+        manera gratuita y solidaria a través de la asociación civil \"¿Me regalás una hora?\" por
+        medio de la modalidad on-line correspondiente al uso de la aplicación DonAr.\n\n En caso de ser
+        un menor de edad (correspondiente según lo decretado por la justicia de la nación Argentina)
+        sea quien utilice los servicios brindados  por medio de la aplicación, la aceptación de estos
+        términos y condiciones debe ser realizada por su padre o tutor. Si por algún motivo no
+        fuese el padre o tutor quien realizace la aceptación de los términos y condiciones la
+        responsabilidad completa quedará sobre el  responsable legal del mentor.  El uso de la
+        aplicación es 100% on-line por lo cual es necesario que se cuente con conexión a internet para
+        poder utilizar la misma sin percance en el funcionamiento.</string>
+    <string name="acepto_los_t_rminos_y_condiciones">Acepto los términos y condiciones</string>
 
 </resources>

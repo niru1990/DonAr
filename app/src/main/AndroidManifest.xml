@@ -23,6 +23,7 @@
         <activity android:name=".sinConexionInternet" />
         <activity android:name=".registroDonacion" />
         <activity android:name=".reportesMain"></activity>
+        <activity android:name=".terminosYcondiciones"></activity>
         <activity android:name=".historial_de_consultas" />
         <activity android:name=".pacientesHistoriaCLinica" />
         <activity android:name=".pacienteAsignarEspecialidad" />

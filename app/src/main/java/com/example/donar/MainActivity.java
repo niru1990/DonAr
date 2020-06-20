@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 return true;
             case R.id.action_registro_oculto:
-                intent = new Intent(getApplicationContext(), registroGeneral.class);
+                intent = new Intent(getApplicationContext(), terminosYcondiciones.class);
                 startActivity(intent);
                 return true;
             case R.id.action_cerrarSesion:
