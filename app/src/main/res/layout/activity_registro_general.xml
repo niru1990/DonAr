@@ -289,19 +289,7 @@
 
             </LinearLayout>
 
-            <CheckBox
-                android:id="@+id/checkBoxTerminosYcondiciones"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10sp"
-                android:layout_marginTop="20sp"
-                android:text="Acepto los términos y condiciones"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.887" />
+
 
 <!--
         </LinearLayout>
@@ -315,13 +303,14 @@
         android:layout_marginHorizontal="10sp"
         android:text="@string/btnSiguiente"
         android:textSize="20sp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976" />
+
     <Button
         android:id="@+id/btnRegistrarPacienteOVoluntarioBasico"
         android:layout_width="match_parent"
@@ -330,7 +319,7 @@
         android:background="#2C61A6"
         android:text="@string/btnRegistrar"
         android:textSize="20sp"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"

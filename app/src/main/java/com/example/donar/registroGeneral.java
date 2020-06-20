@@ -53,7 +53,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
     private Spinner spinnerTipoUsuario,spinnerProvincia,spinnerPais;
     private EditText campoNombre,campoApellido,campoDNI,campoMail,campoTelefono,campoEdad;
     private Button botonRegistrarse, botonSiguiente;
-    private CheckBox campoTyC;
+    //private CheckBox campoTyC;
     private RadioGroup radioGroupGenero;
     private RadioButton radioButtonGenero;
     private SpinnerAdaptor adaptadorTDU,adaptadorPais,adaptadorProvincia;
@@ -85,7 +85,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         campoEdad = findViewById(R.id.edtEdad);
         campoDNI = findViewById(R.id.edtDNI);
         campoTelefono = findViewById(R.id.edtTelefono);
-        campoTyC = findViewById(R.id.checkBoxTerminosYcondiciones);
+       // campoTyC = findViewById(R.id.checkBoxTerminosYcondiciones);
         txtProvincia = findViewById(R.id.txtProvincia);
 
 
@@ -160,10 +160,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
             return false;
         }
 
-        if(campoTyC.isChecked()==false){
-            Toast.makeText(getApplicationContext(), R.string.TyC_invalido, Toast.LENGTH_SHORT).show();
-            return false;
-        }
+
         return true;
     }
 
