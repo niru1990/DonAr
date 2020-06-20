@@ -1,4 +1,4 @@
-package Endpoints;
+package Service;
 
 import DonArDato.AsociacionDTO;
 import DonArDato.PacienteDTO;

@@ -31,8 +31,8 @@ import java.util.Date;
 
 import DonArDato.EventoDTO;
 import DonArDato.PacienteConsultaDTO;
-import Endpoints.EventoServices;
-import Endpoints.PacientesService;
+import Service.EventoServices;
+import Service.PacientesService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

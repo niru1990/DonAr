@@ -31,7 +31,7 @@ import Adapters.ListAdapter;
 import DonArDato.EventoAutoMach;
 import DonArDato.EventoDTO;
 import DonArDato.EventoReducidoDTO;
-import Endpoints.EventoServices;
+import Service.EventoServices;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -1,4 +1,4 @@
-package Endpoints;
+package Service;
 
 import java.util.List;
 

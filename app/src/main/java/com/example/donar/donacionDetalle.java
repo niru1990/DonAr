@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import DonArDato.DonacionDTO;
-import Endpoints.DonacionesService;
+import Service.DonacionesService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

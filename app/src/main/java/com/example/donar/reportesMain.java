@@ -13,9 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 
-import Negocio.ReportesPDF;
-import Negocio.fechas;
-
 public class reportesMain extends AppCompatActivity implements View.OnClickListener {
 
     private Button generar;
@@ -47,8 +44,8 @@ public class reportesMain extends AppCompatActivity implements View.OnClickListe
         try {
             switch (v.getId()) {
                 case R.id.btnGenerar:
-                    //generarPDF();
-                    Intent intent = new Intent(this.getApplicationContext(), ReporteGraficoTorta.class);
+                    Intent intent = new Intent(getApplicationContext(), ReporteGraficoTorta.class);
+                    intent.putExtra("reporteSolicitado", "voluntariosPorTipo");
                     startActivity(intent);
                     break;
             }
@@ -59,10 +56,5 @@ public class reportesMain extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void generarPDF(){
-        ReportesPDF report = new ReportesPDF("TEST"+ new fechas().getDateTime(),
-                "Hola mamá" );
-        report.createDocumentExample();
-    }
+
 }

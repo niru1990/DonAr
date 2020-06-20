@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import DonArDato.ResponseData;
 import DonArDato.actualizaIG;
-import Endpoints.LoginService;
+import Service.LoginService;
 import Negocio.Login;
 import retrofit2.Call;
 import retrofit2.Callback;

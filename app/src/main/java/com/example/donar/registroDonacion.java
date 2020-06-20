@@ -19,7 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 import org.jetbrains.annotations.NotNull;
 
 import DonArDato.DonacionDTO;
-import Endpoints.DonacionesService;
+import Service.DonacionesService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
