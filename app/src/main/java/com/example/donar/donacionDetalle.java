@@ -98,20 +98,6 @@ private String idDonacion;
 
         }
     }
-/*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_QR && resultCode == RESULT_OK) {
-            if (data != null) {
-                final Barcode barcode = data.getParcelableExtra("barcode");
-                String QR = barcode.displayValue;
-                lectura_QR.setText(QR);
-            }
-        }
-    }
-
- */
     /*
 
     private Bitmap getBitmapFromString(String stringPicture) {

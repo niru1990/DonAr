@@ -11,18 +11,6 @@
         layout="@layout/activity_don_ar_tool_bar"></include>
 
 
-    <ListView
-        android:id="@+id/lista_donaciones"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include4">
-
-    </ListView>
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -36,14 +24,28 @@
         app:layout_constraintTop_toTopOf="@+id/include4"
         app:layout_constraintVertical_bias="0.23" />
 
+    <ListView
+        android:id="@+id/lista_donaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/linearLayoutDonacionDetalle"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/include4">
+
+    </ListView>
+
     <LinearLayout
-        android:layout_width="344dp"
+        android:id="@+id/linearLayoutDonacionDetalle"
+        android:layout_width="match_parent"
         android:layout_height="42dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lista_donaciones"
+        app:layout_constraintTop_toTopOf="@+id/include4"
         app:layout_constraintVertical_bias="0.90999997">
 
         <Button

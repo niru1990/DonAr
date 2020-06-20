@@ -116,12 +116,7 @@ public class donacionLeer extends AppCompatActivity {
             public void receiveDetections(Detector.Detections<com.google.android.gms.vision.barcode.Barcode> detections) {
                 final  SparseArray<Barcode> barcodes= detections.getDetectedItems();
                 if (barcodes.size()> 0){
-                    /*
-                    //barcodeInfo.setText(barcodes.valueAt(0).displayValue);
-                    intent.putExtra("id",barcodes.valueAt(0).toString());
-                   // setResult(RESULT_OK,intent);
-                    //finish();
-                     */
+
                     savePreferences("idDonacion",barcodes.valueAt(0).displayValue);
                     Intent intent= new Intent(getApplicationContext(),donacionDetalle.class);
                     startActivity(intent);

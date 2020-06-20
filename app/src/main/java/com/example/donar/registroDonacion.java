@@ -159,19 +159,5 @@ public class registroDonacion extends AppCompatActivity implements View.OnClickL
         }
 return validado;
     }
-/*
-    public Date parsearFecha(String date){
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        Date myDate = new Date();
-        try {
-            myDate = df.parse(date);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return myDate;
-    }
-
- */
 
 }
