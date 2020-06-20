@@ -137,10 +137,9 @@ public class ReportesPDF<T> {
      * @param left
      * @param top
      */
-    public void imagenCanvas(Canvas canvas, Bitmap bmp, int left, int top){
+    public void imagenCanvas(@NotNull Canvas canvas, Bitmap bmp, int left, int top){
         canvas.drawBitmap(bmp, left, top, this.paint);
     }
-
 
     /**
      * Crea la pagina para el documento,
