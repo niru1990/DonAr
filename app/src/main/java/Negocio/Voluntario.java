@@ -1,22 +1,5 @@
 package Negocio;
 
-import android.util.Log;
-import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
-import android.widget.Toast;
-
-import com.example.donar.VoluntariosService;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import DonArDato.VoluntarioDTO;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 
 public class Voluntario {
     /*

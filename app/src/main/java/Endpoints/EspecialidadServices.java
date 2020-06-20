@@ -1,4 +1,4 @@
-package com.example.donar;
+package Endpoints;
 
 import java.util.List;
 

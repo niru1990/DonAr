@@ -1,5 +1,5 @@
 
-package com.example.donar;
+package Endpoints;
 
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.common.reflect.Parameter;
