@@ -49,6 +49,9 @@ public class ReporteGraficoTorta extends AppCompatActivity {
             case "generosUsuarios":
                 getUsuariosPorGenero();
                 break;
+            case "RangoHetario":
+                getRangosHetarios();
+                break;
             case "MedicosXEspecialidad":
                 getMedicosPorEspecialidad();
                 break;
@@ -103,7 +106,6 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     }
-
 
     public void getVoluntariosPorTipo() {
         try {
