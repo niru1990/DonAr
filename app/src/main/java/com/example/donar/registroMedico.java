@@ -267,7 +267,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
             return false;
         }
 
-
+//
         if(campoMatricula.getText().toString().length() != 8 ){
             Toast.makeText(getApplicationContext(), R.string.matricula_cantidad_caracteres_invalidos,
                     Toast.LENGTH_SHORT).show();
