@@ -74,6 +74,8 @@ public class reportesMain extends AppCompatActivity implements View.OnClickListe
 
                             //Trazabilidad de donaciones
                         case 5:
+                            intent = new Intent(this.getApplicationContext(), reportesDonaciones.class);
+                            intent.putExtra("reporteSolicitado", "trazabilidadDonacion");
                             break;
                     }
 

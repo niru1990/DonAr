@@ -135,6 +135,7 @@
     <string name="seguro_invalido">Por favor, introduzca su seguro.</string>
     <string name="reporteGenerosTitle">Composición de Usuarios por Género</string>
     <string name="fecha_de_vencimiento">Fecha de vencimiento</string>
+    <string name="entregar_donacion">Entregar donacion</string>
 
 
 </resources>

@@ -11,8 +11,10 @@ import retrofit2.http.Path;
 
 public interface DonacionesService {
 
-
-
+    //Get donaciones
+    String API_ROUTE_GET_ALL = "api/donacion/";
+    @GET (API_ROUTE_GET_ALL)
+    Call<List<DonacionDTO>>getDonaciones();
 
     //Registrar donacion
     String API_ROUTE_ADD_ITEM = "api/donacion";

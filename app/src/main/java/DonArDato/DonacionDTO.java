@@ -10,21 +10,17 @@ public class DonacionDTO {
     private BigInteger id;
     private String detalle;
     private int cantidad;
-    @Nullable
-    private Date fechaIngreso;
     private String fechaVencimiento;
-    @Nullable
-    private Date fechaEgreso;
     private String destino;
-    @Nullable
-    private ArrayList<DonacionDTO> items;
-
-    private Integer idUsuario;
+    private int idUsuario;
+    private int estado;//0=en camino, 1=entregado, 2=recibido
 
     public DonacionDTO(BigInteger id, String detalle) {
         this.id = id;
         this.detalle = detalle;
     }
+
+
 
     public String getFechaVencimiento() {
         return fechaVencimiento;
@@ -42,36 +38,19 @@ public class DonacionDTO {
         this.destino = destino;
     }
 
-    public DonacionDTO(String destino, int cantidad, String detalle, Integer idUsuario) {
+    public DonacionDTO(String destino, int cantidad, String detalle, int idUsuario) {
         this.destino = destino;
         this.cantidad = cantidad;
         this.detalle = detalle;
         this.idUsuario = idUsuario;
     }
 
-    @Nullable
-    public Date getFechaIngreso() {
-        return fechaIngreso;
+    public int getEstado() {
+        return estado;
     }
 
-    public void setFechaIngreso(Date fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
-    }
-    @Nullable
-    public Date getFechaEgreso() {
-        return fechaEgreso;
-    }
-    @Nullable
-    public void setFechaEgreso(Date fechaEgreso) {
-        this.fechaEgreso = fechaEgreso;
-    }
-    @Nullable
-    public ArrayList<DonacionDTO> getItems() {
-        return items;
-    }
-    @Nullable
-    public void setItems(ArrayList<DonacionDTO> items) {
-        this.items = items;
+    public void setEstado(int estado) {
+        this.estado = estado;
     }
 
     public String getDestino() {
@@ -99,12 +78,12 @@ public class DonacionDTO {
         this.detalle = detalle;
     }
 
-    public BigInteger getId() {
-        return id;
+    public int getId() {
+        return idUsuario;
     }
 
-    public void setId(BigInteger id) {
-        this.id = id;
+    public void setId(int id) {
+        this.idUsuario = id;
     }
 
     public int getCantidad() {

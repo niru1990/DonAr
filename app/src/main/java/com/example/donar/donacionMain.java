@@ -106,7 +106,7 @@ public class donacionMain extends AppCompatActivity implements View.OnClickListe
                                 if(response.body() != null) {
                                     for(DonacionDTO e : response.body()){
 
-                                        myList.add(new EventoAutoMach(e.getId().toString(),
+                                        myList.add(new EventoAutoMach(String.valueOf(e.getDonacion_id()),
                                                 e.getDetalle().toUpperCase(),
                                                 "",
                                                 "",

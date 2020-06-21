@@ -4,13 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import DonArDato.DonacionDTO;
 import Service.DonacionesService;
@@ -27,9 +35,11 @@ private TextView info_cantidad;
 private TextView info_destino;
 private TextView info_fecha_vencimiento;
 private Button recibir_donacion;
+private Button entregar_donacion;
 private DonacionDTO donacionDTO=null;
 private Bitmap bitmap;
 private String idDonacion;
+private ImageView imageView;
 
 
     @Override
@@ -41,10 +51,13 @@ private String idDonacion;
         info_detalle=(TextView) findViewById(R.id.info_detalle);
         info_cantidad=(TextView) findViewById(R.id.info_cantidad);
         info_destino=(TextView) findViewById(R.id.info_destino);
+        imageView=(ImageView)findViewById(R.id.imagenQR);
         recibir_donacion=(Button) findViewById(R.id.recibirDonacion);
+        entregar_donacion=(Button) findViewById(R.id.entregarDonacion);
         recibir_donacion.setOnClickListener(this);
+        entregar_donacion.setOnClickListener(this);
         info_fecha_vencimiento=(TextView) findViewById(R.id.info_fecha_vencimiento);
-        SharedPreferences sharedPreferences=getSharedPreferences("ID usuario", Context.MODE_PRIVATE);
+        final SharedPreferences sharedPreferences=getSharedPreferences("ID usuario", Context.MODE_PRIVATE);
         idDonacion=sharedPreferences.getString("idDonacion", "0");
         if (idDonacion!=null){
 
@@ -66,12 +79,23 @@ private String idDonacion;
                             info_detalle.setText(donacionDTO.getDetalle());
                             info_cantidad.setText(String.valueOf(donacionDTO.getCantidad()));
                             info_destino.setText(donacionDTO.getDestino());
+                            crearQR(donacionDTO.getDonacion_id().toString());
                             if (donacionDTO.getFechaVencimiento()==null){
                                 info_fecha_vencimiento.setText("No tiene");
                             }else{
                                 info_fecha_vencimiento.setText(donacionDTO.getFechaVencimiento());
                             }
+                            if (String.valueOf(donacionDTO.getId()).equals(sharedPreferences.getString("ID", "0"))){
+                                if (donacionDTO.getEstado()==0){
+                                    entregar_donacion.setVisibility(View.VISIBLE);
+                                }
+                            }else{
+                                if (donacionDTO.getEstado()==1){
+                                    recibir_donacion.setVisibility(View.VISIBLE);
+                                }
+                            }
                         }
+                        break;
                             default:
                                 try {
                                     throw new Exception(response.code() + " " + response.message());
@@ -91,19 +115,61 @@ private String idDonacion;
 
         }
     }
-    /*
-
-    private Bitmap getBitmapFromString(String stringPicture) {
-        byte[] decodedString = Base64.decode(stringPicture, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        return decodedByte;
+    public void crearQR(String text){
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE,500,500);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            imageView.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
- */
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.recibirDonacion:
-                Toast.makeText(donacionDetalle.this, "toco el boton", Toast.LENGTH_LONG).show();
+                modificarEstadoDonacion(2);
+                break;
+            case R.id.entregarDonacion:
+                modificarEstadoDonacion(1);
+                break;
         }
+    }
+    public void modificarEstadoDonacion(int estado){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://donar.azurewebsites.net/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        DonacionesService donacionesServic= retrofit.create(DonacionesService.class);
+        Call<DonacionDTO> donacionDTOCall= donacionesServic.getDonacionID(idDonacion);
+        donacionDTOCall.enqueue(new Callback<DonacionDTO>() {
+            @Override
+            public void onResponse(Call<DonacionDTO> call, Response<DonacionDTO> response) {
+                if(response.isSuccessful()){
+                    switch (response.code())
+                    {
+                        case 200:
+                            Intent intent= new Intent(getApplicationContext(),donacionDetalle.class);
+                            startActivity(intent);
+                            break;
+                        default:
+                            try {
+                                throw new Exception(response.code() + " " + response.message());
+                            }
+                            catch (Exception ep) {
+                                ep.printStackTrace();
+                            }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DonacionDTO> call, Throwable t) {
+                Toast.makeText(donacionDetalle.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
