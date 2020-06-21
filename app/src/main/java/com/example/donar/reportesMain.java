@@ -64,9 +64,10 @@ public class reportesMain extends AppCompatActivity implements View.OnClickListe
                             intent.putExtra("reporteSolicitado", "generosUsuarios");
                             break;
 
-                            //Rango etario de pacientes
+                        //Rango etario de pacientes
                         case 2:
-
+                            intent = new Intent(this.getApplicationContext(), ReporteGraficoTorta.class);
+                            intent.putExtra("reporteSolicitado", "RangoHetario");
                             break;
 
                             //Medicos por especialidad
