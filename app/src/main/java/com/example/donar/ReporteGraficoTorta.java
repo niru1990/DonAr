@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,25 +67,18 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                         if (response.body() != null) {
                             ReporteVoluntariosTipo r = (ReporteVoluntariosTipo) response.body();
 
-
-
-
                             ArrayList<SliceValue> pieData = new ArrayList<>();
                             HashMap<String, Integer> mapa = r.getMedicosPorEspecialidad();
                             for (String key : mapa.keySet()) {
-                                Random rand = new Random();
-                                int myRandomNumber = rand.nextInt(0x10) + 0x10; // Generates a random number between 0x10 and 0x20
-                                System.out.printf("%x\n",myRandomNumber); // Prints it in hex, such as "0x14"
-                                // or....
-                                String result = Integer.toHexString(myRandomNumber); // Random hex number in result
 
-/*
+                                String text = key +  " " + mapa.get(key);
                                 Integer value = mapa.get(key);
                                 pieData.add(new SliceValue(value,
-                                        Color.parseColor("#" + result )
-                                        .setLabel(key + " "  + value));*/
+                                        Color.parseColor(getRandomColor()))
+                                        .setLabel(text));
                             }
                             graficar(pieData, "Medicos por especialidad");
+                            //pieData.clear();
                         }
                     }
                     else
@@ -165,6 +160,14 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                     ex.getMessage(),
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+    @NotNull
+    private String getRandomColor(){
+        Random rand = new Random();
+        int myRandomNumber = rand.nextInt(0x1000000) + 0x10; // Generates a random number between 0x10 and 0x20
+        String result = "#" +  Integer.toHexString(myRandomNumber); // Random hex number in result
+        return result.toUpperCase();
     }
 
 }
