@@ -2,6 +2,7 @@ package com.example.donar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import DonArDato.ReporteGeneroDTO;
 import DonArDato.ReporteVoluntariosTipo;
 import Service.ReportesServices;
 import lecho.lib.hellocharts.model.PieChartData;
@@ -44,11 +45,12 @@ public class ReporteGraficoTorta extends AppCompatActivity {
             case "voluntariosPorTipo":
                 getVoluntariosPorTipo();
                 break;
+            //Identidad de genero
+            case "generosUsuarios":
+                getUsuariosPorGenero();
+                break;
             case "MedicosXEspecialidad":
                 getMedicosPorEspecialidad();
-                break;
-            case "RangoHetario":
-                getRangosHetarios();
                 break;
             default:
         }
@@ -101,6 +103,7 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     }
+
 
     public void getVoluntariosPorTipo() {
         try {
@@ -214,13 +217,60 @@ public class ReporteGraficoTorta extends AppCompatActivity {
         }
     }
 
+    public void getUsuariosPorGenero() {
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://donar.azurewebsites.net/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            ReportesServices reportes = retrofit.create(ReportesServices.class);
+            Call<ReporteGeneroDTO> http_call = reportes.getUsuariosGeneros();
+            http_call.enqueue(new Callback<ReporteGeneroDTO>() {
+                @Override
+                public void onResponse(Call<ReporteGeneroDTO> call, Response<ReporteGeneroDTO> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            ReporteGeneroDTO reporteGeneros = (ReporteGeneroDTO) response.body();
+                            ArrayList<SliceValue> pieData = new ArrayList<>();
+                            pieData.add(new SliceValue(reporteGeneros.getCantMasculinos(),
+                                    Color.parseColor("#63BD9A"))
+                                    .setLabel("Masculinos: " + reporteGeneros.getCantMasculinos()));
+                            pieData.add(new SliceValue(reporteGeneros.getCantFemeninos(),
+                                    Color.parseColor("#6D91C7"))
+                                    .setLabel("Femeninos: " + reporteGeneros.getCantFemeninos()));
+                            pieData.add(new SliceValue(reporteGeneros.getCantOtros(),
+                                    Color.parseColor("#F5DE9D"))
+                                    .setLabel("Otro: " + reporteGeneros.getCantOtros()));
+                            graficar(pieData, "Composición de Usuarios por Género");
+                        }
+                    }
+                    else
+                        this.onFailure(call, new Exception("codigo: " + response.code()));
+                }
+
+                @Override
+                public void onFailure(Call<ReporteGeneroDTO> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(),
+                            "No fue posible comunicarse con la API, " + t.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(),
+                    "No fue posible comunicarse con la API, " + ex.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void graficar(ArrayList pieData, String titulo){
 
         List data = pieData;
         try {
             PieChartData pieChartData = new PieChartData(data);
             pieChartData.setHasLabels(true).setValueLabelTextSize(14);
-            pieChartData.setHasCenterCircle(true).setCenterText1(titulo).setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#000000"));
+            pieChartData.setHasCenterCircle(true).setCenterText1(titulo).setCenterText1FontSize(20).
+                    setCenterText1Color(Color.parseColor("#000000"));
             pieChartView.setPieChartData(pieChartData);
         }
         catch (Exception ex) {
