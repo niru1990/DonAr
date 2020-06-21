@@ -10,18 +10,23 @@
         android:id="@+id/include6"
         layout="@layout/activity_don_ar_tool_bar"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="136dp"></include>
+        tools:layout_editor_absoluteY="136dp"/>
 
     <TextView
         android:id="@+id/txtTitulo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
         android:layout_marginTop="84dp"
         android:text="@string/txtTituloReportes"
+        android:textColor="@color/textBlack"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include6" />
+        app:layout_constraintTop_toTopOf="@+id/include6"
+        app:layout_constraintVertical_bias="0.0" />
 
     <RadioGroup
         android:id="@+id/rbgReportes"
@@ -58,6 +63,14 @@
             tools:layout_editor_absoluteY="221dp" />
 
         <RadioButton
+            android:id="@+id/rbtMedicosXEspecialidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reporteMedicosPorEspecialidad"
+            tools:layout_editor_absoluteX="116dp"
+            tools:layout_editor_absoluteY="221dp" />
+
+        <RadioButton
             android:id="@+id/rbtTrazabilidadDonaciones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,13 +82,16 @@
 
     <Button
         android:id="@+id/btnGenerar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btnGenerar"
+        android:layout_marginHorizontal="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.957" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -51,25 +51,30 @@ public class reportesMain extends AppCompatActivity implements View.OnClickListe
                     switch(reportes.indexOfChild(findViewById(reportes.getCheckedRadioButtonId()))){
 
                         //Composicion de voluntarios
-                        case 1:
+                        case 0:
                             intent = new Intent(this.getApplicationContext(),
                                     ReporteGraficoTorta.class);
                             intent.putExtra("reporteSolicitado", "voluntariosPorTipo");
                             break;
 
                             //Identidad de genero
-                        case 2:
+                        case 1:
+                            intent = new Intent(this.getApplicationContext(),
+                                    ReporteGraficoTorta.class);
+                            intent.putExtra("reporteSolicitado", "generosUsuarios");
                             break;
 
-                            //Rango etario de pacientes
-                        case 3:
-                            intent = new Intent(this.getApplicationContext(), ReporteGeneros.class);
-                            intent.putExtra("reporteSolicitado", "generosUsuarios");
-
+                        //Rango etario de pacientes
+                        case 2:
+                            intent = new Intent(this.getApplicationContext(), ReporteGraficoTorta.class);
+                            intent.putExtra("reporteSolicitado", "RangoHetario");
                             break;
 
                             //Medicos por especialidad
-                        case 4:
+                        case 3:
+                            intent = new Intent(this.getApplicationContext(),
+                                    ReporteGraficoTorta.class);
+                            intent.putExtra("reporteSolicitado", "MedicosXEspecialidad");
                             break;
 
                             //Trazabilidad de donaciones

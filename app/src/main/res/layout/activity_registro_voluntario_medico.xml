@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        ></include>
+        />
 
     <TextView
         android:id="@+id/txtRegisterMedicoTitle"
@@ -59,6 +59,7 @@
         android:layout_marginHorizontal="10sp"
         android:ems="10"
         android:hint="Matrícula"
+        android:maxLength="8"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +83,7 @@
 
     <TextView
         android:id="@+id/txtEspecialidad"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10sp"
         android:text="@string/txtEspecialidad"
@@ -108,7 +109,7 @@
 
     <TextView
         android:id="@+id/txtHorarios"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10sp"
         android:text="@string/txtHorarios"
@@ -122,62 +123,69 @@
         app:layout_constraintVertical_bias="0.545"
         tools:ignore="MissingConstraints" />
 
-    <Button
-        android:id="@+id/btnHorarioIngreso"
-        android:layout_width="142sp"
-        android:layout_height="60sp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginHorizontal="10sp"
-        android:ems="10"
-        android:textSize="14sp"
-        android:hint="Seleccionar Ingreso"
-        android:inputType="datetime"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.664" />
+        app:layout_constraintVertical_bias="0.63">
 
-    <TextView
-        android:id="@+id/ingresoTextView"
-        android:layout_width="171dp"
-        android:layout_height="49dp"
-        android:text="Horario de Ingreso: hh:mm hs."
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.67"></TextView>
+        <Button
+            android:id="@+id/btnHorarioIngreso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10sp"
+            android:layout_weight="5"
+            android:ems="10"
+            android:hint="@string/seleccionar_ingreso_btn"
+            android:textSize="14sp" />
 
-    <Button
-        android:id="@+id/btnHorarioSalida"
-        android:layout_width="143dp"
-        android:layout_height="56dp"
+        <TextView
+            android:id="@+id/ingresoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/horario_ingreso_txt"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginHorizontal="10sp"
-        android:ems="10"
-        android:hint="Seleccionar Salida"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.797" />
 
-    <TextView
-        android:id="@+id/salidaTextView"
-        android:layout_width="171sp"
-        android:layout_height="49sp"
-        android:text="Horario de Salida: hh:mm hs."
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.788"></TextView>
+        app:layout_constraintVertical_bias="0.75">
+
+        <Button
+            android:id="@+id/btnHorarioSalida"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10sp"
+            android:layout_weight="5"
+            android:ems="10"
+            android:hint="@string/seleccionar_salida_btn"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/salidaTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Horario de Salida: hh:mm hs."
+            android:textSize="18sp"
+
+            />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnRegistrarMedico"

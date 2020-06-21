@@ -23,6 +23,8 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -157,11 +159,11 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NotNull View v) {
         Intent intent;
             switch (v.getId()) {
                 case R.id.btnRegistrarMedico:
-                    if(awesomeValidation.validate()) {
+                    if(awesomeValidation.validate() && validarCampos()) {
                     SharedPreferences preferences = getSharedPreferences("Datos generales medico",
                             Context.MODE_PRIVATE);
 
@@ -201,8 +203,8 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                             Integer.valueOf(idEspecialidad),
                             campoMatricula.getText().toString(),
                             campoSeguro.getText().toString(),
-                            horaIngreso,//textoHorarioIngreso.getText().toString(),
-                            horaSalida//textoHorarioSalida.getText().toString()
+                            horaIngreso,
+                            horaSalida
                     );
 
                     Retrofit retrofit = new Retrofit.Builder()
@@ -232,10 +234,8 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                     });
 
                     intent = new Intent(v.getContext(), LoginActivity.class);
-                    }else{
-                        //Validacion NO exitosa :(
-                        Toast.makeText(getApplicationContext(), "Uno o más campos incorrectos.", Toast.LENGTH_SHORT).show();
                     }
+
                     break;
 
                 case R.id.btnHorarioIngreso:
@@ -253,6 +253,59 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
             }
 
     }
+
+    private boolean validarCampos() {
+        String horaIngresoString = textoHorarioIngreso.getText().toString().
+                replace(":","");
+        String horaSalidaString = textoHorarioSalida.getText().toString().
+                replace(":","");
+
+        if(!campoMatricula.getText().toString().substring(0,2).equals("MP") &&
+                !campoMatricula.getText().toString().substring(0,2).equals("MN") ){
+            Toast.makeText(getApplicationContext(), R.string.matricula_iniciales_invalidas,
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+//
+        if(campoMatricula.getText().toString().length() != 8 ){
+            Toast.makeText(getApplicationContext(), R.string.matricula_cantidad_caracteres_invalidos,
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(!horaIngresoString.matches(".*\\d.*")){
+            Toast.makeText(getApplicationContext(), R.string.horario_ingreso_vacio,
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(!horaSalidaString.matches(".*\\d.*")){
+            Toast.makeText(getApplicationContext(), R.string.horario_salida_vacio,
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+         int horaIngreso = Integer.parseInt(ajustarFecha(textoHorarioIngreso.getText().toString()).
+                 replace(":",""));
+         int horaSalida = Integer.parseInt(ajustarFecha(textoHorarioSalida.getText().toString()).
+                 replace(":",""));
+
+         if(horaIngreso>horaSalida){
+             Toast.makeText(getApplicationContext(), R.string.horarios_incoherentes,
+                     Toast.LENGTH_SHORT).show();
+             return false;
+         }
+
+         if(horaIngreso<90000 || horaSalida<90000 ||  horaIngreso>190000 || horaSalida>190000){
+             Toast.makeText(getApplicationContext(), R.string.horarios_fuera_rango,
+                     Toast.LENGTH_SHORT).show();
+             return false;
+         }
+
+         return true;
+    }
+
 
     public void setHorarioIngreso(){
         Calendar calendar = Calendar.getInstance();
@@ -285,7 +338,8 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
     }
 
     //Doy formato a la hora para que no pinche el automach
-    private String ajustarFecha(String fecha) {
+    @NotNull
+    private String ajustarFecha(@NotNull String fecha) {
         String finale = "";
         String[] a= fecha.split(":");
         String horas = "";
