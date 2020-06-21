@@ -59,12 +59,14 @@ public class reportesMain extends AppCompatActivity implements View.OnClickListe
 
                             //Identidad de genero
                         case 1:
-                            intent = new Intent(this.getApplicationContext(), ReporteGeneros.class);
+                            intent = new Intent(this.getApplicationContext(),
+                                    ReporteGraficoTorta.class);
                             intent.putExtra("reporteSolicitado", "generosUsuarios");
                             break;
 
-                        //Rango etario de pacientes
+                            //Rango etario de pacientes
                         case 2:
+
                             break;
 
                             //Medicos por especialidad

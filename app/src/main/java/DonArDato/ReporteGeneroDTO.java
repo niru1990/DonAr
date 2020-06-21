@@ -12,4 +12,15 @@ public class ReporteGeneroDTO {
         this.cantOtros = cantOtros;
     }
 
+    public Integer getCantMasculinos() {
+        return cantMasculinos;
+    }
+
+    public Integer getCantFemeninos() {
+        return cantFemeninos;
+    }
+
+    public Integer getCantOtros() {
+        return cantOtros;
+    }
 }
