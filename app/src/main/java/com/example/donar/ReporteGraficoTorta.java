@@ -16,6 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
@@ -28,12 +29,16 @@ import java.util.Random;
 public class ReporteGraficoTorta extends AppCompatActivity {
 
     private PieChartView pieChartView;
+    private TextView reporteTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reporte_grafico_torta);
+
         pieChartView = findViewById(R.id.chart);
+        reporteTitle = findViewById(R.id.reporteTitle);
+
         selectedFontData();
     }
 
@@ -128,18 +133,20 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                 public void onResponse(Call<ReporteVoluntariosTipo> call, Response<ReporteVoluntariosTipo> response) {
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
-                            ReporteVoluntariosTipo r = (ReporteVoluntariosTipo) response.body();
+                            ReporteVoluntariosTipo r = response.body();
                             ArrayList<SliceValue> pieData = new ArrayList<>();
                             pieData.add(new SliceValue(r.getCantVoluntariosBasicos(),
                                     Color.parseColor("#63BD9A"))
-                                    .setLabel("Voluntarios " + r.getCantVoluntariosBasicos()));
+                                    .setLabel("Voluntarios: " + r.getCantVoluntariosBasicos()));
                             pieData.add(new SliceValue(r.getCantVoluntariosMedicos(),
                                     Color.parseColor("#6D91C7"))
-                                    .setLabel("Medicos " + r.getCantVoluntariosMedicos()));
+                                    .setLabel("Médicos: " + r.getCantVoluntariosMedicos()));
                             pieData.add(new SliceValue(r.getCantVoluntariosAsociacion(),
                                     Color.parseColor("#F5DE9D"))
-                                    .setLabel("Asociación " + r.getCantVoluntariosAsociacion()));
-                            graficar(pieData, "Voluntarios por tipo");
+                                    .setLabel("Asociación: " + r.getCantVoluntariosAsociacion()));
+                            reporteTitle.setText("Voluntarios por Tipo");
+                            graficar(pieData, "");
+
                         }
                     }
                     else
@@ -174,7 +181,7 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                 public void onResponse(Call<ReporteGeneroDTO> call, Response<ReporteGeneroDTO> response) {
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
-                            ReporteGeneroDTO reporteGeneros = (ReporteGeneroDTO) response.body();
+                            ReporteGeneroDTO reporteGeneros = response.body();
                             ArrayList<SliceValue> pieData = new ArrayList<>();
                             pieData.add(new SliceValue(reporteGeneros.getCantMasculinos(),
                                     Color.parseColor("#63BD9A"))
@@ -185,7 +192,8 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                             pieData.add(new SliceValue(reporteGeneros.getCantOtros(),
                                     Color.parseColor("#F5DE9D"))
                                     .setLabel("Otro: " + reporteGeneros.getCantOtros()));
-                            graficar(pieData, "Composición de Usuarios por Género");
+                            reporteTitle.setText("Composición de Usuarios por Género");
+                            graficar(pieData, "");
                         }
                     }
                     else

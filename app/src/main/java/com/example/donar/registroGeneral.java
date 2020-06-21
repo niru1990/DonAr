@@ -160,8 +160,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         return true;
     }
 
-    private void cargarSpinnerTipoDeUsuario()
-    {
+    private void cargarSpinnerTipoDeUsuario(){
         spinnerTipoUsuario = (Spinner) findViewById(R.id.spnTipoVoluntario);
         adaptadorTDU = new SpinnerAdaptor(registroGeneral.this, misTiposDeUsuario);
         spinnerTipoUsuario.setAdapter(adaptadorTDU);

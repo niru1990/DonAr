@@ -71,7 +71,8 @@ public class reportesMain extends AppCompatActivity implements View.OnClickListe
 
                             //Medicos por especialidad
                         case 3:
-                            intent = new Intent(this.getApplicationContext(), ReporteGraficoTorta.class);
+                            intent = new Intent(this.getApplicationContext(),
+                                    ReporteGraficoTorta.class);
                             intent.putExtra("reporteSolicitado", "MedicosXEspecialidad");
                             break;
 

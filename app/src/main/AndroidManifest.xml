@@ -16,8 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".grafico_barras" >
-        </activity>
+        <activity android:name=".grafico_barras"/>
         <activity android:name=".ReporteGraficoTorta" />
         <activity android:name=".donacionLeer" />
         <activity android:name=".donacionDetalle" />
@@ -38,16 +37,18 @@
         <activity android:name=".voluntariosAutoMach" />
         <activity android:name=".registroHorasVoluntarios" />
         <activity android:name=".registroGeneral" />
-        <activity android:name=".registroMedico" />
+        <activity android:name=".registroMedico" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
         <activity android:name=".voluntarioMedico" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".MainActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
     </application>
 
 </manifest>
