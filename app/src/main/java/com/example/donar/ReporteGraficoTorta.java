@@ -47,6 +47,9 @@ public class ReporteGraficoTorta extends AppCompatActivity {
             case "MedicosXEspecialidad":
                 getMedicosPorEspecialidad();
                 break;
+            case "RangoHetario":
+                getRangosHetarios();
+                break;
             default:
         }
     }
@@ -99,7 +102,6 @@ public class ReporteGraficoTorta extends AppCompatActivity {
         }
     }
 
-
     public void getVoluntariosPorTipo() {
         try {
             Retrofit retrofit = new Retrofit.Builder()
@@ -140,6 +142,72 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                 }
             });
         } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(),
+                    "No fue posible comunicarse con la API, " + ex.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void getRangosHetarios(){
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://donar.azurewebsites.net/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            ReportesServices reportes = retrofit.create(ReportesServices.class);
+            Call<List<Integer>> http_call = reportes.getRangosHetarios();
+            http_call.enqueue(new Callback<List<Integer>>() {
+                @Override
+                public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            ArrayList<Integer> r = (ArrayList<Integer>) response.body();
+                            ArrayList<SliceValue> pieData = new ArrayList<>();
+                            String text = " ";
+                            for(int i = 0; i < r.size(); i ++){
+                                switch (i)
+                                {
+                                    case 0:
+                                        text = "0-5 : ";
+                                        break;
+                                    case 1:
+                                        text = "6-14 : ";
+                                        break;
+                                    case 2:
+                                        text = "15-19 : ";
+                                        break;
+                                    case 3:
+                                        text = "20-44 : ";
+                                        break;
+                                    case 4:
+                                        text = "45-64 : ";
+                                        break;
+                                    case 5:
+                                        text = "65+ : ";
+                                        break;
+                                }
+
+                                pieData.add(new SliceValue(r.get(i),
+                                        Color.parseColor(getRandomColor()))
+                                        .setLabel(text + r.get(i)));
+                            }
+                            graficar(pieData, "Rangos hetarios");
+                        }
+                    }
+                    else
+                        this.onFailure(call, new Exception("codigo: " + response.code()));
+                }
+
+                @Override
+                public void onFailure(Call<List<Integer>> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(),
+                            "No fue posible comunicarse con la API, " + t.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        catch (Exception ex) {
             Toast.makeText(getApplicationContext(),
                     "No fue posible comunicarse con la API, " + ex.getMessage(),
                     Toast.LENGTH_LONG).show();
