@@ -31,7 +31,7 @@ public class ReporteGraficoTorta extends AppCompatActivity {
 
     private PieChartView pieChartView;
     private TextView reporteTitle;
-
+    private ArrayList<SliceValue> pieData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +39,10 @@ public class ReporteGraficoTorta extends AppCompatActivity {
 
         pieChartView = findViewById(R.id.chart);
         reporteTitle = findViewById(R.id.reporteTitle);
+        if(pieData == null)
+            pieData = new ArrayList<>();
+        else
+            pieData.clear();
 
         selectedFontData();
     }
@@ -75,7 +79,7 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-            ReportesServices reportes = retrofit.create(ReportesServices.class);
+            final ReportesServices reportes = retrofit.create(ReportesServices.class);
             Call<ReporteVoluntariosTipo> http_call = reportes.getVoluntariosPorTipo();
             http_call.enqueue(new Callback<ReporteVoluntariosTipo>() {
                 @Override
@@ -84,7 +88,7 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                         if (response.body() != null) {
                             ReporteVoluntariosTipo r = (ReporteVoluntariosTipo) response.body();
 
-                            ArrayList<SliceValue> pieData = new ArrayList<>();
+                          //  ArrayList<SliceValue> pieData = new ArrayList<>();
                             HashMap<String, Integer> mapa = r.getMedicosPorEspecialidad();
                             for (String key : mapa.keySet()) {
 
@@ -94,7 +98,9 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                                         Color.parseColor(getRandomColor()))
                                         .setLabel(text));
                             }
-                            graficar(pieData, "Medicos por especialidad");
+                            graficar(pieData, "");
+                            reporteTitle.setTextSize(32);
+                            reporteTitle.setText("Medicos por especialidad");
                             //pieData.clear();
                         }
                     }
@@ -132,7 +138,7 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
                             ReporteVoluntariosTipo r = response.body();
-                            ArrayList<SliceValue> pieData = new ArrayList<>();
+                            //ArrayList<SliceValue> pieData = new ArrayList<>();
                             pieData.add(new SliceValue(r.getCantVoluntariosBasicos(),
                                     Color.parseColor("#63BD9A"))
                                     .setLabel("Voluntarios: " + r.getCantVoluntariosBasicos()));
@@ -180,7 +186,7 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
                             ArrayList<Integer> r = (ArrayList<Integer>) response.body();
-                            ArrayList<SliceValue> pieData = new ArrayList<>();
+                            //ArrayList<SliceValue> pieData = new ArrayList<>();
                             String text = " ";
                             for(int i = 0; i < r.size(); i ++){
                                 switch (i)
@@ -209,7 +215,8 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                                         Color.parseColor(getRandomColor()))
                                         .setLabel(text + r.get(i)));
                             }
-                            graficar(pieData, "Rangos hetarios");
+                            graficar(pieData, "");
+                            reporteTitle.setText("Rangos hetarios");
                         }
                     }
                     else
@@ -246,7 +253,7 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
                             ReporteGeneroDTO reporteGeneros = response.body();
-                            ArrayList<SliceValue> pieData = new ArrayList<>();
+                            //ArrayList<SliceValue> pieData = new ArrayList<>();
                             pieData.add(new SliceValue(reporteGeneros.getCantMasculinos(),
                                     Color.parseColor("#63BD9A"))
                                     .setLabel("Masculinos: " + reporteGeneros.getCantMasculinos()));
@@ -256,7 +263,7 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                             pieData.add(new SliceValue(reporteGeneros.getCantOtros(),
                                     Color.parseColor("#F5DE9D"))
                                     .setLabel("Otro: " + reporteGeneros.getCantOtros()));
-                            reporteTitle.setText("Composición de Usuarios por Género");
+                            reporteTitle.setText("Usuarios por Género");
                             graficar(pieData, "");
                         }
                     }
@@ -300,6 +307,10 @@ public class ReporteGraficoTorta extends AppCompatActivity {
         Random rand = new Random();
         int myRandomNumber = rand.nextInt(0x1000000) + 0x10; // Generates a random number between 0x10 and 0x20
         String result = "#" +  Integer.toHexString(myRandomNumber); // Random hex number in result
+        if(result.length()< 7){
+            for(int i = result.length(); i < 7; i++)//Completo la cantidad de digitos requerida
+                result=result+"0";
+        }
         return result.toUpperCase();
     }
 
