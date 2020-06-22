@@ -5,7 +5,7 @@
     <string name="txtNombre">Nombre: </string>
     <string name="txtApellido">Apellido: </string>
     <string name="txtDNI">DNI: </string>
-    <string name="txtMail">Mail: </string>
+    <string name="txtMail">Mail</string>
     <string name="txtTelefono">Teléfono: </string>
     <string name="txtMatricula">Matricula: </string>
     <string name="txtEspecialidad">Especialidad: </string>
@@ -46,7 +46,7 @@
     <string name="btnSolicitar">Solicitar</string>
     <string name="btnSAsignar">Asignar</string>
     <string name="btnGenerar">Generar</string>
-    <string name="btnRegistrarDonacion">Registrar</string>
+    <string name="btnRegistrarDonacion">Enviar</string>
 
     <!-- Radio buttons-->
     <string name="reporteComposiciónVoluntarios">Composición de voluntarios</string>
@@ -68,9 +68,9 @@
     <string name="action_logout">Logout</string>
     <string name="vacio"> </string>
     <string name="btnRegistrarse">Registrarse</string>
-    <string name="donacionDescripcion">¿Que Quiere Donar?</string>
+    <string name="donacionDescripcion">Nombre</string>
     <string name="donacionVencimiento">¿Tiene Vencimiento?</string>
-    <string name="donacionCantidad">¿Cuantos dona?</string>
+    <string name="donacionCantidad">Cantidad</string>
     <string name="title_activity_donacion_crear">activity_donacion_crear</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -82,15 +82,16 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_donacion_main">donacionMain</string>
     <string name="leer_qr">Leer QR</string>
-    <string name="lugar_entrega">¿Donde quiere entregarlo?</string>
+    <string name="lugar_entrega">Lugar de entrega</string>
     <string name="agregar_donacion">Agregar donación</string>
     <string name="enfoque_el_codigo">ENFOQUE EL CODIGO</string>
     <string name="recibir_donacion">Recibir Donacion</string>
-    <string name="detalle">Detalle</string>
-    <string name="cantidad">Cantidad</string>
-    <string name="destino_actual">Destino Actual</string>
-    <string name="cargando_informacion">cargando informacion</string>
-    <string name="ingrese_la_fecha_de_vencimiento">Ingrese la fecha de vencimiento</string>
+    <string name="detalle">Nombre:</string>
+    <string name="cantidad">Cantidad:</string>
+    <string name="destino_actual">Destino Actual:</string>
+    <string name="cargando_informacion">(Cargando información...)</string>
+    <string name="fecha_donacion">Fecha:</string>
+    <string name="ingrese_la_fecha_de_vencimiento">Fecha de vencimiento</string>
 
     <!-- Validaciones formulario -->
     <string name="nombre_invalido">Por favor, inserte un nombre válido.</string>
@@ -149,6 +150,7 @@
     <string name="seleccionar_ingreso_btn">Seleccionar Ingreso</string>
     <string name="seleccionar_salida_btn">Seleccionar Salida</string>
     <string name="horario_ingreso_txt">Horario de Ingreso: hh:mm hs.</string>
+    <string name="registrar_donacion_title">Registrar Donación</string>
 
 
 </resources>
