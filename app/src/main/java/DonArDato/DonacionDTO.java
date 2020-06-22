@@ -13,7 +13,7 @@ public class DonacionDTO {
     private String fechaVencimiento;
     private String destino;
     private int idUsuario;
-    private int estado;//0=en camino, 1=entregado, 2=recibido
+    private String estado;//en camino, entregado, recibido
 
     public DonacionDTO(BigInteger id, String detalle) {
         this.id = id;
@@ -45,11 +45,11 @@ public class DonacionDTO {
         this.idUsuario = idUsuario;
     }
 
-    public int getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 

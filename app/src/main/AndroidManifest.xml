@@ -21,10 +21,7 @@
         <activity android:name=".reportesDonaciones"></activity>
         <activity android:name=".donacionLeer" />
         <activity android:name=".donacionDetalle" />
-        <activity
-            android:name=".donacionMain"
-            android:label="@string/title_activity_donacion_main"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".donacionMain" />
         <activity android:name=".sinConexionInternet" />
         <activity android:name=".registroDonacion" />
         <activity android:name=".reportesMain" />
@@ -38,18 +35,19 @@
         <activity android:name=".voluntariosAutoMach" />
         <activity android:name=".registroHorasVoluntarios" />
         <activity android:name=".registroGeneral" />
-        <activity android:name=".registroMedico" >
+        <activity android:name=".voluntarioMedico" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".registroMedico" />
+        <activity android:name=".MainActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
-        <activity android:name=".voluntarioMedico" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity" />
 
 
-    </application>
+
+</application>
 
 </manifest>

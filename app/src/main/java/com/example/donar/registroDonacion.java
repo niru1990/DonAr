@@ -109,7 +109,7 @@ public class registroDonacion extends AppCompatActivity implements View.OnClickL
                     } else {
                         donacionDTO.setFechaVencimiento("");
                     }
-                    donacionDTO.setEstado(0);//etado en camino
+                    donacionDTO.setEstado("en camino");//etado en camino
                     Toast.makeText(this, "Verificado", Toast.LENGTH_LONG).show();
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl("https://donar.azurewebsites.net/")

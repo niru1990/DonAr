@@ -10,7 +10,9 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,10 +38,12 @@ private TextView info_destino;
 private TextView info_fecha_vencimiento;
 private Button recibir_donacion;
 private Button entregar_donacion;
+private Button cambiar_destino;
 private DonacionDTO donacionDTO=null;
-private Bitmap bitmap;
 private String idDonacion;
 private ImageView imageView;
+private LinearLayout destinoNuevo;
+private EditText destinoTexto;
 
 
     @Override
@@ -52,10 +56,14 @@ private ImageView imageView;
         info_cantidad=(TextView) findViewById(R.id.info_cantidad);
         info_destino=(TextView) findViewById(R.id.info_destino);
         imageView=(ImageView)findViewById(R.id.imagenQR);
+        destinoNuevo=(LinearLayout)findViewById(R.id.destinoNuevo);
+        destinoTexto=(EditText)findViewById(R.id.destinoTexto);
         recibir_donacion=(Button) findViewById(R.id.recibirDonacion);
         entregar_donacion=(Button) findViewById(R.id.entregarDonacion);
+        cambiar_destino=(Button) findViewById(R.id.cambiarDestino);
         recibir_donacion.setOnClickListener(this);
         entregar_donacion.setOnClickListener(this);
+        cambiar_destino.setOnClickListener(this);
         info_fecha_vencimiento=(TextView) findViewById(R.id.info_fecha_vencimiento);
         final SharedPreferences sharedPreferences=getSharedPreferences("ID usuario", Context.MODE_PRIVATE);
         idDonacion=sharedPreferences.getString("idDonacion", "0");
@@ -85,15 +93,22 @@ private ImageView imageView;
                             }else{
                                 info_fecha_vencimiento.setText(donacionDTO.getFechaVencimiento());
                             }
-                            if (String.valueOf(donacionDTO.getId()).equals(sharedPreferences.getString("ID", "0"))){
-                                if (donacionDTO.getEstado()==0){
-                                    entregar_donacion.setVisibility(View.VISIBLE);
-                                }
-                            }else{
-                                if (donacionDTO.getEstado()==1){
+                            switch (donacionDTO.getEstado()){
+                                case "en camino":
+                                    if (String.valueOf(donacionDTO.getId()).equals(sharedPreferences.getString("ID", "0"))){
+                                        entregar_donacion.setVisibility(View.VISIBLE);
+                                    }
+                                        break;
+                                case "entregado":
                                     recibir_donacion.setVisibility(View.VISIBLE);
-                                }
+                                    break;
+                                case "recibido":
+                                    if (!String.valueOf(donacionDTO.getId()).equals(sharedPreferences.getString("ID", "0"))){
+                                        destinoNuevo.setVisibility(View.VISIBLE);
+                                    }
+                                    break;
                             }
+
                         }
                         break;
                             default:
@@ -131,20 +146,33 @@ private ImageView imageView;
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.recibirDonacion:
-                modificarEstadoDonacion(2);
+                final SharedPreferences sharedPreferences=getSharedPreferences("ID usuario", Context.MODE_PRIVATE);
+                donacionDTO.setId(Integer.valueOf(sharedPreferences.getString("ID", "0")));
+                donacionDTO.setEstado("recibido");
+                modificarDonacion();
                 break;
             case R.id.entregarDonacion:
-                modificarEstadoDonacion(1);
+                donacionDTO.setEstado("entregado");
+                modificarDonacion();
+                break;
+            case R.id.cambiarDestino:
+                if (destinoTexto.getText().toString().isEmpty()) {
+                    destinoTexto.setError("Ingrese el Destino");
+                }else {
+                    donacionDTO.setDestino(destinoTexto.getText().toString());
+                    donacionDTO.setEstado("en camino");
+                    modificarDonacion();
+                }
                 break;
         }
     }
-    public void modificarEstadoDonacion(int estado){
+    public void modificarDonacion(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://donar.azurewebsites.net/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         DonacionesService donacionesServic= retrofit.create(DonacionesService.class);
-        Call<DonacionDTO> donacionDTOCall= donacionesServic.getDonacionID(idDonacion);
+        Call<DonacionDTO> donacionDTOCall= donacionesServic.updateDonacion(donacionDTO);
         donacionDTOCall.enqueue(new Callback<DonacionDTO>() {
             @Override
             public void onResponse(Call<DonacionDTO> call, Response<DonacionDTO> response) {
@@ -152,8 +180,7 @@ private ImageView imageView;
                     switch (response.code())
                     {
                         case 200:
-                            Intent intent= new Intent(getApplicationContext(),donacionDetalle.class);
-                            startActivity(intent);
+                            recreate();
                             break;
                         default:
                             try {

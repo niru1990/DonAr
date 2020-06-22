@@ -146,6 +146,7 @@
     <string name="matricula_cantidad_caracteres_invalidos">La matricula debe poseer 8 caracteres.</string>
     <string name="fecha_de_vencimiento">Fecha de vencimiento</string>
     <string name="entregar_donacion">Entregar donacion</string>
+    <string name="agregar_destino">Agregar destino</string>
 
 
 </resources>

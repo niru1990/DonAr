@@ -24,7 +24,7 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
-public class donacionLeer extends AppCompatActivity {
+public class donacionLeer extends AppCompatActivity  {
 
     private TextView barcodeInfo;
     private SurfaceView vistaCamara;
