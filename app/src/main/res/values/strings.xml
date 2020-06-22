@@ -82,7 +82,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_donacion_main">donacionMain</string>
     <string name="leer_qr">Leer QR</string>
-    <string name="lugar_entrega">¿Donde Quiere Entregarlo?</string>
+    <string name="lugar_entrega">¿Donde quiere entregarlo?</string>
     <string name="agregar_donacion">Agregar donación</string>
     <string name="enfoque_el_codigo">ENFOQUE EL CODIGO</string>
     <string name="recibir_donacion">Recibir Donacion</string>
@@ -108,6 +108,19 @@
     <string name="genero_invalido">Por favor, especifique su género.</string>
     <string name="tipo_de_usuario_invalido">Por favor, especifique su tipo de usuario.</string>
     <string name="mail_invalido">Por favor, ingrese un correo electrónico válido.</string>
+    <string name="matricula_invalida">Por favor, introduzca su matrícula.</string>
+    <string name="seguro_invalido">Por favor, introduzca su seguro.</string>
+    <string name="horario_ingreso_vacio">Por favor, ingrese su horario de ingreso.</string>
+    <string name="horario_salida_vacio">Por favor, ingrese su horario de salida.</string>
+    <string name="horarios_incoherentes">El horario de ingreso no puede ser mayor al de salida.
+    </string>
+    <string name="matricula_iniciales_invalidas">La matrícula debe comenzar con las iniciales MP o
+    MN.</string>
+    <string name="matricula_cantidad_caracteres_invalidos">La matricula debe poseer 8 caracteres.
+    </string>
+    <string name="especialidad_invalida">Por favor, indique su especialidad.</string>
+    <string name="horarios_fuera_rango">Los horarios contemplados por la fundación son de 9:00AM a
+        7:00PM.</string>
 
     <!-- Mensajes-->
     <string name="NoTieneAcceso">Usted no cuenta con permisos para realizar esta acción.</string>
@@ -132,17 +145,10 @@
         aplicación es 100% on-line por lo cual es necesario que se cuente con conexión a internet para
         poder utilizar la misma sin percance en el funcionamiento.</string>
     <string name="acepto_los_t_rminos_y_condiciones">Acepto los términos y condiciones</string>
-    <string name="matricula_invalida">Por favor, introduzca su matrícula.</string>
-    <string name="seguro_invalido">Por favor, introduzca su seguro.</string>
     <string name="reporteGenerosTitle">Composición de Usuarios por Género</string>
-    <string name="horario_ingreso_vacio">Por favor, ingrese su horario de ingreso.</string>
-    <string name="horario_salida_vacio">Por favor, ingrese su horario de salida.</string>
-    <string name="horarios_incoherentes">El horario de ingreso no puede ser mayor al de salida.</string>
-    <string name="horarios_fuera_rango">Los horarios contemlados por la fundación son de 9:00AM a 7:00PM.</string>
+    <string name="seleccionar_ingreso_btn">Seleccionar Ingreso</string>
     <string name="seleccionar_salida_btn">Seleccionar Salida</string>
     <string name="horario_ingreso_txt">Horario de Ingreso: hh:mm hs.</string>
-    <string name="seleccionar_ingreso_btn">Seleccionar Ingreso</string>
-    <string name="matricula_iniciales_invalidas">La matrícula debe comenzar con las iniciales MP o MN.</string>
-    <string name="matricula_cantidad_caracteres_invalidos">La matricula debe poseer 8 caracteres.</string>
+
 
 </resources>

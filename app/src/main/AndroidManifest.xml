@@ -37,16 +37,17 @@
         <activity android:name=".voluntariosAutoMach" />
         <activity android:name=".registroHorasVoluntarios" />
         <activity android:name=".registroGeneral" />
-        <activity android:name=".registroMedico" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".registroMedico" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
         <activity android:name=".voluntarioMedico" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
 
     </application>
