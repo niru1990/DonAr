@@ -100,10 +100,12 @@ private EditText destinoTexto;
                                     }
                                         break;
                                 case "entregado":
-                                    recibir_donacion.setVisibility(View.VISIBLE);
+                                    if (!String.valueOf(donacionDTO.getId()).equals(sharedPreferences.getString("ID", "0"))){
+                                        recibir_donacion.setVisibility(View.VISIBLE);
+                                    }
                                     break;
                                 case "recibido":
-                                    if (!String.valueOf(donacionDTO.getId()).equals(sharedPreferences.getString("ID", "0"))){
+                                    if (String.valueOf(donacionDTO.getId()).equals(sharedPreferences.getString("ID", "0"))){
                                         destinoNuevo.setVisibility(View.VISIBLE);
                                     }
                                     break;
