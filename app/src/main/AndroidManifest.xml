@@ -40,7 +40,6 @@
         <activity android:name=".registroHorasVoluntarios" />
         <activity android:name=".registroGeneral" />
         <activity android:name=".registroMedico" />
-
         <activity android:name=".voluntarioMedico" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" >
@@ -50,8 +49,5 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
     </application>
-
 </manifest>
