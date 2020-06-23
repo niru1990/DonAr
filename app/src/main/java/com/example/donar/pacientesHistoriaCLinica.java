@@ -137,6 +137,10 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                                         voluntarioBasicoId = event.getidVoluntario();
                                         diagnosticoPresuntivo.setChecked(event.getDiagnosticoPresuntivo());
                                         tratamientoFarmacologico.setChecked(event.getTratamientoFarmacologico());
+                                        if(event.getDetalle() != null)
+                                            detalle.setText(event.getDetalle());
+                                        else
+                                            detalle.setText("");
                                         getPaciente(event.getPacienteId());
                                     }
                                     break;

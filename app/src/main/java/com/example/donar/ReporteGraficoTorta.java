@@ -216,7 +216,7 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                                         .setLabel(text + r.get(i)));
                             }
                             graficar(pieData, "");
-                            reporteTitle.setText("Rangos hetarios");
+                            reporteTitle.setText("Rangos etarios");
                         }
                     }
                     else
@@ -262,7 +262,7 @@ public class ReporteGraficoTorta extends AppCompatActivity {
                                     .setLabel("Femeninos: " + reporteGeneros.getCantFemeninos()));
                             pieData.add(new SliceValue(reporteGeneros.getCantOtros(),
                                     Color.parseColor("#F5DE9D"))
-                                    .setLabel("Otro: " + reporteGeneros.getCantOtros()));
+                                    .setLabel("Transgenero: " + reporteGeneros.getCantOtros()));
                             reporteTitle.setText("Usuarios por Género");
                             graficar(pieData, "");
                         }
