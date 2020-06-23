@@ -56,9 +56,11 @@ public class ReportesPDF<T> {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public PdfDocument createDocumentArray(){
+
         this.pdf = createDocument();
-        this.paint = createPaint();
-        paintOnACanvas(createPage(this.pdf,600,800,1), arrayList,40,this.arrayList.size(),50);
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(800, 1000, 1).create();
+        PdfDocument.Page page = this.pdf.startPage(pageInfo);
+        paintOnACanvas(page, arrayList,40,this.arrayList.size(),50);
         savePDF(this.pdf, this.name);
         pdf.close();
         return pdf;
@@ -67,10 +69,15 @@ public class ReportesPDF<T> {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void paintOnACanvas(@NotNull PdfDocument.Page page,List<String> data, int x, int y,int y2){
         Canvas canvas = page.getCanvas();
+        this.paint = createPaint();
         int [] ints=new int[4];
-        configSizeTextPaint(24);
-        canvas.drawText(this.name,x,y2,this.paint);
-        configSizeTextPaint(12);
+        //Titulo
+        paint.setTextSize(24);
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText(this.name,(canvas.getWidth() / 2),y2,this.paint);
+        y2=y2+20;
+        paint.setTextSize(12);
+        paint.setTextAlign(Paint.Align.LEFT);
         for (int i=0; i < y; i++) {
             canvas.drawText(data.get(i), x, y2+i*16+16, this.paint);
             ints[0] = x;
