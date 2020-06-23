@@ -93,24 +93,26 @@ private EditText destinoTexto;
                             }else{
                                 info_fecha_vencimiento.setText(donacionDTO.getFechaVencimiento());
                             }
-                            switch (donacionDTO.getEstado()){
-                                case "en camino":
-                                    if (String.valueOf(donacionDTO.getId()).equals(sharedPreferences.getString("ID", "0"))){
-                                        entregar_donacion.setVisibility(View.VISIBLE);
-                                    }
-                                        break;
-                                case "entregado":
-                                    if (!String.valueOf(donacionDTO.getId()).equals(sharedPreferences.getString("ID", "0"))){
-                                        recibir_donacion.setVisibility(View.VISIBLE);
-                                    }
-                                    break;
-                                case "recibido":
-                                    if (String.valueOf(donacionDTO.getId()).equals(sharedPreferences.getString("ID", "0"))){
-                                        destinoNuevo.setVisibility(View.VISIBLE);
-                                    }
-                                    break;
-                            }
 
+                            if(donacionDTO.getEstado() != null) {
+                                switch (donacionDTO.getEstado()) {
+                                    case "en camino":
+                                        if (String.valueOf(donacionDTO.getId()).equals(sharedPreferences.getString("ID", "0"))) {
+                                            entregar_donacion.setVisibility(View.VISIBLE);
+                                        }
+                                        break;
+                                    case "entregado":
+                                        if (!String.valueOf(donacionDTO.getId()).equals(sharedPreferences.getString("ID", "0"))) {
+                                            recibir_donacion.setVisibility(View.VISIBLE);
+                                        }
+                                        break;
+                                    case "recibido":
+                                        if (String.valueOf(donacionDTO.getId()).equals(sharedPreferences.getString("ID", "0"))) {
+                                            destinoNuevo.setVisibility(View.VISIBLE);
+                                        }
+                                        break;
+                                }
+                            }
                         }
                         break;
                             default:
