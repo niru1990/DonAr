@@ -167,6 +167,14 @@ public class ReportesPDF<T> {
         pdf.finishPage(page);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void paintOnACanvas(@NotNull PdfDocument.Page page,String  data, int X, int Y){
+        this.data = (T) data;
+        Canvas canvas = page.getCanvas();
+        canvas.drawText(this.data.toString(), X, Y, this.paint);
+        pdf.finishPage(page);
+    }
+
     /**
      * guarda el archivo.
      * @param pdf
