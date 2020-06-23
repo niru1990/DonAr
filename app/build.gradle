@@ -61,8 +61,12 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
-    //mkl barcode
+    // barcode vision
     implementation 'com.google.android.gms:play-services-vision:20.1.0'
+
+//ZXING barcode generator
+    implementation group: 'com.google.zxing', name: 'core', version: '3.4.0'
+    implementation group: 'com.journeyapps', name: 'zxing-android-embedded', version: '3.2.0'
 
     //Firebase
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.donar" >
+    package="com.example.donar">
     <!-- Internet -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- Verificación del estado de internet -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Acceso a la camara -->
@@ -18,14 +18,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".grafico_barras"/>
+
+        <activity android:name=".donacionHistorial"></activity>
+        <activity android:name=".grafico_barras" />
         <activity android:name=".ReporteGraficoTorta" />
+        <activity android:name=".reportesDonaciones" />
         <activity android:name=".donacionLeer" />
         <activity android:name=".donacionDetalle" />
-        <activity
-            android:name=".donacionMain"
-            android:label="@string/title_activity_donacion_main"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".donacionMain" />
         <activity android:name=".sinConexionInternet" />
         <activity android:name=".registroDonacion" />
         <activity android:name=".reportesMain" />

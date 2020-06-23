@@ -1,15 +1,18 @@
 package com.example.donar;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Calendar;
 
 import DonArDato.DonacionDTO;
 import Service.DonacionesService;
@@ -36,6 +41,7 @@ public class registroDonacion extends AppCompatActivity implements View.OnClickL
     private CheckBox checkBoxVencimiento;
     private Button registrarDonacion;
     private Toolbar toolbar;
+    private DatePickerDialog picker;
 
 
     @Override
@@ -49,71 +55,82 @@ public class registroDonacion extends AppCompatActivity implements View.OnClickL
         donacionCantidad = (EditText) findViewById(R.id.donacionCantidad);
         donacionDestino = (EditText) findViewById(R.id.donacionDestino);
         checkBoxVencimiento = (CheckBox) findViewById(R.id.donacionVencimiento);
-        registrarDonacion= (Button) findViewById(R.id.btnRegistrarDonacion);
+        registrarDonacion = (Button) findViewById(R.id.btnRegistrarDonacion);
         registrarDonacion.setOnClickListener(this);
         donacionVencimientoFecha.setVisibility(View.INVISIBLE);
-       checkBoxVencimiento.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-           @Override
-           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               if (buttonView.isChecked()) {
-                  donacionVencimientoFecha.setVisibility(View.VISIBLE);
-               }
-               else
-               {
-                   donacionVencimientoFecha.setVisibility(View.INVISIBLE);
-               }
-           }
+        checkBoxVencimiento.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (buttonView.isChecked()) {
+                    donacionVencimientoFecha.setVisibility(View.VISIBLE);
+                } else {
+                    donacionVencimientoFecha.setVisibility(View.INVISIBLE);
+                }
+            }
 
-       });
+        });
+        donacionVencimientoFecha.setInputType(InputType.TYPE_NULL);
+        donacionVencimientoFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                // date picker dialog
+                picker = new DatePickerDialog(registroDonacion.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                donacionVencimientoFecha.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                            }
+                        }, year, month, day);
+                picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                picker.show();
+            }
+        });
 
     }
 
 
-
     @Override
     public void onClick(@NotNull View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btnRegistrarDonacion:
-                if (validarRegistro()){
-
+                if (validarRegistro()) {
                     SharedPreferences preferencias = getSharedPreferences
                             ("ID usuario", Context.MODE_PRIVATE);
-
-
-                    String idUsuario= preferencias.getString("ID", "0");
-
+                    String idUsuario = preferencias.getString("ID", "0");
                     DonacionDTO donacionDTO = new DonacionDTO(donacionDestino.getText().toString(),
                             Integer.parseInt(donacionCantidad.getText().toString()),
                             donacionDescripcion.getText().toString(), Integer.valueOf(idUsuario));
-                    if (checkBoxVencimiento.isChecked()){
+                    if (checkBoxVencimiento.isChecked()) {
                         donacionDTO.setFechaVencimiento(donacionVencimientoFecha.getText().toString());
-                    }else{
+                    } else {
                         donacionDTO.setFechaVencimiento("");
                     }
-                    Toast.makeText(this,"Verificado",Toast.LENGTH_LONG).show();
-
+                    donacionDTO.setEstado("en camino");//etado en camino
+                    Toast.makeText(this, "Verificado", Toast.LENGTH_LONG).show();
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl("https://donar.azurewebsites.net/")
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
-                    DonacionesService donacionesServic= retrofit.create(DonacionesService.class);
-                    Call<Integer> donacionDTOCall= donacionesServic.addDonacion(donacionDTO);
+                    DonacionesService donacionesServic = retrofit.create(DonacionesService.class);
+                    Call<Integer> donacionDTOCall = donacionesServic.addDonacion(donacionDTO);
                     donacionDTOCall.enqueue(new Callback<Integer>() {
                         @Override
                         public void onResponse(Call<Integer> call, Response<Integer> response) {
-                            if(response.isSuccessful()){
-                                switch (response.code())
-                                {
+                            if (response.isSuccessful()) {
+                                switch (response.code()) {
                                     case 200:
-                                        if(response.isSuccessful()){
+                                        if (response.isSuccessful()) {
                                             Intent intent = new Intent(getApplicationContext(), donacionMain.class);
                                             startActivity(intent);
                                         }
                                     default:
                                         try {
                                             throw new Exception(response.code() + " " + response.message());
-                                        }
-                                        catch (Exception ep) {
+                                        } catch (Exception ep) {
                                             ep.printStackTrace();
                                         }
                                 }
@@ -122,52 +139,37 @@ public class registroDonacion extends AppCompatActivity implements View.OnClickL
 
                         @Override
                         public void onFailure(Call<Integer> call, Throwable t) {
-                            if (t !=null){
+                            if (t != null) {
                                 Log.i("HTTP ERROR", t.getMessage());
                             }
                         }
                     });
-
-    }
+                }
                 break;
             default:
                 break;
-    }
+        }
     }
 
     public boolean validarRegistro() {
-        boolean validado=true;
-        if (donacionDescripcion.getText().toString().isEmpty()){
+        boolean validado = true;
+        if (donacionDescripcion.getText().toString().isEmpty()) {
             donacionDescripcion.setError("Describa la donación");
-            validado=false;
+            validado = false;
         }
-        if (donacionCantidad.getText().toString().isEmpty()){
+        if (donacionCantidad.getText().toString().isEmpty()) {
             donacionCantidad.setError("Ingrese la Cantidad");
-            validado=false;
+            validado = false;
         }
-        if (donacionDestino.getText().toString().isEmpty()){
+        if (donacionDestino.getText().toString().isEmpty()) {
             donacionDestino.setError("Ingrese el Destino");
-            validado=false;
+            validado = false;
         }
-        if (checkBoxVencimiento.isChecked()&&donacionVencimientoFecha.getText().toString().isEmpty()){
+        if (checkBoxVencimiento.isChecked() && donacionVencimientoFecha.getText().toString().isEmpty()) {
             donacionVencimientoFecha.setError("Ingrese la fecha de Vencimiento");
-            validado=false;
+            validado = false;
         }
-return validado;
+        return validado;
     }
-/*
-    public Date parsearFecha(String date){
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        Date myDate = new Date();
-        try {
-            myDate = df.parse(date);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return myDate;
-    }
-
- */
 
 }

@@ -3,28 +3,18 @@ package DonArDato;
 import androidx.annotation.Nullable;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class DonacionDTO {
     private BigInteger id;
     private String detalle;
     private int cantidad;
-    @Nullable
-    private Date fechaIngreso;
     private String fechaVencimiento;
-    @Nullable
-    private Date fechaEgreso;
     private String destino;
+    private int idUsuario;
+    private String estado;//en camino, entregado, recibido
     @Nullable
-    private ArrayList<DonacionDTO> items;
-
-    private Integer idUsuario;
-
-    public DonacionDTO(BigInteger id, String detalle) {
-        this.id = id;
-        this.detalle = detalle;
-    }
+    private String fechaCambio;
 
     public String getFechaVencimiento() {
         return fechaVencimiento;
@@ -34,44 +24,29 @@ public class DonacionDTO {
         this.fechaVencimiento = fechaVencimiento;
     }
 
-    public DonacionDTO(BigInteger id, String detalle, int cantidad, String fechaVencimiento, String destino) {
+    public DonacionDTO(BigInteger id, String detalle, int cantidad, String fechaVencimiento, String destino, int idUsuario, String estado) {
         this.id = id;
         this.detalle = detalle;
         this.cantidad = cantidad;
         this.fechaVencimiento = fechaVencimiento;
         this.destino = destino;
+        this.idUsuario = idUsuario;
+        this.estado = estado;
     }
 
-    public DonacionDTO(String destino, int cantidad, String detalle, Integer idUsuario) {
+    public DonacionDTO(String destino, int cantidad, String detalle, int idUsuario) {
         this.destino = destino;
         this.cantidad = cantidad;
         this.detalle = detalle;
         this.idUsuario = idUsuario;
     }
 
-    @Nullable
-    public Date getFechaIngreso() {
-        return fechaIngreso;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setFechaIngreso(Date fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
-    }
-    @Nullable
-    public Date getFechaEgreso() {
-        return fechaEgreso;
-    }
-    @Nullable
-    public void setFechaEgreso(Date fechaEgreso) {
-        this.fechaEgreso = fechaEgreso;
-    }
-    @Nullable
-    public ArrayList<DonacionDTO> getItems() {
-        return items;
-    }
-    @Nullable
-    public void setItems(ArrayList<DonacionDTO> items) {
-        this.items = items;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getDestino() {
@@ -99,12 +74,21 @@ public class DonacionDTO {
         this.detalle = detalle;
     }
 
-    public BigInteger getId() {
-        return id;
+    public int getId() {
+        return idUsuario;
     }
 
-    public void setId(BigInteger id) {
-        this.id = id;
+    public void setId(int id) {
+        this.idUsuario = id;
+    }
+
+    @Nullable
+    public String getFechaCambio() {
+        return fechaCambio;
+    }
+
+    public void setFechaCambio(@Nullable String fechaCambio) {
+        this.fechaCambio = fechaCambio;
     }
 
     public int getCantidad() {

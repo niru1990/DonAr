@@ -54,7 +54,6 @@ public class donacionMain extends AppCompatActivity implements View.OnClickListe
         botonLeerQR.setOnClickListener(this);
         preferencias= getSharedPreferences("ID usuario", Context.MODE_PRIVATE);
         idUsuario=preferencias.getString("ID","0");
-
         myList=new ArrayList();
         cargarDonaciones();
         myAdapter = new ListAdapter(this, R.layout.list_item_row, myList);
@@ -106,7 +105,7 @@ public class donacionMain extends AppCompatActivity implements View.OnClickListe
                                 if(response.body() != null) {
                                     for(DonacionDTO e : response.body()){
 
-                                        myList.add(new EventoAutoMach(e.getId().toString(),
+                                        myList.add(new EventoAutoMach(String.valueOf(e.getDonacion_id()),
                                                 e.getDetalle().toUpperCase(),
                                                 "",
                                                 "",

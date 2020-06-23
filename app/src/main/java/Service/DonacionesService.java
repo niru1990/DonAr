@@ -7,12 +7,25 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface DonacionesService {
 
+    //Get donaciones
+    String API_ROUTE_GET_ALL = "api/donacion/";
+    @GET (API_ROUTE_GET_ALL)
+    Call<List<DonacionDTO>>getDonaciones();
 
+    //Get historial donacion
+    String API_ROUTE_GET_HISTORY="api/donacion/historicodonacion/{id}";
+    @GET (API_ROUTE_GET_HISTORY)
+    Call<List<DonacionDTO>>getHistoricoDonacion (@Path("id") String id);
 
+    //actualizar donacion
+    String API_ROUTE_UPDATE_ITEM= "api/donacion/";
+    @PUT(API_ROUTE_UPDATE_ITEM)
+    Call<DonacionDTO> updateDonacion(@Body DonacionDTO donacionDTO);
 
     //Registrar donacion
     String API_ROUTE_ADD_ITEM = "api/donacion";
