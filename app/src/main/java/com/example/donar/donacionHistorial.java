@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -67,7 +68,6 @@ public class donacionHistorial extends AppCompatActivity implements View.OnClick
         cargarDonacion();
         myAdapter = new ListAdapter(this, R.layout.list_item_row, myList);
         myListView.setAdapter(myAdapter);
-
     }
     private void cargarDonacion(){
         GsonBuilder gBuilder = new GsonBuilder();
@@ -119,13 +119,15 @@ public class donacionHistorial extends AppCompatActivity implements View.OnClick
                 if(response.body() != null) {
                     for(DonacionDTO e : response.body()){
                         String fecha=null;
+                        String finalstring=e.getEstado();
                         if(e.getFechaCambio()!=null){
                             fecha=e.getFechaCambio();
+                            finalstring=finalstring+" "+fecha;
                         }
                         myList.add(new EventoAutoMach(String.valueOf(e.getId()),
                                 e.getDestino(),
-                                e.getEstado(),
-                                fecha,
+                                finalstring,
+                                "",
                                 "",
                                 false));
                         detalleDonacionPDF=e.getDetalle();
@@ -165,11 +167,7 @@ public class donacionHistorial extends AppCompatActivity implements View.OnClick
         if (!myList.isEmpty()){
         List<String> strings = new ArrayList<String>(myList.size());
         for (EventoAutoMach e : myList) {
-            if(e.getNombreMedico()!=null){
-                strings.add("Destino: "+e.getNombre() +" Estado: "+ e.getApellido()+" Fecha Modificación:"+e.getNombreMedico());
-            }else {
                 strings.add("Destino: "+e.getNombre() +" Estado: "+ e.getApellido());
-            }
         }
 
         ReportesPDF report = new ReportesPDF("Donacion:"+ detalleDonacionPDF +" "+ new fechas().getDateTime(),
