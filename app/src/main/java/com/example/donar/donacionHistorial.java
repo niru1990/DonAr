@@ -75,11 +75,16 @@ public class donacionHistorial extends AppCompatActivity implements View.OnClick
                     @Override
                     public DonacionDTO deserialize(JsonElement element, Type typeOfT, JsonDeserializationContext context)  {
                        JsonObject jObject = element.getAsJsonObject();
-                        BigInteger id=jObject.get("idDonacion").getAsBigInteger();
+                        String estado="";
+                        BigInteger id= jObject.get("idDonacion").getAsBigInteger();
                         String detalle=jObject.get("detalle").getAsString();
                         int cantidad=jObject.get("cantidad").getAsInt();
                         String fechaVencimiento=jObject.get("fechaVencimiento").getAsString();
-                        String estado=jObject.get("estado").getAsString();
+                        try {
+                            estado=jObject.get("estado").getAsString();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         int idUsuario=jObject.get("idUsuario").getAsInt();
                         String destino=jObject.get("destino").getAsString();
                         String dateInicial=jObject.get("fecha").getAsString();
