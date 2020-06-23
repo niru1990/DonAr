@@ -146,35 +146,6 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/recibirDonacion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/recibir_donacion"
-        android:visibility="invisible"
-        android:layout_marginHorizontal="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.957" />
-
-
-        app:layout_constraintTop_toTopOf="@+id/guideline12"
-        app:layout_constraintVertical_bias="0.962" />
-    <Button
-        android:id="@+id/entregarDonacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/entregar_donacion"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline12"
-        app:layout_constraintVertical_bias="0.962" />
 
     <ImageView
         android:id="@+id/imagenQR"
@@ -183,7 +154,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline12"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
         app:srcCompat="@mipmap/boton_donaciones" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -193,6 +164,32 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_end="85dp" />
 
+
+    <Button
+        android:id="@+id/entregarDonacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20sp"
+        android:text="@string/entregar_donacion"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.957" />
+
+    <Button
+        android:id="@+id/recibirDonacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20sp"
+        android:text="@string/recibir_donacion"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.957" />
 
     <LinearLayout
         android:id="@+id/destinoNuevo"

@@ -3,6 +3,7 @@ package DonArDato;
 import androidx.annotation.Nullable;
 
 import java.math.BigInteger;
+import java.util.Date;
 
 public class DonacionDTO {
     private BigInteger id;
@@ -23,7 +24,7 @@ public class DonacionDTO {
         this.fechaVencimiento = fechaVencimiento;
     }
 
-    public DonacionDTO(BigInteger id, String detalle, int cantidad, String fechaVencimiento, String destino, int idUsuario, String estado, @Nullable String fechaCambio) {
+    public DonacionDTO(BigInteger id, String detalle, int cantidad, String fechaVencimiento, String destino, int idUsuario, String estado) {
         this.id = id;
         this.detalle = detalle;
         this.cantidad = cantidad;
@@ -31,7 +32,6 @@ public class DonacionDTO {
         this.destino = destino;
         this.idUsuario = idUsuario;
         this.estado = estado;
-        this.fechaCambio = fechaCambio;
     }
 
     public DonacionDTO(String destino, int cantidad, String detalle, int idUsuario) {
@@ -82,11 +82,12 @@ public class DonacionDTO {
         this.idUsuario = id;
     }
 
+    @Nullable
     public String getFechaCambio() {
         return fechaCambio;
     }
 
-    public void setFechaCambio(String fechaCambio) {
+    public void setFechaCambio(@Nullable String fechaCambio) {
         this.fechaCambio = fechaCambio;
     }
 

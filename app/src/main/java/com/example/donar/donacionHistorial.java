@@ -15,10 +15,24 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Type;
+import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import Adapters.ListAdapter;
 import DonArDato.DonacionDTO;
@@ -56,9 +70,39 @@ public class donacionHistorial extends AppCompatActivity implements View.OnClick
 
     }
     private void cargarDonacion(){
+        GsonBuilder gBuilder = new GsonBuilder();
+        gBuilder.registerTypeAdapter(DonacionDTO.class, new JsonDeserializer<DonacionDTO>() {
+                    @Override
+                    public DonacionDTO deserialize(JsonElement element, Type typeOfT, JsonDeserializationContext context)  {
+                       JsonObject jObject = element.getAsJsonObject();
+                        BigInteger id=jObject.get("idDonacion").getAsBigInteger();
+                        String detalle=jObject.get("detalle").getAsString();
+                        int cantidad=jObject.get("cantidad").getAsInt();
+                        String fechaVencimiento=jObject.get("fechaVencimiento").getAsString();
+                        String estado=jObject.get("estado").getAsString();
+                        int idUsuario=jObject.get("idUsuario").getAsInt();
+                        String destino=jObject.get("destino").getAsString();
+                        String dateInicial=jObject.get("fecha").getAsString();
+                        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS");
+                        Date date = null;
+                        try {
+                            date = parser.parse(dateInicial);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        DonacionDTO donacionDTO=new DonacionDTO(id,detalle,cantidad,fechaVencimiento,destino,idUsuario,estado);
+                        if (date!=null){
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                            String formattedDate = format.format(date);
+                            donacionDTO.setFechaCambio(formattedDate);
+                        }
+                        return donacionDTO;
+                        }
+        });
+        Gson gSon = gBuilder.create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://donar.azurewebsites.net/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gSon))
                 .build();
         DonacionesService donacionesService = retrofit.create(DonacionesService.class);
         Call<List<DonacionDTO>> http_call = donacionesService.getHistoricoDonacion(idDonacionPDF);
@@ -69,11 +113,14 @@ public class donacionHistorial extends AppCompatActivity implements View.OnClick
 
                 if(response.body() != null) {
                     for(DonacionDTO e : response.body()){
-
-                        myList.add(new EventoAutoMach(e.getFechaCambio(),
+                        String fecha=null;
+                        if(e.getFechaCambio()!=null){
+                            fecha=e.getFechaCambio();
+                        }
+                        myList.add(new EventoAutoMach(String.valueOf(e.getId()),
                                 e.getDestino(),
                                 e.getEstado(),
-                                String.valueOf(e.getId()),
+                                fecha,
                                 "",
                                 false));
                         detalleDonacionPDF=e.getDetalle();
@@ -110,9 +157,14 @@ public class donacionHistorial extends AppCompatActivity implements View.OnClick
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void generarPDF(List<EventoAutoMach> myList){
+        if (!myList.isEmpty()){
         List<String> strings = new ArrayList<String>(myList.size());
         for (EventoAutoMach e : myList) {
-            strings.add("Destino: "+e.getNombre() +" Estado: "+ e.getApellido());
+            if(e.getNombreMedico()!=null){
+                strings.add("Destino: "+e.getNombre() +" Estado: "+ e.getApellido()+" Fecha Modificación:"+e.getNombreMedico());
+            }else {
+                strings.add("Destino: "+e.getNombre() +" Estado: "+ e.getApellido());
+            }
         }
 
         ReportesPDF report = new ReportesPDF("Donacion:"+ detalleDonacionPDF +" "+ new fechas().getDateTime(),
@@ -120,6 +172,7 @@ public class donacionHistorial extends AppCompatActivity implements View.OnClick
         report.createDocumentArray();
         Toast.makeText(getApplicationContext(),"Se Creo su PDF revise su almacenamiento interno",Toast.LENGTH_LONG).show();
 
+        }
     }
 
  }

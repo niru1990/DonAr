@@ -18,8 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".grafico_barras"/>
-        android:theme="@style/AppTheme">
+
         <activity android:name=".donacionHistorial"></activity>
         <activity android:name=".grafico_barras" />
         <activity android:name=".ReporteGraficoTorta" />
