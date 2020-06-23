@@ -156,8 +156,10 @@ public class historial_de_consultas extends AppCompatActivity implements  View.O
         switch (v.getId())
         {
             case R.id.btnBuscar:
-                if(!mail.getText().equals(""))
+                if(!mail.getText().equals("")) {
+                    myList.clear();
                     searchEventByMail();
+                }
                 else
                     Toast.makeText(this,
                             "Debe ingresar un mail para poder realizar la busqeuda.",
