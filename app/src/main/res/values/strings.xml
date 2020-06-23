@@ -152,5 +152,7 @@
     <string name="horario_ingreso_txt">Horario de Ingreso: hh:mm hs.</string>
     <string name="registrar_donacion_title">Registrar Donación</string>
 
+    <string name="tituloDonacionDetalle">Detalle: </string>
+
 
 </resources>
