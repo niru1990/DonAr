@@ -10,7 +10,7 @@
         android:id="@+id/include2"
         layout="@layout/activity_don_ar_tool_bar"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"></include>
+        tools:layout_editor_absoluteY="0dp"/>
 
     <ImageButton
         android:id="@+id/imbAsignarEspecialidad"

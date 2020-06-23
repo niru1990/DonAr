@@ -257,6 +257,11 @@ public class historial_de_consultas extends AppCompatActivity implements  View.O
                                         if (response.body() != null) {
                                             EventoReducidoDTO e = (EventoReducidoDTO) response.body();
 
+                                            if(e.getFecha().length() < 19)
+                                            {
+                                                e.setFecha(e.getFecha() + " 00:00:00");
+                                            }
+
                                             myList.add(new EventoAutoMach(e.getId().toString(),
                                                     e.getNombrePaciente() + " " + e.getApellidoPaciente(),
                                                     e.getFecha(),

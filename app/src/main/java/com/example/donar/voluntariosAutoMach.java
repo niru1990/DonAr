@@ -228,16 +228,21 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                                         if (response.body() != null) {
                                             EventoReducidoDTO e = (EventoReducidoDTO) response.body();
 
+                                            if(e.getFecha().length() < 19)
+                                            {
+                                                e.setFecha(e.getFecha() + " 00:00:00");
+                                            }
+
                                             if(tipoUsuario.equals("3")) {
                                                 myList.add(new EventoAutoMach(e.getId().toString(),
                                                         e.getNombrePaciente(),
-                                                        e.getApellidoPaciente(),
+                                                        e.getApellidoPaciente() +  " "  + e.getFecha(),
                                                         e.getNombreMedico()));
                                             }
                                             else {
                                                 myList.add(new EventoAutoMach(e.getId().toString(),
                                                         e.getNombrePaciente(),
-                                                        e.getApellidoPaciente(),
+                                                        e.getApellidoPaciente() + " " + e.getFecha(),
                                                         e.getFecha(),
                                                         "",
                                                         false));

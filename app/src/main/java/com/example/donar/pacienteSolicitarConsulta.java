@@ -272,7 +272,7 @@ public class pacienteSolicitarConsulta extends AppCompatActivity implements View
         EventoDTO e = new EventoDTO();
 
         Date d = new Date();
-        CharSequence Fecha  = DateFormat.format("dd-MM-yyyy", d.getTime());
+        CharSequence Fecha  = DateFormat.format("dd-MM-yyyy hh:mm:ss", d.getTime());
 
         e.setId(BigInteger.valueOf(0));
         e.setPacienteId( new BigInteger(idPacient) );

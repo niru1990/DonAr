@@ -224,13 +224,13 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                                             String generoText = "";
                                             switch (p.getGenero()){
                                                 case 0:
-                                                    generoText = "Masculino";
+                                                    generoText = "Género: Femenino";
                                                     break;
                                                 case 1:
-                                                    generoText = "Femenino";
+                                                    generoText = "Género: Masculino";
                                                     break;
                                                 default:
-                                                    generoText = "Transgenero";
+                                                    generoText = "Género: Otro";
                                             }
 
                                             genero.setText(generoText);

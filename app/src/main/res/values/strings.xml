@@ -5,7 +5,7 @@
     <string name="txtNombre">Nombre: </string>
     <string name="txtApellido">Apellido: </string>
     <string name="txtDNI">DNI: </string>
-    <string name="txtMail">Mail</string>
+    <string name="txtMail">Mail:</string>
     <string name="txtTelefono">Teléfono: </string>
     <string name="txtMatricula">Matricula: </string>
     <string name="txtEspecialidad">Especialidad: </string>
@@ -84,7 +84,7 @@
     <string name="leer_qr">Leer QR</string>
     <string name="lugar_entrega">Lugar de entrega</string>
     <string name="agregar_donacion">Agregar donación</string>
-    <string name="enfoque_el_codigo">ENFOQUE EL CODIGO</string>
+    <string name="enfoque_el_codigo">Por favor, enfocar el código.</string>
     <string name="recibir_donacion">Recibir Donacion</string>
     <string name="detalle">Nombre:</string>
     <string name="cantidad">Cantidad:</string>
@@ -102,7 +102,7 @@
     <string name="DNI_invalido">Por favor, inserte su DNI.</string>
     <string name="tipo_usuario_invalido">Por favor, seleccione un tipo de usuario.</string>
     <string name="txtNacionalidad">Nacionalidad</string>
-    <string name="txtHistorialClinicoTitulo">Historial Clínico</string>
+    <string name="txtHistorialClinicoTitulo">Registro de Consulta</string>
     <string name="email_valido">Por favor, inserte su email.</string>
     <string name="provincia_invalida">Por favor, especifique su provincia de residencia.</string>
     <string name="pais_invalido">Por favor, especifique su país de residencia.</string>

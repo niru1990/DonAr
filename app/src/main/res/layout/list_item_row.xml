@@ -35,8 +35,9 @@
         android:layout_toEndOf="@+id/idEvento"
         android:layout_toRightOf="@+id/idEvento"
         android:gravity="center_horizontal|center_vertical"
-        android:textColor="@color/AutomachPaciente"
-        android:text=" " />
+        android:text=" "
+        android:textColor="@color/textBlack"
+        android:textStyle="bold"/>
 
     <ImageButton
         android:id="@+id/aceptar"
