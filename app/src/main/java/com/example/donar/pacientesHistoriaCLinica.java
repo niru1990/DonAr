@@ -69,19 +69,21 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
     private BigInteger voluntarioMedicoId;
     private BigInteger voluntarioBasicoId;
 
+    private String tipoUsuario, idUsuario;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pacientes_historia_c_linica);
-        //eventId = getIntent().getStringExtra("idEvento");
         configView();
     }
 
     private void configView() {
+        tipoUsuario = getEspecificPreference("tipo", "0");
+        idUsuario = getEspecificPreference("ID", "0");
 
         //identificadores rescatables
         eventId = (TextView) findViewById(R.id.txtIdEvento);
-
         agregar = (ImageButton) findViewById(R.id.imbAgregar);
         cancelar= (ImageButton) findViewById(R.id.ibmCancelar);
         nombre = (TextView) findViewById(R.id.txtNombre);
@@ -137,6 +139,10 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                                         voluntarioBasicoId = event.getidVoluntario();
                                         diagnosticoPresuntivo.setChecked(event.getDiagnosticoPresuntivo());
                                         tratamientoFarmacologico.setChecked(event.getTratamientoFarmacologico());
+                                        if(event.getDetalle() != null)
+                                            detalle.setText(event.getDetalle());
+                                        else
+                                            detalle.setText("");
                                         getPaciente(event.getPacienteId());
                                     }
                                     break;
@@ -289,7 +295,7 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
         switch (v.getId())
         {
             case R.id.imbAgregar:
-                if(idEspecialidad != null ) {
+                if(idEspecialidad != null && tipoUsuario.equals("3")) {
                     EventoDTO e = formToObject();
                     if (new Evento().validar(e, true, true)) {
                         updateFullData(e);
@@ -390,7 +396,11 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
         Date d = new Date();
         CharSequence Fecha  = DateFormat.format("dd-MM-yyyy", d.getTime());
         event.setFecha(Fecha.toString());
-        event.setidVoluntarioMedico(voluntarioMedicoId);
+
+        if(voluntarioMedicoId.equals(idUsuario))
+            event.setidVoluntarioMedico(voluntarioMedicoId);
+        else
+            event.setidVoluntarioMedico(BigInteger.valueOf(Long.valueOf(idUsuario)));
         event.setidVoluntario(voluntarioBasicoId);
         if(seguimiento.isChecked())
             event.setEstado(1);
@@ -417,12 +427,12 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                             switch (response.code())
                             {
                                 case 200:
-                                    if(response.body()!= null)
-                                    {
                                         Toast.makeText(getApplicationContext(),
                                                 "Se guardo correctamente la información.",
                                                 Toast.LENGTH_LONG).show();
-                                    }
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                     break;
                                 case 404:
                                     Toast.makeText(pacientesHistoriaCLinica.this,
@@ -466,6 +476,11 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
                     "Ocurrio un error inesperado"
                     , Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private String getEspecificPreference( String key, String defaultValue) {
+        SharedPreferences preferencias = getSharedPreferences("ID usuario", Context.MODE_PRIVATE);
+        return preferencias.getString(key, defaultValue);
     }
 
 }

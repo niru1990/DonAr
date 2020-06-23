@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     if(tipoUsuario.equals("2") || tipoUsuario.equals("3"))
                         voluntarios.setImageResource(R.mipmap.boton_voluntarios);
-                    //if(tipoUsuario.equals("4"))
+                    if(tipoUsuario.equals("4"))
                         reportes.setImageResource(R.mipmap.boton_reportes);
 
                 } else {
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(@NotNull View v) {
-        Intent intent;
+        Intent intent = null;
 
         if(active){
             switch(v.getId())
@@ -188,8 +188,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         intent = new Intent(v.getContext(), historial_de_consultas.class);
                     break;
                 case R.id.imbReportes:
-                    intent = new Intent(v.getContext(), reportesMain.class);
-                    /*
+                    //intent = new Intent(v.getContext(), reportesMain.class);
+
                     if(tipoUsuario.equals("4"))
                         intent = new Intent(v.getContext(), reportesMain.class);
                     else {
@@ -198,7 +198,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 Toast.LENGTH_SHORT).show();
                         intent = new Intent(v.getContext(), MainActivity.class);
                     }
-                     */
                     break;
                 case R.id.imbVoluntarios:
                     if(tipoUsuario.equals("2") || tipoUsuario.equals("3"))
@@ -207,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Toast.makeText(getApplicationContext(),
                                 R.string.NoTieneAcceso,
                                 Toast.LENGTH_SHORT).show();
-                        intent = new Intent(v.getContext(), MainActivity.class);
+                        //intent = new Intent(v.getContext(), MainActivity.class);
                     }
                     break;
                 default:
@@ -217,7 +216,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else
             intent = new Intent(v.getContext(), registroGeneral.class);
-        startActivity(intent);
+
+        if(intent != null)
+            startActivity(intent);
 
     }
 

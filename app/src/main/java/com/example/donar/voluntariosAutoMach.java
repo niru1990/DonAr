@@ -68,32 +68,47 @@ public class voluntariosAutoMach extends AppCompatActivity  {
         loadConsultas();
         myAdapter = new ListAdapter(voluntariosAutoMach.this, R.layout.list_item_row,myList);
         myListView.setAdapter(myAdapter);
-        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                idEvento = myList.get(position).getIdEvento();
-                nombreMedico =myList.get(position).getNombreMedico();
-                switch (view.getId())
-                {
-                    case R.id.aceptar:
-                        sendStatus = 1;
-                        modificarEstado(idEvento,
-                                sendStatus);
+        if(tipoUsuario.equals("3")) {
 
-                        break;
+            myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    case R.id.rechazar:
-                        sendStatus = 2;
-                        modificarEstado(idEvento,
-                                sendStatus);
-                        Toast.makeText(view.getContext(),
-                                "Se rechazo la consulta.",
-                                Toast.LENGTH_LONG).show();
-                        break;
+                    idEvento = myList.get(position).getIdEvento();
+                    nombreMedico = myList.get(position).getNombreMedico();
+                    switch (view.getId()) {
+                        case R.id.aceptar:
+                            sendStatus = 1;
+                            modificarEstado(idEvento,
+                                    sendStatus);
+
+                            break;
+
+                        case R.id.rechazar:
+                            sendStatus = 2;
+                            modificarEstado(idEvento,
+                                    sendStatus);
+                            Toast.makeText(view.getContext(),
+                                    "Se rechazo la consulta.",
+                                    Toast.LENGTH_LONG).show();
+                            break;
+                    }
                 }
-            }
-        } );
+            });
+        }
+        else
+        {
+            myListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent;
+                    SaveEventId(myList.get(position).getIdEvento());
+                    intent = new Intent(getApplicationContext(), pacienteAsignarEspecialidad.class);
+                    startActivity(intent);
+                }
+            } );
+        }
 
     }
 
@@ -212,10 +227,22 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                                     case 200:
                                         if (response.body() != null) {
                                             EventoReducidoDTO e = (EventoReducidoDTO) response.body();
-                                            myList.add(new EventoAutoMach(e.getId().toString(),
-                                                    e.getNombrePaciente(),
-                                                    e.getApellidoPaciente(),
-                                                    e.getNombreMedico()));
+
+                                            if(tipoUsuario.equals("3")) {
+                                                myList.add(new EventoAutoMach(e.getId().toString(),
+                                                        e.getNombrePaciente(),
+                                                        e.getApellidoPaciente(),
+                                                        e.getNombreMedico()));
+                                            }
+                                            else {
+                                                myList.add(new EventoAutoMach(e.getId().toString(),
+                                                        e.getNombrePaciente(),
+                                                        e.getApellidoPaciente(),
+                                                        e.getFecha(),
+                                                        "",
+                                                        false));
+                                            }
+
                                             myAdapter.notifyDataSetChanged();
                                         }
                                         break;
@@ -294,6 +321,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
 
                                         SaveEventId(e.getId().toString());
                                         startActivity(intent);
+                                        finish();
                                     }
                                     else {
                                         intent = new Intent(context, voluntariosAutoMach.class);
@@ -409,7 +437,6 @@ public class voluntariosAutoMach extends AppCompatActivity  {
         }
 
     }
-
 
     private void signOut() {
         GoogleSignInOptions gso = new GoogleSignInOptions.

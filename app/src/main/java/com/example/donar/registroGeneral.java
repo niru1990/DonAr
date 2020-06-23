@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -255,7 +254,7 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
     }
 
     private void cargarSpinnerPais() {
-        spinnerPais = (Spinner) findViewById(R.id.spnNacionalidad);
+        spinnerPais =  findViewById(R.id.spnNacionalidad);
         adaptadorPais = new SpinnerAdaptor(registroGeneral.this, misPaises);
         spinnerPais.setAdapter(adaptadorPais);
 
@@ -476,11 +475,11 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
                                            if (response.isSuccessful()) {
                                                String message = "";
                                                if (response.isSuccessful()) {
-                                                   message = "Se registro exitosamente su cuenta.";
+                                                   message = "¡Te has registrado exitosamente!";
                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                                    startActivity(intent);
                                                } else
-                                                   message = "Ocurrio algo inesperado.";
+                                                   message = "Ocurrió algo inesperado.";
 
                                                Toast.makeText(registroGeneral.this
                                                        , message

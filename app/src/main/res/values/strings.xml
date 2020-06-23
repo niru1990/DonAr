@@ -5,7 +5,7 @@
     <string name="txtNombre">Nombre: </string>
     <string name="txtApellido">Apellido: </string>
     <string name="txtDNI">DNI: </string>
-    <string name="txtMail">Mail: </string>
+    <string name="txtMail">Mail</string>
     <string name="txtTelefono">Teléfono: </string>
     <string name="txtMatricula">Matricula: </string>
     <string name="txtEspecialidad">Especialidad: </string>
@@ -46,7 +46,7 @@
     <string name="btnSolicitar">Solicitar</string>
     <string name="btnSAsignar">Asignar</string>
     <string name="btnGenerar">Generar</string>
-    <string name="btnRegistrarDonacion">Registrar</string>
+    <string name="btnRegistrarDonacion">Enviar</string>
 
     <!-- Radio buttons-->
     <string name="reporteComposiciónVoluntarios">Composición de voluntarios</string>
@@ -68,10 +68,10 @@
     <string name="action_logout">Logout</string>
     <string name="vacio"> </string>
     <string name="btnRegistrarse">Registrarse</string>
-    <string name="donacionDescripcion">¿Que Quiere Donar?</string>
-    <string name="donacionVencimiento">¿Tiene Vencimiento?</string>
-    <string name="donacionCantidad">¿Cuantos dona?</string>
-    <string name="title_activity_donacion_crear">activity_donacion_crear</string>
+    <string name="donacionDescripcion">Nombre</string>
+    <string name="donacionVencimiento">¿Tiene vencimiento?</string>
+    <string name="donacionCantidad">Cantidad</string>
+    <string name="title_activity_donacion_crear"> </string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -80,17 +80,18 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_activity_donacion_main">donacionMain</string>
+    <string name="title_activity_donacion_main"> </string>
     <string name="leer_qr">Leer QR</string>
-    <string name="lugar_entrega">¿Donde Quiere Entregarlo?</string>
+    <string name="lugar_entrega">Lugar de entrega</string>
     <string name="agregar_donacion">Agregar donación</string>
     <string name="enfoque_el_codigo">ENFOQUE EL CODIGO</string>
     <string name="recibir_donacion">Recibir Donacion</string>
-    <string name="detalle">Detalle</string>
-    <string name="cantidad">Cantidad</string>
-    <string name="destino_actual">Destino Actual</string>
-    <string name="cargando_informacion">cargando informacion</string>
-    <string name="ingrese_la_fecha_de_vencimiento">Ingrese la fecha de vencimiento</string>
+    <string name="detalle">Nombre:</string>
+    <string name="cantidad">Cantidad:</string>
+    <string name="destino_actual">Destino Actual:</string>
+    <string name="cargando_informacion">(Cargando información...)</string>
+    <string name="fecha_donacion">Fecha:</string>
+    <string name="ingrese_la_fecha_de_vencimiento">Fecha de vencimiento</string>
 
     <!-- Validaciones formulario -->
     <string name="nombre_invalido">Por favor, inserte un nombre válido.</string>
@@ -108,6 +109,19 @@
     <string name="genero_invalido">Por favor, especifique su género.</string>
     <string name="tipo_de_usuario_invalido">Por favor, especifique su tipo de usuario.</string>
     <string name="mail_invalido">Por favor, ingrese un correo electrónico válido.</string>
+    <string name="matricula_invalida">Por favor, introduzca su matrícula.</string>
+    <string name="seguro_invalido">Por favor, introduzca su seguro.</string>
+    <string name="horario_ingreso_vacio">Por favor, ingrese su horario de ingreso.</string>
+    <string name="horario_salida_vacio">Por favor, ingrese su horario de salida.</string>
+    <string name="horarios_incoherentes">El horario de ingreso no puede ser mayor al de salida.
+    </string>
+    <string name="matricula_iniciales_invalidas">La matrícula debe comenzar con las iniciales MP o
+    MN.</string>
+    <string name="matricula_cantidad_caracteres_invalidos">La matricula debe poseer 8 caracteres.
+    </string>
+    <string name="especialidad_invalida">Por favor, indique su especialidad.</string>
+    <string name="horarios_fuera_rango">Los horarios contemplados por la fundación son de 9:00AM a
+        7:00PM.</string>
 
     <!-- Mensajes-->
     <string name="NoTieneAcceso">Usted no cuenta con permisos para realizar esta acción.</string>
@@ -128,19 +142,18 @@
         sea quien utilice los servicios brindados  por medio de la aplicación, la aceptación de estos
         términos y condiciones debe ser realizada por su padre o tutor. Si por algún motivo no
         fuese el padre o tutor quien realizace la aceptación de los términos y condiciones la
-        responsabilidad completa quedará sobre el  responsable legal del mentor.  El uso de la
+        responsabilidad completa quedará sobre el  responsable legal del menor.  El uso de la
         aplicación es 100% on-line por lo cual es necesario que se cuente con conexión a internet para
         poder utilizar la misma sin percance en el funcionamiento.</string>
     <string name="acepto_los_t_rminos_y_condiciones">Acepto los términos y condiciones</string>
-    <string name="matricula_invalida">Por favor, introduzca su matrícula.</string>
-    <string name="seguro_invalido">Por favor, introduzca su seguro.</string>
     <string name="reporteGenerosTitle">Composición de Usuarios por Género</string>
-    <string name="horario_ingreso_vacio">Por favor, ingrese su horario de ingreso.</string>
-    <string name="horario_salida_vacio">Por favor, ingrese su horario de salida.</string>
-    <string name="horarios_incoherentes">El horario de ingreso no puede ser mayor al de salida.</string>
-    <string name="horarios_fuera_rango">Los horarios contemlados por la fundación son de 9:00AM a 7:00PM.</string>
+    <string name="seleccionar_ingreso_btn">Seleccionar Ingreso</string>
     <string name="seleccionar_salida_btn">Seleccionar Salida</string>
     <string name="horario_ingreso_txt">Horario de Ingreso: hh:mm hs.</string>
+    <string name="registrar_donacion_title">Registro de Donaciones</string>
+
+    <string name="tituloDonacionDetalle">Detalle: </string>
+
     <string name="seleccionar_ingreso_btn">Seleccionar Ingreso</string>
     <string name="matricula_iniciales_invalidas">La matrícula debe comenzar con las iniciales MP o MN.</string>
     <string name="matricula_cantidad_caracteres_invalidos">La matricula debe poseer 8 caracteres.</string>

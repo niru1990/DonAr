@@ -218,7 +218,7 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                         @Override
                         public void onResponse(Call<Integer> call, Response<Integer> response) {
                             Toast.makeText(getApplicationContext(),
-                                    "El usuario fue creado",
+                                    "¡Te has registrado exitosamente!",
                                     Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(intent);
@@ -302,6 +302,12 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                      Toast.LENGTH_SHORT).show();
              return false;
          }
+
+        if(idEspecialidad.equals("0")){
+            Toast.makeText(getApplicationContext(), R.string.especialidad_invalida,
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
          return true;
     }
