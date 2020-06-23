@@ -77,7 +77,7 @@ public interface EventoServices {
 
     //Obtener evento por id de voluntario
     String API_ROUTE_GET_BY_VoluntarioMedico_ID = "api/evento/eventosporvoluntariomedico/{id}";
-    @GET(API_ROUTE_GET_BY_VoluntarioBasico_ID)
+    @GET(API_ROUTE_GET_BY_VoluntarioMedico_ID   )
     Call<List<EventoDTO>> getEventoByVoluntarioMedicoId(@Path("id") String id);
 
 
