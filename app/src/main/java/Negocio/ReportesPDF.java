@@ -15,6 +15,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReportesPDF<T> {
 
@@ -22,10 +24,17 @@ public class ReportesPDF<T> {
     private Paint paint;
     private String name;
     private T data;
+    private List<String> arrayList;
 
     public ReportesPDF(String name, T data){
         this.name = name;
         this.data = data;
+    }
+
+    public ReportesPDF(String name, List<String> arrayList) {
+        this.name = name;
+        this.arrayList = arrayList;
+        this.data= (T) arrayList;
     }
 
     /**
@@ -45,6 +54,33 @@ public class ReportesPDF<T> {
         return pdf;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public PdfDocument createDocumentArray(){
+        this.pdf = createDocument();
+        this.paint = createPaint();
+        paintOnACanvas(createPage(this.pdf,600,800,1), arrayList,40,this.arrayList.size(),50);
+        savePDF(this.pdf, this.name);
+        pdf.close();
+        return pdf;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void paintOnACanvas(@NotNull PdfDocument.Page page,List<String> data, int x, int y,int y2){
+        Canvas canvas = page.getCanvas();
+        int [] ints=new int[4];
+        configSizeTextPaint(24);
+        canvas.drawText(this.name,x,y2,this.paint);
+        configSizeTextPaint(12);
+        for (int i=0; i < y; i++) {
+            canvas.drawText(data.get(i), x, y2+i*16+16, this.paint);
+            ints[0] = x;
+            ints[1] = y2+i*16+18;
+            ints[2] = page.getInfo().getPageWidth()-x;
+            ints[3] = y2+i*16+20;
+            lineaEnCanvas(canvas,ints); //xStart, yStart, xStop, yStop, paint
+        }
+        pdf.finishPage(page);
+    }
     /**
      * Devuelve un PdfDocument vacio
      * @return PdfDocumet

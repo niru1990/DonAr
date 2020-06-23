@@ -112,13 +112,12 @@ public class donacionHistorial extends AppCompatActivity implements View.OnClick
     private void generarPDF(List<EventoAutoMach> myList){
         List<String> strings = new ArrayList<String>(myList.size());
         for (EventoAutoMach e : myList) {
-            strings.add(e.getNombre() +" "+ e.getApellido() +" "+ e.getNombreMedico() + e.getIdEvento());
+            strings.add("Destino: "+e.getNombre() +" Estado: "+ e.getApellido());
         }
-        List<String> list = strings;
-        String joined = TextUtils.join(", ", list);
-        ReportesPDF report = new ReportesPDF("Donacion:"+ detalleDonacionPDF + new fechas().getDateTime(),
-               joined );
-        report.createDocumentExample();
+
+        ReportesPDF report = new ReportesPDF("Donacion:"+ detalleDonacionPDF +" "+ new fechas().getDateTime(),
+               strings );
+        report.createDocumentArray();
         Toast.makeText(getApplicationContext(),"Se Creo su PDF revise su almacenamiento interno",Toast.LENGTH_LONG).show();
 
     }
