@@ -10,12 +10,12 @@ import retrofit2.http.Path;
 
 public interface AsociacionService {
     //Registrar paciente
-    String API_ROUTE_ADD_ITEM = "api/Asociacion/";
+    String API_ROUTE_ADD_ITEM = "api/voluntarioAsociacion/";
     @POST(API_ROUTE_ADD_ITEM)
     Call<Integer> addAsociacion(@Body AsociacionDTO paciente);
 
     //Get paciente
-    String API_ROUTE_GET_ESPECIFIC= "api/Asociacion/{id}";
+    String API_ROUTE_GET_ESPECIFIC= "api/voluntarioAsociacion/{id}";
     @GET(API_ROUTE_GET_ESPECIFIC)
     Call<PacienteDTO> getAsociacionEspecifico(@Path("id") String id);
 

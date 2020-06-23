@@ -130,19 +130,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtGenero">
 
                 <RadioButton
-                    android:id="@+id/masculinoButton"
-                    android:layout_width="0sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Masculino"
-                    android:textSize="18sp" />
-
-                <RadioButton
                     android:id="@+id/femeninoButton"
                     android:layout_width="0sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Femenino"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/masculinoButton"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Masculino"
                     android:textSize="18sp" />
 
                 <RadioButton
