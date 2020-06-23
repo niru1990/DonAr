@@ -17,6 +17,11 @@ public interface DonacionesService {
     @GET (API_ROUTE_GET_ALL)
     Call<List<DonacionDTO>>getDonaciones();
 
+    //Get historial donacion
+    String API_ROUTE_GET_HISTORY="api/donacion/historicodonacion/{id}";
+    @GET (API_ROUTE_GET_HISTORY)
+    Call<List<DonacionDTO>>getHistoricoDonacion (@Path("id") String id);
+
     //actualizar donacion
     String API_ROUTE_UPDATE_ITEM= "api/donacion/";
     @PUT(API_ROUTE_UPDATE_ITEM)

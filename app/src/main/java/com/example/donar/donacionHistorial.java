@@ -5,14 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,42 +32,36 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class reportesDonaciones extends AppCompatActivity {
+public class donacionHistorial extends AppCompatActivity implements View.OnClickListener{
     private ListView myListView;
     private List<EventoAutoMach> myList= new ArrayList<>();
     private ListAdapter myAdapter;
-    Toolbar toolbar;
+    private String detalleDonacionPDF;
+    private Button generarPDF;
     String idDonacionPDF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reportes_donaciones);
-        myListView = findViewById(R.id.lista_donaciones);
-        toolbar = (Toolbar) findViewById(R.id.donArToolBar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_donacion_historial);
+        myListView = findViewById(R.id.lista_donacion);
+        generarPDF=(Button) findViewById(R.id.generarPDF);
+        generarPDF.setOnClickListener(this);
         myList=new ArrayList();
-        cargarDonaciones();
+        SharedPreferences preferencias= getSharedPreferences("ID usuario", Context.MODE_PRIVATE);
+        idDonacionPDF=preferencias.getString("idDonacionPDF","0");
+        cargarDonacion();
         myAdapter = new ListAdapter(this, R.layout.list_item_row, myList);
         myListView.setAdapter(myAdapter);
-        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public  void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
-                idDonacionPDF= myList.get(position).getIdEvento();//id de donacion
-                guardarDonacionId(idDonacionPDF);//id de donacion
-                Intent intent= new Intent(getApplicationContext(),donacionHistorial.class);
-                startActivity(intent);
-            }
-        });
+
     }
-    private void cargarDonaciones(){
+    private void cargarDonacion(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://donar.azurewebsites.net/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         DonacionesService donacionesService = retrofit.create(DonacionesService.class);
-        Call<List<DonacionDTO>> http_call = donacionesService.getDonaciones();
+        Call<List<DonacionDTO>> http_call = donacionesService.getHistoricoDonacion(idDonacionPDF);
         http_call.enqueue(new Callback<List<DonacionDTO>>() {
             @Override
             public void onResponse(Call<List<DonacionDTO>> call, Response<List<DonacionDTO>> response) {
@@ -73,12 +70,13 @@ public class reportesDonaciones extends AppCompatActivity {
                 if(response.body() != null) {
                     for(DonacionDTO e : response.body()){
 
-                        myList.add(new EventoAutoMach(String.valueOf(e.getDonacion_id()),
-                                e.getDetalle().toUpperCase(),
-                                "",
-                                "",
+                        myList.add(new EventoAutoMach(e.getFechaCambio(),
+                                e.getDestino(),
+                                e.getEstado(),
+                                String.valueOf(e.getId()),
                                 "",
                                 false));
+                        detalleDonacionPDF=e.getDetalle();
 
                     }
                     myAdapter.notifyDataSetChanged();
@@ -97,12 +95,32 @@ public class reportesDonaciones extends AppCompatActivity {
         });
     }
 
-    private void guardarDonacionId(String id) {
-        SharedPreferences  preferencias= getSharedPreferences("ID usuario", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferencias.edit();
-        editor.putString("idDonacionPDF", id);
-        editor.commit();
+    @Override
+    public void onClick(@NotNull View view) {
+        switch (view.getId()) {
+            case R.id.generarPDF:
+                generarPDF(myList);
+                break;
+            default:
+                break;
+        }
+
     }
 
 
-}
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void generarPDF(List<EventoAutoMach> myList){
+        List<String> strings = new ArrayList<String>(myList.size());
+        for (EventoAutoMach e : myList) {
+            strings.add(e.getNombre() +" "+ e.getApellido() +" "+ e.getNombreMedico() + e.getIdEvento());
+        }
+        List<String> list = strings;
+        String joined = TextUtils.join(", ", list);
+        ReportesPDF report = new ReportesPDF("Donacion:"+ detalleDonacionPDF + new fechas().getDateTime(),
+               joined );
+        report.createDocumentExample();
+        Toast.makeText(getApplicationContext(),"Se Creo su PDF revise su almacenamiento interno",Toast.LENGTH_LONG).show();
+
+    }
+
+ }

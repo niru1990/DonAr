@@ -54,7 +54,6 @@ public class donacionMain extends AppCompatActivity implements View.OnClickListe
         botonLeerQR.setOnClickListener(this);
         preferencias= getSharedPreferences("ID usuario", Context.MODE_PRIVATE);
         idUsuario=preferencias.getString("ID","0");
-
         myList=new ArrayList();
         cargarDonaciones();
         myAdapter = new ListAdapter(this, R.layout.list_item_row, myList);
