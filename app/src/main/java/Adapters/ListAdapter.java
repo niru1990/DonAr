@@ -83,10 +83,11 @@ public class ListAdapter extends ArrayAdapter<EventoAutoMach>{
                 rechazar.setVisibility(View.INVISIBLE);
             }
 
+
             if(position % 2 == 1)
-                view.setBackgroundColor(Color.WHITE);
+                view.setBackgroundColor(Color.parseColor("#56ccdc"));
             else
-                view.setBackgroundColor(Color.GRAY);
+                view.setBackgroundColor(Color.WHITE);
             return view;
         }
         catch (Exception ex){
