@@ -150,7 +150,7 @@
     <string name="seleccionar_ingreso_btn">Seleccionar Ingreso</string>
     <string name="seleccionar_salida_btn">Seleccionar Salida</string>
     <string name="horario_ingreso_txt">Horario de Ingreso: hh:mm hs.</string>
-    <string name="registrar_donacion_title">Registrar Donación</string>
+    <string name="registrar_donacion_title">Registro de Donaciones</string>
 
     <string name="tituloDonacionDetalle">Detalle: </string>
 
