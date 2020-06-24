@@ -75,7 +75,7 @@ public class reportesDonaciones extends AppCompatActivity {
 
                         myList.add(new EventoAutoMach(String.valueOf(e.getDonacion_id()),
                                 e.getDetalle().toUpperCase(),
-                                "",
+                                e.getDestino(),
                                 "",
                                 "",
                                 false));

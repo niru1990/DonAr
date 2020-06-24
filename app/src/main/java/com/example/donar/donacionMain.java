@@ -103,11 +103,13 @@ public class donacionMain extends AppCompatActivity implements View.OnClickListe
 
 
                                 if(response.body() != null) {
+
+                                    myList.clear();
                                     for(DonacionDTO e : response.body()){
 
                                         myList.add(new EventoAutoMach(String.valueOf(e.getDonacion_id()),
                                                 e.getDetalle().toUpperCase(),
-                                                "",
+                                                e.getDestino(),
                                                 "",
                                                 "",
                                                 false));
@@ -129,4 +131,19 @@ public class donacionMain extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        cargarDonaciones();
+        myAdapter = new ListAdapter(this, R.layout.list_item_row, myList);
+        myListView.setAdapter(myAdapter);
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public  void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
+                guardarDonacionId(myList.get(position).getIdEvento());//id de donacion
+                Intent intent= new Intent(getApplicationContext(),donacionDetalle.class);
+                startActivity(intent);;
+            }
+        });
+    }
 }
