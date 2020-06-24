@@ -52,7 +52,7 @@ public class donacionLeer extends AppCompatActivity  {
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putString(key, value);
         editor.commit();
-    }
+}
 
     @Override
     public void onResume() {
