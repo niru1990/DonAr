@@ -394,7 +394,7 @@ public class pacientesHistoriaCLinica extends AppCompatActivity implements View.
         event.setTratamientoFarmacologico(tratamientoFarmacologico.isChecked());
         event.setEspecialidadId(idEspecialidad);
         Date d = new Date();
-        CharSequence Fecha  = DateFormat.format("dd-MM-yyyy", d.getTime());
+        CharSequence Fecha  = DateFormat.format("dd-MM-yyyy hh:mm:ss", d.getTime());
         event.setFecha(Fecha.toString());
 
         if(voluntarioMedicoId.equals(idUsuario))
