@@ -126,6 +126,7 @@ public class registroDonacion extends AppCompatActivity implements View.OnClickL
                                         if (response.isSuccessful()) {
                                             Intent intent = new Intent(getApplicationContext(), donacionMain.class);
                                             startActivity(intent);
+                                            finish();
                                         }
                                     default:
                                         try {
