@@ -34,6 +34,7 @@ import DonArDato.ProvinciaDTO;
 import DonArDato.SpinnerItem;
 import DonArDato.TipoDeUsuarioDTO;
 import DonArDato.VoluntarioDTO;
+import Negocio.Preferencias;
 import Service.AsociacionService;
 import Service.PacientesService;
 import Service.PaisService;
@@ -599,9 +600,6 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
 
     public void guardarPreferencias(@NotNull View v) {
 
-        SharedPreferences preferencias = getSharedPreferences
-                ("Datos generales medico", Context.MODE_PRIVATE);
-
         String nombre = campoNombre.getText().toString();
         String apellido = campoApellido.getText().toString();
         //String genero = getGeneroValue().getText().toString();
@@ -616,18 +614,18 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
         SpinnerItem siProvincia = (SpinnerItem)spinnerProvincia.getSelectedItem();
         String provincia = siProvincia.getIdData();
 
-        SharedPreferences.Editor editor = preferencias.edit();
-        editor.putString("nombre", nombre);
-        editor.putString("apellido", apellido);
-        editor.putString("genero", genero);
-        editor.putString("email", email);
-        editor.putString("edad", edad);
-        editor.putString("DNI", DNI);
-        editor.putString("telefono", telefono);
-        editor.putString("pais",pais);
-        editor.putString("provincia",provincia);
+        Preferencias p = new Preferencias(getSharedPreferences("Datos generales medico", Context.MODE_PRIVATE));
 
-        editor.commit();
+        p.guardarPreferencia("nombre", nombre);
+        p.guardarPreferencia("apellido", apellido);
+        p.guardarPreferencia("genero", genero);
+        p.guardarPreferencia("email", email);
+        p.guardarPreferencia("edad", edad);
+        p.guardarPreferencia("DNI", DNI);
+        p.guardarPreferencia("telefono", telefono);
+        p.guardarPreferencia("pais",pais);
+        p.guardarPreferencia("provincia",provincia);
+
         Intent intent = new Intent(v.getContext(), registroMedico.class);
         startActivity(intent);
     }

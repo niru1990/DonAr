@@ -33,6 +33,7 @@ import Adapters.SpinnerAdaptor;
 import DonArDato.EspecialidadDTO;
 import DonArDato.SpinnerItem;
 import DonArDato.VoluntarioMedicoDTO;
+import Negocio.Preferencias;
 import Service.EspecialidadServices;
 import Service.VoluntariosService;
 import retrofit2.Call;
@@ -164,20 +165,22 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
             switch (v.getId()) {
                 case R.id.btnRegistrarMedico:
                     if(awesomeValidation.validate() && validarCampos()) {
-                    SharedPreferences preferences = getSharedPreferences("Datos generales medico",
-                            Context.MODE_PRIVATE);
 
+                        Preferencias p = new Preferencias(getSharedPreferences("Datos generales medico",
+                                Context.MODE_PRIVATE));
+
+                        p.obtenerPreferencia("nombre", "No posee nombre");
                     //Cargo campos del formulario anterior, guardados en el XML, mediante Shared
                     //Preferences
-                    String nombre = preferences.getString("nombre", "No posee nombre");
-                    String apellido = preferences.getString("apellido", "No posee apellido");
-                    String genero = preferences.getString("genero","No posee genero");
-                    String email = preferences.getString("email", "No posee email");
-                    String edad = preferences.getString("edad","-1");
-                    String DNI = preferences.getString("DNI", "No posee DNI");
-                    String telefono = preferences.getString("telefono", "No posee teléfono");
-                    String pais = preferences.getString("pais","-1");
-                    String provincia = preferences.getString("provincia","0");
+                    String nombre = p.obtenerPreferencia("nombre", "No posee nombre");
+                    String apellido = p.obtenerPreferencia("apellido", "No posee apellido");
+                    String genero = p.obtenerPreferencia("genero","No posee genero");
+                    String email = p.obtenerPreferencia("email", "No posee email");
+                    String edad = p.obtenerPreferencia("edad","-1");
+                    String DNI =p.obtenerPreferencia("DNI", "No posee DNI");
+                    String telefono =p.obtenerPreferencia("telefono", "No posee teléfono");
+                    String pais = p.obtenerPreferencia("pais","-1");
+                    String provincia = p.obtenerPreferencia("provincia","0");
 
 
                     String horaIngreso = "";
