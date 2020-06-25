@@ -88,7 +88,7 @@ private EditText destinoTexto;
                             info_cantidad.setText(String.valueOf(donacionDTO.getCantidad()));
                             info_destino.setText(donacionDTO.getDestino());
                             crearQR(donacionDTO.getDonacion_id().toString());
-                            if (donacionDTO.getFechaVencimiento()==null){
+                            if (donacionDTO.getFechaVencimiento()==null || donacionDTO.getFechaVencimiento().equals("") ){
                                 info_fecha_vencimiento.setText("No tiene");
                             }else{
                                 info_fecha_vencimiento.setText(donacionDTO.getFechaVencimiento());
