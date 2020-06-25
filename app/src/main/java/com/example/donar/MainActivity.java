@@ -149,8 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         GoogleSignInClient googleSignInClient=GoogleSignIn.getClient(this,gso);
         googleSignInClient.signOut();
-        finish();
-        startActivity(getIntent());
+        recreate();
     }
 
     private void signOutAndOut() {
