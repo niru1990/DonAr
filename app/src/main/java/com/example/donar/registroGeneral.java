@@ -599,7 +599,6 @@ public class registroGeneral extends AppCompatActivity implements View.OnClickLi
 
 
     public void guardarPreferencias(@NotNull View v) {
-
         String nombre = campoNombre.getText().toString();
         String apellido = campoApellido.getText().toString();
         //String genero = getGeneroValue().getText().toString();

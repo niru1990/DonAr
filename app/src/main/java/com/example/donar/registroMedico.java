@@ -182,7 +182,6 @@ public class registroMedico extends AppCompatActivity implements View.OnClickLis
                     String pais = p.obtenerPreferencia("pais","-1");
                     String provincia = p.obtenerPreferencia("provincia","0");
 
-
                     String horaIngreso = "";
                     horaIngreso = textoHorarioIngreso.getText().toString();
                     horaIngreso = ajustarFecha(horaIngreso);
