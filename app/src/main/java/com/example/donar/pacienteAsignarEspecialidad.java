@@ -247,6 +247,7 @@ public class pacienteAsignarEspecialidad extends AppCompatActivity implements Vi
 
                                                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                                                 startActivity(i);
+                                                finish();
                                             }
                                             break;
                                         case 404:
