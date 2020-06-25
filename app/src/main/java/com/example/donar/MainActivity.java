@@ -18,12 +18,11 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 
 import org.jetbrains.annotations.NotNull;
+import Negocio.Preferencias;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -223,8 +222,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void obtenerPreferencias(){
-        SharedPreferences preferencias = getSharedPreferences
-                ("ID usuario", Context.MODE_PRIVATE);
-        tipoUsuario = preferencias.getString("tipo", "0");
+        Preferencias p = new Preferencias(getSharedPreferences("ID usuario", Context.MODE_PRIVATE));
+        tipoUsuario = p.obtenerPreferencia("tipo", "0");
+
+        //tipoUsuario =getEspecificPreference("tipo", "0");
     }
 }
