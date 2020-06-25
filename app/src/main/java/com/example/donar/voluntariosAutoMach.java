@@ -47,7 +47,6 @@ public class voluntariosAutoMach extends AppCompatActivity  {
     private List<EventoAutoMach> myList = new ArrayList<>();
     ListAdapter myAdapter;
 
-
     private Toolbar toolbar;
 
     private String idVoluntario;
@@ -89,9 +88,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                             sendStatus = 2;
                             modificarEstado(idEvento,
                                     sendStatus);
-                            Toast.makeText(view.getContext(),
-                                    "Se rechazo la consulta.",
-                                    Toast.LENGTH_LONG).show();
+
                             break;
                     }
                 }
@@ -138,6 +135,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                     signOut();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
+                    finish();
                 }
 
                 Call<List<EventoDTO>> http_call;
@@ -229,9 +227,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                                             EventoReducidoDTO e = (EventoReducidoDTO) response.body();
 
                                             if(e.getFecha().length() < 19)
-                                            {
                                                 e.setFecha(e.getFecha() + " 00:00:00");
-                                            }
 
                                             if(tipoUsuario.equals("3")) {
                                                 myList.add(new EventoAutoMach(e.getId().toString(),
@@ -302,7 +298,7 @@ public class voluntariosAutoMach extends AppCompatActivity  {
 
                 BigInteger eventId = BigInteger.valueOf(Long.parseLong(idEvento));
 
-                cambiarEstado c = new cambiarEstado(eventId, estado);
+                     cambiarEstado c = new cambiarEstado(eventId, estado);
 
                 Call<EventoDTO> http_call = eventoServices.modifyStatus(c);
                 http_call.enqueue(new Callback<EventoDTO>() {
@@ -329,8 +325,10 @@ public class voluntariosAutoMach extends AppCompatActivity  {
                                         finish();
                                     }
                                     else {
-                                        intent = new Intent(context, voluntariosAutoMach.class);
-                                        startActivity(intent);
+                                        Toast.makeText(getApplicationContext(),
+                                                "Se rechazo la consulta.",
+                                                Toast.LENGTH_LONG).show();
+                                        recreate();
                                     }
                                     break;
                                 case 400:
