@@ -15,6 +15,7 @@ public class Preferencias {
         boolean response = false;
         SharedPreferences.Editor editor = preferencia.edit();
         editor.putString(key, value);
+        editor.commit();
         response = true;
         return response;
     }
@@ -23,6 +24,7 @@ public class Preferencias {
         boolean response = false;
         SharedPreferences.Editor editor = preferencia.edit();
         editor.putBoolean(key, value);
+        editor.commit();
         response = true;
         return response;
     }
@@ -31,6 +33,7 @@ public class Preferencias {
         boolean response = false;
         SharedPreferences.Editor editor = preferencia.edit();
         editor.putFloat(key, value);
+        editor.commit();
         response = true;
         return response;
     }
@@ -39,6 +42,7 @@ public class Preferencias {
         boolean response = false;
         SharedPreferences.Editor editor = preferencia.edit();
         editor.putInt(key, value);
+        editor.commit();
         response = true;
         return response;
     }
@@ -47,6 +51,7 @@ public class Preferencias {
         boolean response = false;
         SharedPreferences.Editor editor = preferencia.edit();
         editor.putLong(key, value);
+        editor.commit();
         response = true;
         return response;
     }
