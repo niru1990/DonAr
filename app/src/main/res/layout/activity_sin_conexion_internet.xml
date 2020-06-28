@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/include3"
-        layout="@layout/activity_don_ar_tool_bar"></include>
+        layout="@layout/activity_don_ar_tool_bar"/>
 
     <ImageView
         android:id="@+id/imageView"

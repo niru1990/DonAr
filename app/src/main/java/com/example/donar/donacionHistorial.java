@@ -39,7 +39,7 @@ import Adapters.ListAdapter;
 import DonArDato.DonacionDTO;
 import DonArDato.EventoAutoMach;
 import Negocio.ReportesPDF;
-import Negocio.fechas;
+import Negocio.Fechas;
 import Service.DonacionesService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -170,7 +170,7 @@ public class donacionHistorial extends AppCompatActivity implements View.OnClick
                 strings.add("Destino: "+e.getNombre() +" Estado: "+ e.getApellido());
         }
 
-        ReportesPDF report = new ReportesPDF("Donacion:"+ detalleDonacionPDF +" "+ new fechas().getDateTime(),
+        ReportesPDF report = new ReportesPDF("Donacion:"+ detalleDonacionPDF +" "+ new Fechas().getDateTime(),
                strings );
         report.createDocumentArray();
         Toast.makeText(getApplicationContext(),"Se Creo su PDF revise su almacenamiento interno",Toast.LENGTH_LONG).show();
